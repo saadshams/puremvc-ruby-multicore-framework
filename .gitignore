@@ -34,6 +34,7 @@ build-iPhoneSimulator/
 
 ## Documentation cache and generated files:
 /.yardoc/
+src/.yardoc/
 /_yardoc/
 /doc/
 /rdoc/

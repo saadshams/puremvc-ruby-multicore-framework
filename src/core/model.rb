@@ -10,23 +10,52 @@ require_relative '../interfaces/i_model'
 
 module PureMVC
   class Model
+    # A Multiton `IModel` implementation.
+    #
+    # In PureMVC, the `Model` class provides access to model objects (Proxies) by named lookup.
+    #
+    # The `Model` assumes these responsibilities:
+    #
+    # - Maintains a cache of `IProxy` instances.
+    # - Provides methods for registering, retrieving, and removing `IProxy` instances.
+    #
+    # Your application must register `IProxy` instances with the `Model`. Typically,
+    # an `ICommand` is used to create and register `IProxy` instances after the `Facade`
+    # has initialized the Core actors.
+    #
+    # @see Proxy
+    # @see IProxy
     include IModel
 
+    # Message Constants
     MULTITON_MSG = "Model instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
 
+    # The Multiton IModel instanceMap.
+    # @return [Hash{String => IModel}]
     @instance_map = {}
+
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
     @mutex = Mutex.new
 
     class << self
       protected attr_accessor :instance_map
 
+      # <code>Model</code> Multiton Factory method.
+      #
+      # @param key [String] the unique key identifying the Multiton instance
+      # @param factory [Proc<(String|Symbol) -> IModel>] the unique key passed to the factory block
+      # @return [IModel] the instance for this Multiton key
       def get_instance(key, &factory)
         @mutex.synchronize do
           @instance_map[key] ||= factory.call(key)
         end
       end
 
+      # Remove an IModel instance
+      #
+      # @param key [String] the multiton key of the IModel instance to remove
       def remove_model(key)
         @mutex.synchronize do
           @instance_map.delete(key)
@@ -34,6 +63,13 @@ module PureMVC
       end
     end
 
+    # Constructor.
+    #
+    # This <code>IModel</code> implementation is a Multiton,
+    # so you should not call the constructor directly, but instead call
+    # the static Multiton Factory method <code>Model.get_instance(key) { |key| PureMVC::Model.new(key) }</code>.
+    #
+    # @raise [RuntimeError] Error if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.send(:instance_map)[key]
       self.class.send(:instance_map)[key] = self
@@ -43,10 +79,21 @@ module PureMVC
       initialize_model
     end
 
+    # Initialize the <code>Model</code> instance.
+    #
+    # Called automatically by the constructor, this
+    # is your opportunity to initialize the Multiton
+    # instance in your subclass without overriding the
+    # constructor.
+    #
+    # @return [void]
     protected def initialize_model
 
     end
 
+    # Register an <code>IProxy</code> with the <code>Model</code>.
+    #
+    # @param proxy [IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
     def register_proxy(proxy)
       @proxy_mutex.synchronize do
         proxy.initialize_notifier(@multiton_key)
@@ -55,18 +102,30 @@ module PureMVC
       end
     end
 
+    # Retrieve an <code>IProxy</code> from the <code>Model</code>.
+    #
+    # @param proxy_name [String, Symbol] the name of the proxy to retrieve.
+    # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
     def retrieve_proxy(proxy_name)
       @proxy_mutex.synchronize do
         @proxy_map[proxy_name]
       end
     end
 
+    # Check if a Proxy is registered.
+    #
+    # @param proxy_name [String, Symbol] the name of the proxy to check.
+    # @return [Boolean] whether a Proxy is currently registered with the given <code>proxy_name</code>.
     def has_proxy?(proxy_name)
       @proxy_mutex.synchronize do
         @proxy_map.has_key?(proxy_name)
       end
     end
 
+    # Remove an <code>IProxy</code> from the <code>Model</code>.
+    #
+    # @param proxy_name [String, Symbol] name of the <code>IProxy</code> instance to be removed.
+    # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy(proxy_name)
       @proxy_mutex.synchronize do
         proxy = @proxy_map[proxy_name]
