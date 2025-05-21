@@ -19,16 +19,16 @@ module PureMVC
     class << self
       # The Multiton IController instanceMap.
       # @return [Hash{String => IController}]
-      def instance_map = (@@instance_map ||= {})
+      def instance_map = (@instance_map ||= {})
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      def mutex = (@@mutex ||= Mutex.new)
+      def mutex = (@mutex ||= Mutex.new)
 
       # Gets an instance using the provided factory block
       #
       # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String|Symbol) -> IController>] the unique key passed to the factory block
+      # @param factory [Proc<(String) -> IController>] the unique key passed to the factory block
       # @return [IController] The controller instance created by the factory
       def get_instance(key, &factory)
         mutex.synchronize do
@@ -56,9 +56,13 @@ module PureMVC
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
       self.class.instance_map[key] = self
+      # The Multiton Key for this Core
       @multiton_key = key
+      # Local reference to View
       @view = nil
+      # Mapping of Notification names to Command Class references
       @command_map = {}
+      # Mutex used to synchronize access to the @command_map
       @command_mutex = Mutex.new
       initialize_controller
     end
@@ -92,7 +96,7 @@ module PureMVC
     # an ICommand has been registered for this notification name.
     #
     # @param notification_name [String] the name of the INotification
-    # @param factory [Proc<() -> IController>] the class of the ICommand
+    # @param factory [Proc<() -> ICommand>] the class of the ICommand
     # @return [void]
     def register_command(notification_name, &factory)
       if @command_map[notification_name].nil?
@@ -130,8 +134,11 @@ module PureMVC
     def remove_command(notification_name)
       @command_mutex.synchronize do
         command = @command_map[notification_name]
+        # if the Command is registered...
         if command
+          # remove the observer
           @view&.remove_observer(notification_name, self)
+          # remove the command
           @command_map.delete(notification_name)
         end
       end

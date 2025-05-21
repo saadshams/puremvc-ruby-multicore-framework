@@ -10,17 +10,17 @@ require_relative '../interfaces/i_model'
 
 module PureMVC
   class Model
-    # A Multiton `IModel` implementation.
+    # A Multiton <code>IModel</code> implementation.
     #
-    # In PureMVC, the `Model` class provides access to model objects (Proxies) by named lookup.
+    # In PureMVC, the <code>Model</code> class provides access to model objects (Proxies) by named lookup.
     #
-    # The `Model` assumes these responsibilities:
+    # The <code>Model</code> assumes these responsibilities:
     #
-    # - Maintains a cache of `IProxy` instances.
-    # - Provides methods for registering, retrieving, and removing `IProxy` instances.
+    # - Maintains a cache of <code>IProxy</code> instances.
+    # - Provides methods for registering, retrieving, and removing <code>IProxy</code> instances.
     #
-    # Your application must register `IProxy` instances with the `Model`. Typically,
-    # an `ICommand` is used to create and register `IProxy` instances after the `Facade`
+    # Your application must register <code>IProxy</code> instances with the <code>Model</code>. Typically,
+    # an <code>ICommand</code> is used to create and register <code>IProxy</code> instances after the <code>Facade<code>
     # has initialized the Core actors.
     #
     # @see Proxy
@@ -34,16 +34,16 @@ module PureMVC
     class << self
       # The Multiton IModel instanceMap.
       # @return [Hash{String => IModel}]
-      def instance_map = (@@instance_map ||= {})
+      def instance_map = (@instance_map ||= {})
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      private def mutex = (@@mutex ||= Mutex.new)
+      private def mutex = (@mutex ||= Mutex.new)
 
       # <code>Model</code> Multiton Factory method.
       #
       # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String|Symbol) -> IModel>] the unique key passed to the factory block
+      # @param factory [Proc<(String) -> IModel>] the unique key passed to the factory block
       # @return [IModel] the instance for this Multiton key
       def get_instance(key, &factory)
         mutex.synchronize do
@@ -102,7 +102,7 @@ module PureMVC
 
     # Retrieve an <code>IProxy</code> from the <code>Model</code>.
     #
-    # @param proxy_name [String, Symbol] the name of the proxy to retrieve.
+    # @param proxy_name [String] the name of the proxy to retrieve.
     # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
     def retrieve_proxy(proxy_name)
       @proxy_mutex.synchronize do
@@ -112,7 +112,7 @@ module PureMVC
 
     # Check if a Proxy is registered.
     #
-    # @param proxy_name [String, Symbol] the name of the proxy to check.
+    # @param proxy_name [String] the name of the proxy to check.
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxy_name</code>.
     def has_proxy?(proxy_name)
       @proxy_mutex.synchronize do
@@ -122,7 +122,7 @@ module PureMVC
 
     # Remove an <code>IProxy</code> from the <code>Model</code>.
     #
-    # @param proxy_name [String, Symbol] name of the <code>IProxy</code> instance to be removed.
+    # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
     # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy(proxy_name)
       @proxy_mutex.synchronize do

@@ -24,16 +24,16 @@ module PureMVC
     class << self
       # The Multiton IFacade instanceMap.
       # @return [Hash{String => IFacade}]
-      def instance_map = (@@instance_map ||= {})
+      def instance_map = (@instance_map ||= {})
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      def mutex = (@@mutex ||= Mutex.new)
+      def mutex = (@mutex ||= Mutex.new)
 
       # Facade Multiton Factory method.
       #
       # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String|Symbol) -> IFacade>] the unique key passed to the factory block
+      # @param factory [Proc<(String) -> IFacade>] the unique key passed to the factory block
       # @return [IFacade] the Multiton instance of the Facade
       def get_instance(key, &factory)
         mutex.synchronize do
@@ -43,7 +43,7 @@ module PureMVC
 
       # Check if a Core is registered or not.
       #
-      # @param key [String, Symbol] the multiton key for the Core in question
+      # @param key [String] the multiton key for the Core in question
       # @return [Boolean] whether a Core is registered with the given <code>key</code>.
       def has_core?(key)
         instance_map.key?(key)
@@ -54,7 +54,7 @@ module PureMVC
       # Removes the Model, View, Controller, and Facade
       # instances associated with the given key.
       #
-      # @param key [String, Symbol] the key of the Core to remove
+      # @param key [String] the key of the Core to remove
       def remove_core(key)
         mutex.synchronize do
           Model::remove_model(key)
@@ -144,14 +144,14 @@ module PureMVC
     # constructor when <code>get_instance</code> is called. However, it must be public
     # to implement <code>INotifier</code>.
     #
-    # @param key [String, Symbol] the multiton key for this instance
+    # @param key [String] the multiton key for this instance
     def initialize_notifier(key)
       @multiton_key = key
     end
 
     # Register an <code>ICommand</code> with the <code>Controller</code> by Notification name.
     #
-    # @param notification_name [String, Symbol] the name of the <code>INotification</code> to associate the <code>ICommand</code> with
+    # @param notification_name [String] the name of the <code>INotification</code> to associate the <code>ICommand</code> with
     # @param factory [Proc<() -> ICommand>] a reference to the Class of the <code>ICommand</code>
     def register_command(notification_name, &factory)
       @controller&.register_command(notification_name, &factory)
@@ -159,7 +159,7 @@ module PureMVC
 
     # Check if a Command is registered for a given Notification
     #
-    # @param notification_name [String, Symbol] The name of the Notification to check
+    # @param notification_name [String] The name of the Notification to check
     # @return [Boolean] whether a Command is currently registered for the given <code>notification_name</code>.
     def has_command?(notification_name)
       !!@controller&.has_command?(notification_name)
@@ -167,7 +167,7 @@ module PureMVC
 
     # Remove a previously registered <code>ICommand</code> to <code>INotification</code> mapping from the Controller.
     #
-    # @param notification_name [String, Symbol] the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
+    # @param notification_name [String] the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
     def remove_command(notification_name)
       @controller&.remove_command(notification_name)
     end
@@ -181,7 +181,7 @@ module PureMVC
 
     # Retrieve an <code>IProxy</code> from the <code>Model</code> by name.
     #
-    # @param proxy_name [String, Symbol] the name of the proxy to be retrieved.
+    # @param proxy_name [String] the name of the proxy to be retrieved.
     # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if not found.
     def retrieve_proxy(proxy_name)
       @model&.retrieve_proxy(proxy_name)
@@ -189,7 +189,7 @@ module PureMVC
 
     # Check if a Proxy is registered
     #
-    # @param proxy_name [String, Symbol] the name of the Proxy
+    # @param proxy_name [String] the name of the Proxy
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxyName</code>.
     def has_proxy?(proxy_name)
       !!@model&.has_proxy?(proxy_name)
@@ -197,7 +197,7 @@ module PureMVC
 
     # Remove an <code>IProxy</code> from the <code>Model</code> by name.
     #
-    # @param proxy_name [String, Symbol] the <code>IProxy</code> to remove from the <code>Model</code>.
+    # @param proxy_name [String] the <code>IProxy</code> to remove from the <code>Model</code>.
     # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none was found.
     def remove_proxy(proxy_name)
       @model&.remove_proxy(proxy_name)
@@ -212,7 +212,7 @@ module PureMVC
 
     # Retrieve an <code>IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String, Symbol] the name of the <code>IMediator</code> to retrieve
+    # @param mediator_name [String] the name of the <code>IMediator</code> to retrieve
     # @return [IMediator, nil] the <code>IMediator</code> previously registered with the given <code>mediator_name</code>, or nil if not found
     def retrieve_mediator(mediator_name)
       @view&.retrieve_mediator(mediator_name)
@@ -220,7 +220,7 @@ module PureMVC
 
     # Check if a Mediator is registered or not
     #
-    # @param mediator_name [String, Symbol] the name of the Mediator
+    # @param mediator_name [String] the name of the Mediator
     # @return [Boolean] whether a Mediator is registered with the given <code>mediator_name</code>.
     def has_mediator?(mediator_name)
       !!@view&.has_mediator?(mediator_name)
@@ -228,7 +228,7 @@ module PureMVC
 
     # Remove an <code>IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String, Symbol] name of the <code>IMediator</code> to be removed.
+    # @param mediator_name [String] name of the <code>IMediator</code> to be removed.
     # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
     def remove_mediator(mediator_name)
       @view&.remove_mediator(mediator_name)
@@ -252,9 +252,9 @@ module PureMVC
     #
     # Keeps us from having to construct new notification instances in our implementation code.
     #
-    # @param name [String, Symbol] the name of the notification to send
+    # @param name [String] the name of the notification to send
     # @param body [Object, nil] the body of the notification (optional)
-    # @param type [String, Symbol, nil] the type of the notification (optional)
+    # @param type [String, nil] the type of the notification (optional)
     def send_notification(name, body = nil, type = nil)
       notify_observers(Notification.new(name, body, type))
     end

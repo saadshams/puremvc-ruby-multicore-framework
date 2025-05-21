@@ -25,7 +25,7 @@ class NotifierTest < Minitest::Test
 
     vo = NotifierTestVO.new(12)
     note = PureMVC::Notification.new("NotifierTest", vo)
-    notifier.facade.send_notification(note.name, note.body, note.type)
+    notifier.facade.send_notification(note.name, note.body)
 
     assert_equal 24, vo.result, "Expecting vo.result == 24"
   end

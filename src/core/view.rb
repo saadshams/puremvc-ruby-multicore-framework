@@ -33,11 +33,11 @@ module PureMVC
     class << self
       # The Multiton IModel instanceMap.
       # @return [Hash{String => IView}]
-      def instance_map = (@@instance_map ||= {})
+      def instance_map = (@instance_map ||= {})
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      def mutex = (@@mutex ||= Mutex.new)
+      def mutex = (@mutex ||= Mutex.new)
 
       # View Multiton Factory method.
       #
@@ -129,7 +129,11 @@ module PureMVC
     # @param notify_context [Object] remove the observer with this object as its notifyContext
     def remove_observer(notification_name, notify_context)
       @observer_mutex.synchronize do
+        # the observer list for the notification under inspection
         observers = @observer_map[notification_name]
+        # find and remove the sole Observer for the given notifyContext
+        # there can only be one Observer for a given notifyContext
+        # in any given Observer list, so remove it
         observers.reject! { |observer| observer.compare_notify_context?(notify_context) }
         @observer_map.delete(notification_name) if observers.empty?
       end
@@ -150,24 +154,34 @@ module PureMVC
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
     def register_mediator(mediator)
       @mediator_mutex.synchronize do
+        # do not allow re-registration (you must to removeMediator fist)
         return if @mediator_map[mediator.name]
 
         mediator.initialize_notifier(@multiton_key)
+
+        # Register the Mediator for retrieval by name
         @mediator_map[mediator.name] = mediator
 
+        # Get Notification interests, if any.
         interests = mediator.list_notification_interests
+
+        # Register Mediator as an observer for each notification of interests
         if interests.any?
+          # Create Observer referencing this mediator's handleNotification method
           observer = Observer.new(mediator.method(:handle_notification), mediator)
+
+          # Register Mediator as Observer for its list of Notification interests
           interests.each { |interest| register_observer(interest, observer) }
         end
 
+        # alert the mediator that it has been registered
         mediator.on_register
       end
     end
 
     # Retrieve an <code>IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String, Symbol] the name of the <code>IMediator</code> instance to retrieve.
+    # @param mediator_name [String] the name of the <code>IMediator</code> instance to retrieve.
     # @return [IMediator, nil] the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
     def retrieve_mediator(mediator_name)
       @mediator_mutex.synchronize do
@@ -177,7 +191,7 @@ module PureMVC
 
     # Check if a Mediator is registered or not.
     #
-    # @param mediator_name [String, Symbol] the name of the mediator to check.
+    # @param mediator_name [String] the name of the mediator to check.
     # @return [Boolean] whether a Mediator is registered with the given <code>mediatorName</code>.
     def has_mediator?(mediator_name)
       @mediator_mutex.synchronize do
@@ -187,7 +201,7 @@ module PureMVC
 
     # Remove an <code>IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String, Symbol] name of the <code>IMediator</code> instance to be removed.
+    # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
     # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
     def remove_mediator(mediator_name)
       @mediator_mutex.synchronize do

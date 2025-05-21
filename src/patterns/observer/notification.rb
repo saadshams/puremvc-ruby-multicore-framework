@@ -51,9 +51,9 @@ module PureMVC
 
     # The Notification class represents a message with a name, optional body, and optional type.
     #
-    # @param name [String, Symbol] the name of the notification
+    # @param name [String] the name of the notification
     # @param body [Object, nil] optional data to pass with the notification
-    # @param type [String, Symbol, nil] optional type identifier
+    # @param type [String, nil] optional type identifier
     def initialize(name, body = nil, type = nil)
       @name = name
       @body = body
