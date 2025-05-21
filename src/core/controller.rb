@@ -9,6 +9,27 @@
 require_relative '../interfaces/i_controller'
 
 module PureMVC
+  # A Multiton <code>IController</code> implementation.
+  #
+  # In PureMVC, the <code>Controller</code> class follows the
+  # 'Command and Controller' strategy and assumes these responsibilities:
+  #
+  # * Remembering which <code>ICommand</code>s are intended to handle which <code>INotifications</code>.
+  # * Registering itself as an <code>IObserver</code> with the <code>View</code> for each <code>INotification</code>
+  #   that has an <code>ICommand</code> mapping.
+  # * Creating a new instance of the proper <code>ICommand</code> to handle a given <code>INotification</code> when notified by the <code>View</code>.
+  # * Calling the <code>ICommand</code>'s <code>execute</code> method, passing in the <code>INotification</code>.
+  #
+  # Your application must register <code>ICommands</code> with the <code>Controller</code>.
+  #
+  # The simplest way is to subclass <code>Facade</code>, and use its <code>initializeController</code> method
+  # to add your registrations.
+  #
+  # @see PureMVC::View View
+  # @see PureMVC::Observer Observer
+  # @see PureMVC::Notification Notification
+  # @see PureMVC::SimpleCommand SimpleCommand
+  # @see PureMVC::MacroCommand MacroCommand
   class Controller
     include IController
 
@@ -96,7 +117,7 @@ module PureMVC
     # an ICommand has been registered for this notification name.
     #
     # @param notification_name [String] the name of the INotification
-    # @param factory [Proc<() -> ICommand>] the class of the ICommand
+    # @param factory [Proc<() -> ICommand>] the factory to produce an instance of the ICommand
     # @return [void]
     def register_command(notification_name, &factory)
       if @command_map[notification_name].nil?

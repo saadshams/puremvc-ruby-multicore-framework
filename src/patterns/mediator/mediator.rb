@@ -13,7 +13,7 @@ module PureMVC
   #
   # @see PureMVC::View
   class Mediator < Notifier
-    include IMediator
+    include IMediator, INotifier
 
     # The name of the <code>Mediator</code>.
     #
@@ -62,5 +62,7 @@ module PureMVC
     def on_remove
 
     end
+
   end
+
 end

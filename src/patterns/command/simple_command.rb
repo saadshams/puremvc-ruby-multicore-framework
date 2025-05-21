@@ -18,7 +18,7 @@ module PureMVC
   # @see PureMVC::Notification
   # @see PureMVC::MacroCommand
   class SimpleCommand < Notifier
-    include ICommand
+    include ICommand, INotifier
 
     # Fulfill the use-case initiated by the given <code>INotification</code>.
     #

@@ -9,22 +9,22 @@
 require_relative '../interfaces/i_model'
 
 module PureMVC
+  # A Multiton <code>IModel</code> implementation.
+  #
+  # In PureMVC, the <code>Model</code> class provides access to model objects (Proxies) by named lookup.
+  #
+  # The <code>Model</code> assumes these responsibilities:
+  #
+  # - Maintains a cache of <code>IProxy</code> instances.
+  # - Provides methods for registering, retrieving, and removing <code>IProxy</code> instances.
+  #
+  # Your application must register <code>IProxy</code> instances with the <code>Model</code>. Typically,
+  # an <code>ICommand</code> is used to create and register <code>IProxy</code> instances after the <code>Facade<code>
+  # has initialized the Core actors.
+  #
+  # @see Proxy
+  # @see IProxy
   class Model
-    # A Multiton <code>IModel</code> implementation.
-    #
-    # In PureMVC, the <code>Model</code> class provides access to model objects (Proxies) by named lookup.
-    #
-    # The <code>Model</code> assumes these responsibilities:
-    #
-    # - Maintains a cache of <code>IProxy</code> instances.
-    # - Provides methods for registering, retrieving, and removing <code>IProxy</code> instances.
-    #
-    # Your application must register <code>IProxy</code> instances with the <code>Model</code>. Typically,
-    # an <code>ICommand</code> is used to create and register <code>IProxy</code> instances after the <code>Facade<code>
-    # has initialized the Core actors.
-    #
-    # @see Proxy
-    # @see IProxy
     include IModel
 
     # Message Constants

@@ -56,6 +56,7 @@ module PureMVC
           instance_map.delete(key)
         end
       end
+
     end
 
     # Constructor.
@@ -223,7 +224,9 @@ module PureMVC
         mediator.on_remove
         mediator
       end
+
     end
 
   end
+
 end

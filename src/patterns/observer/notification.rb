@@ -33,14 +33,14 @@ module PureMVC
   # until some parent component handles the <code>Event</code>, while
   # PureMVC <code>Notification</code>s follow a 'Publish/Subscribe'
   # pattern. PureMVC classes need not be related to each other in a
-  # parent/child relationship in order to communicate with one another
+  # parent/child relationship to communicate with one another
   # using <code>Notification</code>s.
   #
   # @see PureMVC::Observer
   class Notification
     include INotification
 
-    # @return [String] the proxy name
+    # @return [String] the name of the notification
     attr_reader :name
 
     # @return [Object, nil] the body of the notification
