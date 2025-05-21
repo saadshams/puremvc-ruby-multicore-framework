@@ -13,7 +13,7 @@ module PureMVC
   #
   # @see PureMVC::View
   class Mediator < Notifier
-    include IMediator, INotifier
+    include IMediator
 
     # The name of the <code>Mediator</code>.
     #

@@ -138,17 +138,6 @@ module PureMVC
       @view = View::get_instance(@multiton_key) { |key| View.new(key) }
     end
 
-    # Set the Multiton key for this facade instance.
-    #
-    # This is not meant to be called directly. It is invoked internally by the
-    # constructor when <code>get_instance</code> is called. However, it must be public
-    # to implement <code>INotifier</code>.
-    #
-    # @param key [String] the multiton key for this instance
-    def initialize_notifier(key)
-      @multiton_key = key
-    end
-
     # Register an <code>ICommand</code> with the <code>Controller</code> by Notification name.
     #
     # @param notification_name [String] the name of the <code>INotification</code> to associate the <code>ICommand</code> with
@@ -258,6 +247,18 @@ module PureMVC
     def send_notification(name, body = nil, type = nil)
       notify_observers(Notification.new(name, body, type))
     end
+
+    # Set the Multiton key for this facade instance.
+    #
+    # This is not meant to be called directly. It is invoked internally by the
+    # constructor when <code>get_instance</code> is called. However, it must be public
+    # to implement <code>INotifier</code>.
+    #
+    # @param key [String] the multiton key for this instance
+    def initialize_notifier(key)
+      @multiton_key = key
+    end
+
 
   end
 

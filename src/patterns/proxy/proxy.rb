@@ -23,7 +23,7 @@ module PureMVC
   #
   # @see PureMVC::Model
   class Proxy < Notifier
-    include IProxy, INotifier
+    include IProxy
 
     # The name of the <code>Proxy</code>.
     NAME = "Proxy"

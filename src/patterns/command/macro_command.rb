@@ -23,7 +23,7 @@ module PureMVC
   # @see Notification
   # @see SimpleCommand
   class MacroCommand < Notifier
-    include ICommand, INotifier
+    include ICommand
 
     # Constructor.
     #
