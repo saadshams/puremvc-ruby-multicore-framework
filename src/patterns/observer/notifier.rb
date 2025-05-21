@@ -82,7 +82,7 @@ module PureMVC
     # Return the Multiton Facade instance
     #
     # @raise [RuntimeError] if the <code>multiton_key</code> is not set
-    # @return [Facade] the facade instance for the notifier's key
+    # @return [IFacade] the facade instance for the notifier's key
     def facade
       raise MULTITON_MSG if @multiton_key.nil?
       Facade.get_instance(@multiton_key) { |key| Facade.new(key) }

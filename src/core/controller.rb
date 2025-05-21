@@ -16,17 +16,14 @@ module PureMVC
     MULTITON_MSG = "Controller instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
 
-    # The Multiton IController instanceMap.
-    # @return [Hash{String => IController}]
-    @instance_map = {}
-
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
-    @mutex = Mutex.new
-
     class << self
-      # @return [Hash{String => IController}] A map of instances keyed by multiton keys.
-      protected attr_accessor :instance_map
+      # The Multiton IController instanceMap.
+      # @return [Hash{String => IController}]
+      def instance_map = (@@instance_map ||= {})
+
+      # Mutex used to synchronize access to the instance map for thread safety.
+      # @return [Mutex]
+      def mutex = (@@mutex ||= Mutex.new)
 
       # Gets an instance using the provided factory block
       #
@@ -34,8 +31,8 @@ module PureMVC
       # @param factory [Proc<(String|Symbol) -> IController>] the unique key passed to the factory block
       # @return [IController] The controller instance created by the factory
       def get_instance(key, &factory)
-        @mutex.synchronize do
-          @instance_map[key] ||= factory.call(key)
+        mutex.synchronize do
+          instance_map[key] ||= factory.call(key)
         end
       end
 
@@ -43,8 +40,8 @@ module PureMVC
       #
       # @param key [String] the multiton key of the IController instance to remove
       def remove_controller(key)
-        @mutex.synchronize do
-          @instance_map.delete(key)
+        mutex.synchronize do
+          instance_map.delete(key)
         end
       end
     end
@@ -57,8 +54,8 @@ module PureMVC
     #
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed
     def initialize(key)
-      raise MULTITON_MSG if self.class.send(:instance_map)[key]
-      self.class.send(:instance_map)[key] = self
+      raise MULTITON_MSG if self.class.instance_map[key]
+      self.class.instance_map[key] = self
       @multiton_key = key
       @view = nil
       @command_map = {}

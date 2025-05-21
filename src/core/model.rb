@@ -31,16 +31,14 @@ module PureMVC
     MULTITON_MSG = "Model instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
 
-    # The Multiton IModel instanceMap.
-    # @return [Hash{String => IModel}]
-    @instance_map = {}
-
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
-    @mutex = Mutex.new
-
     class << self
-      protected attr_accessor :instance_map
+      # The Multiton IModel instanceMap.
+      # @return [Hash{String => IModel}]
+      def instance_map = (@@instance_map ||= {})
+
+      # Mutex used to synchronize access to the instance map for thread safety.
+      # @return [Mutex]
+      private def mutex = (@@mutex ||= Mutex.new)
 
       # <code>Model</code> Multiton Factory method.
       #
@@ -48,8 +46,8 @@ module PureMVC
       # @param factory [Proc<(String|Symbol) -> IModel>] the unique key passed to the factory block
       # @return [IModel] the instance for this Multiton key
       def get_instance(key, &factory)
-        @mutex.synchronize do
-          @instance_map[key] ||= factory.call(key)
+        mutex.synchronize do
+          instance_map[key] ||= factory.call(key)
         end
       end
 
@@ -57,8 +55,8 @@ module PureMVC
       #
       # @param key [String] the multiton key of the IModel instance to remove
       def remove_model(key)
-        @mutex.synchronize do
-          @instance_map.delete(key)
+        mutex.synchronize do
+          instance_map.delete(key)
         end
       end
     end
@@ -71,8 +69,8 @@ module PureMVC
     #
     # @raise [RuntimeError] Error if an instance for this Multiton key has already been constructed.
     def initialize(key)
-      raise MULTITON_MSG if self.class.send(:instance_map)[key]
-      self.class.send(:instance_map)[key] = self
+      raise MULTITON_MSG if self.class.instance_map[key]
+      self.class.instance_map[key] = self
       @multiton_key = key
       @proxy_map = {}
       @proxy_mutex = Mutex.new

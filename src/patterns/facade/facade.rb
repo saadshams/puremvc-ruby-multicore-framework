@@ -21,17 +21,14 @@ module PureMVC
     MULTITON_MSG = "Facade instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
 
-    # The Multiton IFacade instanceMap.
-    # @return [Hash{String => IFacade}]
-    @instance_map = {}
-
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
-    @mutex = Mutex.new
-
     class << self
-      # @return [Hash{String => IFacade}] A map of instances keyed by multiton keys.
-      protected attr_accessor :instance_map
+      # The Multiton IFacade instanceMap.
+      # @return [Hash{String => IFacade}]
+      def instance_map = (@@instance_map ||= {})
+
+      # Mutex used to synchronize access to the instance map for thread safety.
+      # @return [Mutex]
+      def mutex = (@@mutex ||= Mutex.new)
 
       # Facade Multiton Factory method.
       #
@@ -39,8 +36,8 @@ module PureMVC
       # @param factory [Proc<(String|Symbol) -> IFacade>] the unique key passed to the factory block
       # @return [IFacade] the Multiton instance of the Facade
       def get_instance(key, &factory)
-        @mutex.synchronize do
-          @instance_map[key] ||= factory.call(key)
+        mutex.synchronize do
+          instance_map[key] ||= factory.call(key)
         end
       end
 
@@ -49,7 +46,7 @@ module PureMVC
       # @param key [String, Symbol] the multiton key for the Core in question
       # @return [Boolean] whether a Core is registered with the given <code>key</code>.
       def has_core?(key)
-        @instance_map.key?(key)
+        instance_map.key?(key)
       end
 
       # Remove a Core.
@@ -59,11 +56,11 @@ module PureMVC
       #
       # @param key [String, Symbol] the key of the Core to remove
       def remove_core(key)
-        @mutex.synchronize do
+        mutex.synchronize do
           Model::remove_model(key)
           View::remove_view(key)
           Controller::remove_controller(key)
-          @instance_map.delete(key)
+          instance_map.delete(key)
         end
       end
     end
@@ -76,8 +73,8 @@ module PureMVC
     #
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize(key)
-      raise MULTITON_MSG if self.class.send(:instance_map)[key]
-      self.class.send(:instance_map)[key] = self
+      raise MULTITON_MSG if self.class.instance_map[key]
+      self.class.instance_map[key] = self
       @model = @view = @controller = nil
       initialize_notifier(key)
       initialize_facade
