@@ -113,7 +113,7 @@ class FacadeTest < Minitest::Test
   def test_has_core_and_remove_core
     assert_equal false, PureMVC::Facade.has_core?("FacadeTestKey11"), "Expecting Facade.has_core('FacadeTestKey11')"
 
-    facade = PureMVC::Facade.get_instance("FacadeTestKey11") { |key| PureMVC::Facade.new(key) }
+    PureMVC::Facade.get_instance("FacadeTestKey11") { |key| PureMVC::Facade.new(key) }
     assert_equal true, PureMVC::Facade.has_core?("FacadeTestKey11"), "Expecting Facade.has_core('FacadeTestKey11')"
 
     PureMVC::Facade.remove_core("FacadeTestKey11")
