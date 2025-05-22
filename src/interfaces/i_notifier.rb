@@ -23,8 +23,8 @@ module PureMVC
   # classes have frequent <code>Facade</code> interactions and usually require
   # access to the facade anyway.
   #
-  # @see PureMVC::IFacade IFacade
-  # @see PureMVC::INotification INotification
+  # @see PureMVC::IFacade
+  # @see PureMVC::INotification
   module INotifier
     # Send a <code>INotification</code>.
     #

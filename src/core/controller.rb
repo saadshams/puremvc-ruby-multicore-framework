@@ -25,11 +25,11 @@ module PureMVC
   # The simplest way is to subclass <code>Facade</code>, and use its <code>initializeController</code> method
   # to add your registrations.
   #
-  # @see PureMVC::View View
-  # @see PureMVC::Observer Observer
-  # @see PureMVC::Notification Notification
-  # @see PureMVC::SimpleCommand SimpleCommand
-  # @see PureMVC::MacroCommand MacroCommand
+  # @see PureMVC::View
+  # @see PureMVC::Observer
+  # @see PureMVC::Notification
+  # @see PureMVC::SimpleCommand
+  # @see PureMVC::MacroCommand
   class Controller
     include IController
 

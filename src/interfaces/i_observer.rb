@@ -35,8 +35,8 @@ module PureMVC
   # in an object implementing the <code>INotification</code> interface, such
   # as a subclass of <code>Notification</code>.
   #
-  # @see PureMVC::IView IView
-  # @see PureMVC::INotification INotification
+  # @see PureMVC::IView
+  # @see PureMVC::INotification
   module IObserver
     # Notify the interested object.
     #

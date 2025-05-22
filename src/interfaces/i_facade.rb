@@ -17,11 +17,11 @@ module PureMVC
   # the core MVC actors (<code>Model</code>, <code>View</code>, <code>Controller</code>) and
   # the rest of your application.
   #
-  # @see PureMVC::IModel IModel
-  # @see PureMVC::IView IView
-  # @see PureMVC::IController IController
-  # @see PureMVC::ICommand ICommand
-  # @see PureMVC::INotification INotification
+  # @see PureMVC::IModel
+  # @see PureMVC::IView
+  # @see PureMVC::IController
+  # @see PureMVC::ICommand
+  # @see PureMVC::INotification
   module IFacade
     ##
     # Register an <code>IProxy</code> with the <code>Model</code> by name.

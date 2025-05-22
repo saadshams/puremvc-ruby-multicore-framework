@@ -34,7 +34,7 @@ module PureMVC
   # encapsulating that <code>IMediator</code>'s <code>handle_notification</code> method
   # and register it as an Observer for each <code>INotification</code> name returned by <code>list_notification_interests</code>.
   #
-  # @see PureMVC::INotification INotification
+  # @see PureMVC::INotification
   module IMediator
     # @return [String] The name of the Mediator.
     def name

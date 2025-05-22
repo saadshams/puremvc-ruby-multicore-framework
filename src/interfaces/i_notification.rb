@@ -35,8 +35,8 @@ module PureMVC
   # parent/child relationship to communicate with one another
   # using <code>Notification</code>s.
   #
-  # @see PureMVC::IView IView
-  # @see PureMVC::IObserver IObserver
+  # @see PureMVC::IView
+  # @see PureMVC::IObserver
   module INotification
     # @return [String] the name of the notification
     def name
