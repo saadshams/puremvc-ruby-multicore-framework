@@ -93,11 +93,11 @@ module PureMVC
     #
     # @param proxy [IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
     def register_proxy(proxy)
+      proxy.initialize_notifier(@multiton_key)
       @proxy_mutex.synchronize do
-        proxy.initialize_notifier(@multiton_key)
         @proxy_map[proxy.name] = proxy
-        proxy.on_register
       end
+      proxy.on_register
     end
 
     # Retrieve an <code>IProxy</code> from the <code>Model</code>.
@@ -125,14 +125,12 @@ module PureMVC
     # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
     # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy(proxy_name)
+      proxy = nil
       @proxy_mutex.synchronize do
-        proxy = @proxy_map[proxy_name]
-        if proxy
-          @proxy_map.delete(proxy_name)
-          proxy.on_remove
-        end
-        proxy
+        proxy = @proxy_map.delete(proxy_name)
       end
+      proxy&.on_remove
+      proxy
     end
   end
 end

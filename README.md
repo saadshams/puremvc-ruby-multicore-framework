@@ -19,6 +19,8 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 <!--
 yard doc src/**/*.rb --protected --private
 open doc/index.html
+
+gem install steep
 -->
 
 ## Status

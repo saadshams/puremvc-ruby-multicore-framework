@@ -100,7 +100,8 @@ module PureMVC
     # @param observer [IObserver] the <code>IObserver</code> to register
     def register_observer(notification_name, observer)
       @observer_mutex.synchronize do
-        (@observer_map[notification_name] ||= []) << observer
+        observers = (@observer_map[notification_name] ||= [])
+        observers << observer
       end
     end
 
@@ -115,8 +116,8 @@ module PureMVC
       observers = nil
       @observer_mutex.synchronize do
         # Get a reference to the observers list for this notification name
-        return unless (observers_ref = Array(@observer_map[notification.name]))
-        # Copy observers from reference array to working array,
+        observers_ref = @observer_map[notification.name]
+        # Iteration safe, copy observers from reference array to working array,
         # since the reference array may change during the notification loop
         observers = observers_ref.dup
       end
@@ -132,10 +133,12 @@ module PureMVC
       @observer_mutex.synchronize do
         # the observer list for the notification under inspection
         observers = @observer_map[notification_name]
-        # find and remove the sole Observer for the given notifyContext
-        # there can only be one Observer for a given notifyContext
+        # find and remove the sole Observer for the given notify_context
+        # there can only be one Observer for a given notify_context
         # in any given Observer list, so remove it
         observers.reject! { |observer| observer.compare_notify_context?(notify_context) }
+        # Also, when a Notification's Observer list length falls to
+        # zero, delete the notification key from the observer map
         @observer_map.delete(notification_name) if observers.empty?
       end
     end
@@ -154,30 +157,26 @@ module PureMVC
     #
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
     def register_mediator(mediator)
+      # do not allow re-registration (you must to removeMediator first)
+      return if has_mediator?(mediator.name)
+
+      mediator.initialize_notifier(@multiton_key)
+
       @mediator_mutex.synchronize do
-        # do not allow re-registration (you must to removeMediator fist)
-        return if @mediator_map[mediator.name]
-
-        mediator.initialize_notifier(@multiton_key)
-
         # Register the Mediator for retrieval by name
         @mediator_map[mediator.name] = mediator
-
-        # Get Notification interests, if any.
-        interests = mediator.list_notification_interests
-
-        # Register Mediator as an observer for each notification of interests
-        if interests.any?
-          # Create Observer referencing this mediator's handleNotification method
-          observer = Observer.new(mediator.method(:handle_notification), mediator)
-
-          # Register Mediator as Observer for its list of Notification interests
-          interests.each { |interest| register_observer(interest, observer) }
-        end
-
-        # alert the mediator that it has been registered
-        mediator.on_register
       end
+
+      # Create Observer referencing this mediator's handleNotification method
+      observer = Observer.new(mediator.method(:handle_notification), mediator)
+
+      # Get Notification interests, if any.
+      interests = mediator.list_notification_interests
+      # Register Mediator as Observer for its list of Notification interests
+      interests.each { |interest| register_observer(interest, observer) }
+
+      # alert the mediator that it has been registered
+      mediator.on_register
     end
 
     # Retrieve an <code>IMediator</code> from the <code>View</code>.
@@ -205,26 +204,23 @@ module PureMVC
     # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
     # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
     def remove_mediator(mediator_name)
+      mediator = nil
       @mediator_mutex.synchronize do
-        # Retrieve the named mediator
-        mediator = @mediator_map[mediator_name]
-        return unless mediator
-
-        # // for every notification this mediator is interested in...
-        interests = mediator.list_notification_interests
-
-        # remove the observer linking the mediator
-        # to the notification interest
-        interests.each { |interest| remove_observer(interest, mediator) }
-
-        # remove the mediator from the map
-        @mediator_map.delete(mediator_name)
-
-        # alert the mediator that it has been removed
-        mediator.on_remove
-        mediator
+        # retrieve the named mediator and delete from the mediator map
+        mediator = @mediator_map.delete(mediator_name)
       end
 
+      return unless mediator
+
+      # for every notification this mediator is interested in...
+      interests = mediator.list_notification_interests
+      # remove the observer linking the mediator
+      # to the notification interest
+      interests.each { |interest| remove_observer(interest, mediator) }
+
+      # alert the mediator that it has been removed
+      mediator.on_remove
+      mediator
     end
 
   end

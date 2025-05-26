@@ -23,6 +23,7 @@ module PureMVC
   # @see PureMVC::ICommand
   # @see PureMVC::INotification
   module IFacade
+    include INotifier
     ##
     # Register an <code>IProxy</code> with the <code>Model</code> by name.
     #

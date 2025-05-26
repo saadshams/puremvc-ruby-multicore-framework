@@ -120,10 +120,12 @@ module PureMVC
     # @param factory [Proc<() -> ICommand>] the factory to produce an instance of the ICommand
     # @return [void]
     def register_command(notification_name, &factory)
-      if @command_map[notification_name].nil?
-        @view&.register_observer(notification_name, Observer.new(method(:execute_command), self))
+      @command_mutex.synchronize do
+        if @command_map[notification_name].nil?
+          @view&.register_observer(notification_name, Observer.new(method(:execute_command), self))
+        end
+        @command_map[notification_name] = factory
       end
-      @command_map[notification_name] = factory
     end
 
     # If an ICommand has previously been registered to handle the given INotification, then it is executed.
@@ -131,7 +133,10 @@ module PureMVC
     # @param notification [INotification] the notification to handle
     # @return [void]
     def execute_command(notification)
-      factory = @command_map[notification.name]
+      factory = nil
+      @command_mutex.synchronize do
+        factory = @command_map[notification.name]
+      end
       return if factory.nil?
 
       command = factory.call
