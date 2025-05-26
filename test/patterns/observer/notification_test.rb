@@ -11,7 +11,7 @@ require_relative '../../../src/puremvc'
 
 # Test the PureMVC Notification class.
 #
-# @see PureMVC::Notification Notification
+# @see PureMVC::Notification
 class NotificationTest < Minitest::Test
   # Tests setting and getting the name using Notification class accessor methods.
   def test_name_accessor

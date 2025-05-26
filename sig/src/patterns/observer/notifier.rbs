@@ -1,13 +1,3 @@
-# frozen_string_literal: true
-
-# notifier.rb
-# PureMVC Ruby Multicore
-#
-# Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
-# Your reuse is governed by the BSD 3-Clause License
-
-require_relative '../../interfaces/i_notifier'
-
 module PureMVC
   # A base <code>INotifier</code> implementation.
   #
@@ -40,13 +30,16 @@ module PureMVC
   # @see MacroCommand
   # @see SimpleCommand
   class Notifier
+
     include INotifier
 
+    @multiton_key: String?
+
     # Message Constants
-    MULTITON_MSG = "multitonKey for this Notifier not yet initialized!"
+    MULTITON_MSG: "multitonKey for this Notifier not yet initialized!"
 
     # @attr_reader [String] The Multiton Key for this app
-    protected attr_reader :multiton_key
+    attr_reader multiton_key: String
 
     # Create and send an INotification.
     #
@@ -57,9 +50,7 @@ module PureMVC
     # @param body [Object, nil] optional body
     # @param type [String, nil] optional type
     # @return [void]
-    def send_notification(name, body = nil, type = nil)
-      facade.send_notification(name, body, type)
-    end
+    def send_notification: (String name, Object? body, String? type) -> void
 
     # Initialize this INotifier instance.
     #
@@ -75,18 +66,12 @@ module PureMVC
     #
     # @param key [String] the <code>multiton_key</code> this <code>INotifier</code> will use
     # @return [void]
-    def initialize_notifier(key)
-      @multiton_key = key
-    end
+    def initialize_notifier: (String key) -> void
 
     # Return the Multiton Facade instance
     #
     # @raise [RuntimeError] if the <code>multiton_key</code> is not set
     # @return [IFacade] the facade instance for the notifier's key
-    def facade
-      raise MULTITON_MSG if @multiton_key.nil?
-      Facade.get_instance(@multiton_key) { |key| Facade.new(key) }
-    end
-
+    def facade: () -> IFacade
   end
 end

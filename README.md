@@ -17,10 +17,10 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 * [YARD: Yay! A Ruby Documentation Tool](https://rubydoc.info/gems/yard)
 
 <!--
+bundle install 
+
 yard doc src/**/*.rb --protected --private
 open doc/index.html
-
-gem install steep
 -->
 
 ## Status

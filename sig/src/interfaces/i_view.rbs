@@ -1,11 +1,3 @@
-# frozen_string_literal: true
-
-# i_view.rb
-# PureMVC Ruby Multicore
-#
-# Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
-# Your reuse is governed by the BSD 3-Clause License
-
 module PureMVC
   # The interface definition for a PureMVC View.
   #
@@ -24,9 +16,7 @@ module PureMVC
     # @param notification_name [String] the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
     # @param observer [IObserver] the <code>IObserver</code> to register
     # @return [void]
-    def register_observer(notification_name, observer)
-      raise NotImplementedError, "#{self.class} must implement #register_observer"
-    end
+    def register_observer: (String notification_name, IObserver observer) -> void
 
     # Notify the <code>IObservers</code> for a particular <code>INotification</code>.
     #
@@ -36,18 +26,14 @@ module PureMVC
     #
     # @param notification [INotification] the <code>INotification</code> to notify <code>IObservers</code> of.
     # @return [void]
-    def notify_observers(notification)
-      raise NotImplementedError, "#{self.class} must implement #notify_observers"
-    end
+    def notify_observers: (INotification notification) -> void
 
     # Remove a group of observers from the observer list for a given <code>Notification</code> name.
     #
     # @param notification_name [String] which observer list to remove from
     # @param notify_context [Object] remove the observers with this object as their notifyContext
     # @return [void]
-    def remove_observer(notification_name, notify_context)
-      raise NotImplementedError, "#{self.class} must implement #remove_observer"
-    end
+    def remove_observer: (String notification_name, Object notify_context) -> void
 
     # Register an <code>IMediator</code> instance with the <code>View</code>.
     #
@@ -63,32 +49,24 @@ module PureMVC
     #
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
     # @return [void]
-    def register_mediator(mediator)
-      raise NotImplementedError, "#{self.class} must implement #register_mediator"
-    end
+    def register_mediator: (IMediator mediator) -> void
 
     # Retrieve an <code>IMediator</code> from the <code>View</code>.
     #
     # @param mediator_name [String] the name of the <code>IMediator</code> instance to retrieve.
     # @return [IMediator | nil] the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
-    def retrieve_mediator(mediator_name)
-      raise NotImplementedError, "#{self.class} must implement #retrieve_mediator"
-    end
+    def retrieve_mediator: (String mediator_name) -> IMediator?
 
     # Check if a <code>Mediator</code> is registered or not.
     #
     # @param mediator_name [String]
     # @return [Boolean] whether a <code>Mediator</code> is registered with the given <code>mediatorName</code>.
-    def has_mediator?(mediator_name)
-      raise NotImplementedError, "#{self.class} must implement #has_mediator?"
-    end
+    def has_mediator?: (String mediator_name) -> bool
 
     # Remove an <code>IMediator</code> from the <code>View</code>.
     #
     # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
-    # @return [IMediator | nil] the <code>IMediator</code> that was removed from the <code>View</code>
-    def remove_mediator(mediator_name)
-      raise NotImplementedError, "#{self.class} must implement #remove_mediator"
-    end
+    # @return [IMediator] the <code>IMediator</code> that was removed from the <code>View</code>
+    def remove_mediator: (String mediator_name) -> IMediator?
   end
 end

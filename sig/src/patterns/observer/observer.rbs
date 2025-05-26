@@ -1,13 +1,3 @@
-# frozen_string_literal: true
-
-# observer.rb
-# PureMVC Ruby Multicore
-#
-# Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
-# Your reuse is governed by the BSD 3-Clause License
-
-require_relative '../../interfaces/i_observer'
-
 module PureMVC
   # A base <code>IObserver</code> implementation.
   #
@@ -24,38 +14,37 @@ module PureMVC
   # @see View
   # @see Notification
   class Observer
+
     include IObserver
 
+    @notify: untyped
+
+    @context: Object?
+
     # @return [Method] notify The callback method to be called on notification.
-    attr_accessor :notify
+    attr_accessor notify: Method
+
 
     # @return [Object] context The object context for the callback.
-    attr_accessor :context
+    attr_accessor context: Object
 
     # Initialize an Observer with a notify method and context.
     #
     # @param notify [Method, nil] the callback method to invoke on notification.
     # @param context [Object, nil] the object context for the callback.
-    def initialize(notify = nil, context = nil)
-      @notify = notify
-      @context = context
-    end
+    # @return [void]
+    def initialize: (?Method? notify, Object? context) -> void
 
     # Calls the notify method with the given notification.
     #
     # @param notification [INotification] the notification to send.
     # @return [void]
-    def notify_observer(notification)
-      @notify&.call(notification)
-    end
+    def notify_observer: (INotification notification) -> void
 
     # Compares the given object with the Observer's context.
     #
     # @param object [Object] the object to compare.
     # @return [Boolean] true if the given object is the same as the context.
-    def compare_notify_context?(object)
-      object.equal?(@context)
-    end
-
+    def compare_notify_context?: (Object object) -> bool
   end
 end

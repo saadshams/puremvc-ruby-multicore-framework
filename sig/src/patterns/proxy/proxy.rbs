@@ -1,13 +1,3 @@
-# frozen_string_literal: true
-
-# proxy.rb
-# PureMVC Ruby Multicore
-#
-# Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
-# Your reuse is governed by the BSD 3-Clause License
-
-require_relative '../../interfaces/i_proxy'
-
 module PureMVC
   # A base <code>IProxy</code> implementation.
   #
@@ -23,35 +13,30 @@ module PureMVC
   #
   # @see Model
   class Proxy < Notifier
+
     include IProxy
 
     # The name of the <code>Proxy</code>.
-    NAME = "Proxy"
+    NAME: "Proxy"
 
+    @name: String
     # @return [String] The proxy name
-    attr_reader :name
+    attr_reader name: String
 
-    # @return [Object] The data managed by the proxy
-    attr_accessor :data
+    @data: Object?
+    # @return [Object | nil] The data managed by the proxy
+    attr_accessor data: Object?
 
     # @param [String | nil] name the name of the proxy (defaults to <code>NAME</code>)
     # @param [Object, nil] data optional data to be managed by the proxy
-    def initialize(name = nil, data = nil)
-      @name =  name || NAME
-      @data = data
-    end
+    def initialize: (String? name, Object? data) -> void
 
     # Called by the Model when the Proxy is registered
     # @return [void]
-    def on_register
-
-    end
+    def on_register: () -> void
 
     # Called by the Model when the Proxy is removed
     # @return [void]
-    def on_remove
-
-    end
-
+    def on_remove: () -> void
   end
 end

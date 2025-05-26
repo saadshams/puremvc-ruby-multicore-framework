@@ -2,7 +2,7 @@
 
 # view.rb
 # PureMVC Ruby Multicore
-
+#
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
@@ -41,6 +41,8 @@ module PureMVC
 
       # View Multiton Factory method.
       #
+      # @param key [String] the unique key identifying the Multiton instance
+      # @param factory [Proc<(String) -> IView>] the unique key passed to the factory block
       # @return [View] the Multiton instance of <code>View</code>
       def get_instance(key, &factory)
         mutex.synchronize do
@@ -51,6 +53,7 @@ module PureMVC
       # Remove an <code>IView</code> instance.
       #
       # @param key [String] the key of the <code>IView</code> instance to remove
+      # @return [void]
       def remove_view(key)
         mutex.synchronize do
           instance_map.delete(key)
@@ -63,8 +66,10 @@ module PureMVC
     #
     # This <code>IView</code> implementation is a Multiton,
     # so you should not call the constructor directly.
-    # Instead, call the static Multiton factory method <code>View.get_instance(multiton_key) { |key| PureMVC::View.new(key) }</code>.
+    # Instead, call the static Multiton factory method <code>View.get_instance(multiton_key) { |key| View.new(key) }</code>.
     #
+    # @param key [String]
+    # @return [void]
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
@@ -98,6 +103,7 @@ module PureMVC
     #
     # @param notification_name [String] the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
     # @param observer [IObserver] the <code>IObserver</code> to register
+    # @return [void]
     def register_observer(notification_name, observer)
       @observer_mutex.synchronize do
         observers = (@observer_map[notification_name] ||= [])
@@ -112,6 +118,7 @@ module PureMVC
     # the order in which they were registered.
     #
     # @param notification [INotification] the <code>INotification</code> to notify <code>IObservers</code> of.
+    # @return [void]
     def notify_observers(notification)
       observers = nil
       @observer_mutex.synchronize do
@@ -129,6 +136,7 @@ module PureMVC
     #
     # @param notification_name [String] which observer list to remove from
     # @param notify_context [Object] remove the observer with this object as its notifyContext
+    # @return [void]
     def remove_observer(notification_name, notify_context)
       @observer_mutex.synchronize do
         # the observer list for the notification under inspection
@@ -156,6 +164,7 @@ module PureMVC
     # <code>IMediator</code> is interested in.
     #
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
+    # @return [void]
     def register_mediator(mediator)
       # do not allow re-registration (you must to removeMediator first)
       return if has_mediator?(mediator.name)

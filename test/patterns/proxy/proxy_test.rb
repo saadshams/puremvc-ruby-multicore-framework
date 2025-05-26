@@ -11,8 +11,8 @@ require_relative '../../../src/puremvc'
 
 # Test the PureMVC Proxy class.
 #
-# @see PureMVC::IProxy IProxy
-# @see PureMVC::Proxy Proxy
+# @see PureMVC::IProxy
+# @see PureMVC::Proxy
 class ProxyTest < Minitest::Test
   # Tests getting the name using Proxy class accessor method. Setting can only be done in constructor.
   def test_name_accessor

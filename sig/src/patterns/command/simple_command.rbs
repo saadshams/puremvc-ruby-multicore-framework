@@ -1,13 +1,3 @@
-# frozen_string_literal: true
-
-# simple_command.rb
-# PureMVC Ruby Multicore
-#
-# Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
-# Your reuse is governed by the BSD 3-Clause License
-
-require_relative '../../interfaces/i_command'
-
 module PureMVC
   # A base <code>ICommand</code>implementation.
   #
@@ -18,6 +8,7 @@ module PureMVC
   # @see Notification
   # @see MacroCommand
   class SimpleCommand < Notifier
+
     include ICommand
 
     # Fulfill the use-case initiated by the given <code>INotification</code>.
@@ -28,10 +19,6 @@ module PureMVC
     #
     # @param notification [INotification] the notification to handle
     # @return [void]
-    def execute(notification)
-
-    end
-
+    def execute: (INotification notification) -> void
   end
-
 end

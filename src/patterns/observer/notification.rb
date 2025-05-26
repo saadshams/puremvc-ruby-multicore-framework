@@ -2,7 +2,7 @@
 
 # notification.rb
 # PureMVC Ruby Multicore
-
+#
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
@@ -36,7 +36,7 @@ module PureMVC
   # parent/child relationship to communicate with one another
   # using <code>Notification</code>s.
   #
-  # @see PureMVC::Observer
+  # @see Observer
   class Notification
     include INotification
 

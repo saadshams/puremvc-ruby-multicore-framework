@@ -11,8 +11,8 @@ require_relative '../../../src/puremvc'
 
 # Test the PureMVC Mediator class.
 #
-# @see PureMVC::IMediator IMediator
-# @see PureMVC::Mediator Mediator
+# @see PureMVC::IMediator
+# @see PureMVC::Mediator
 class MediatorTest < Minitest::Test
 
   # Tests getting the name using Mediator class accessor method.

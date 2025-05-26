@@ -1,0 +1,145 @@
+module PureMVC
+  # A Multiton <code>IView</code> implementation.
+  #
+  # In PureMVC, the <code>IView</code> class assumes these responsibilities:
+  #
+  # - Maintains a cache of <code>IMediator</code>instances.
+  # - Provides methods for registering, retrieving, and removing <code>IMediators</code>.
+  # - Notifies <code>IMediators</code>when they are registered or removed.
+  # - Manages the observer lists for each <code>INotification</code>in the application.
+  # - Provides a method for attaching <code>IObservers</code>to an <code>INotification<code>'s observer list.
+  # - Provides a method for broadcasting an <code>INotification</code>.
+  # - Notifies the <code>IObservers</code>of a given <code>INotification</code>when it is broadcast.
+  #
+  # @see Mediator
+  # @see Observer
+  # @see Notification
+  class View
+
+    include IView
+
+    # The Multiton IModel instanceMap.
+    # @return [Hash{String => IView}]
+    self.@instance_map: Hash[String, IView]
+
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
+    self.@mutex: Mutex
+
+    @multiton_key: String
+
+    # Mapping of Notification names to Observer lists
+    @observer_map: Hash[String, IObserver]
+
+    # Mutex used to synchronize access to the observer_map
+    @observer_mutex: Mutex
+
+    # Mapping of Mediator names to Mediator instances
+    @mediator_map: Hash[String, IMediator]
+
+    # Mutex used to synchronize access to the mediator_map
+    @mediator_mutex: Mutex
+
+    MULTITON_MSG: "View instance for this Multiton key already constructed!"
+
+    # The Multiton IModel instanceMap.
+    # @return [Hash{String => IView}]
+    def self.instance_map: () -> Hash[String, IView]
+
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
+    def self.mutex: () -> Mutex
+
+    # View Multiton Factory method.
+    #
+    # @param key [String]
+    # @return [View] the Multiton instance of <code>View</code>
+    def self.get_instance: (String key) { () -> IView } -> IView
+
+    # Remove an <code>IView</code> instance.
+    #
+    # @param key [String] the key of the <code>IView</code> instance to remove
+    # @return [void]
+    def self.remove_view: (String key) -> void
+
+    # Constructor.
+    #
+    # This <code>IView</code> implementation is a Multiton,
+    # so you should not call the constructor directly.
+    # Instead, call the static Multiton factory method <code>View.get_instance(multiton_key) { |key| View.new(key) }</code>.
+    #
+    # @param key [String]
+    # @return [void]
+    # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
+    def initialize: (String key) -> void
+
+    # Initialize the Multiton <code>View</code> instance.
+    #
+    # Called automatically by the constructor, this
+    # is your opportunity to initialize the Multiton
+    # instance in your subclass without overriding the
+    # constructor.
+    #
+    # @return [void]
+    def initialize_view: () -> void
+
+    # Register an <code>IObserver</code> to be notified
+    # of <code>INotifications</code> with a given name.
+    #
+    # @param notification_name [String] the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
+    # @param observer [IObserver] the <code>IObserver</code> to register
+    # @return [void]
+    def register_observer: (String notification_name, IObserver observer) -> void
+
+    # Notify the <code>IObservers</code> for a particular <code>INotification</code>.
+    #
+    # All previously attached <code>IObservers</code> for this <code>INotification</code>'s
+    # list are notified and are passed a reference to the <code>INotification</code> in
+    # the order in which they were registered.
+    #
+    # @param notification [INotification] the <code>INotification</code> to notify <code>IObservers</code> of.
+    # @return [void]
+    def notify_observers: (INotification notification) -> void
+
+    # Remove the observer for a given notifyContext from an observer list for a given Notification name.
+    #
+    # @param notification_name [String] which observer list to remove from
+    # @param notify_context [Object] remove the observer with this object as its notifyContext
+    # @return [void]
+    def remove_observer: (String notification_name, Object notify_context) -> void
+
+    # Register an <code>IMediator</code> instance with the <code>View</code>.
+    #
+    # Registers the <code>IMediator</code> so that it can be retrieved by name,
+    # and further interrogates the <code>IMediator</code> for its
+    # <code>INotification</code> interests.
+    #
+    # If the <code>IMediator</code> returns any <code>INotification</code>
+    # names to be notified about, an <code>Observer</code> is created encapsulating
+    # the <code>IMediator</code> instance's <code>handleNotification</code> method
+    # and registering it as an <code>Observer</code> for all <code>INotifications</code> the
+    # <code>IMediator</code> is interested in.
+    #
+    # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
+    # @return [void]
+    def register_mediator: (IMediator mediator) -> void
+
+    # Retrieve an <code>IMediator</code> from the <code>View</code>.
+    #
+    # @param mediator_name [String] the name of the <code>IMediator</code> instance to retrieve.
+    # @return [IMediator, nil] the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
+    def retrieve_mediator: (String mediator_name) -> IMediator?
+
+    # Check if a Mediator is registered or not.
+    #
+    # @param mediator_name [String] the name of the mediator to check.
+    # @return [Boolean] whether a Mediator is registered with the given <code>mediatorName</code>.
+    def has_mediator?: (String mediator_name) -> bool
+
+    # Remove an <code>IMediator</code> from the <code>View</code>.
+    #
+    # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
+    # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
+    def remove_mediator: (String mediator_name) -> IMediator?
+  end
+end

@@ -1,13 +1,3 @@
-# frozen_string_literal: true
-
-# facade.rb
-# PureMVC Ruby Multicore
-#
-# Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
-# Your reuse is governed by the BSD 3-Clause License
-
-require_relative '../../interfaces/i_facade'
-
 module PureMVC
   # A base Multiton <code>IFacade</code> implementation.
   #
@@ -15,56 +5,59 @@ module PureMVC
   # @see View
   # @see Controller
   class Facade
-    include IFacade, INotifier
+
+    include IFacade
+
+    include INotifier
+
+    # The Multiton IFacade instanceMap.
+    # @return [Hash{String => IFacade}]
+    self.@instance_map: Hash[String, IFacade]
+
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
+    self.@mutex: Mutex
+
+    @model: IModel?
+
+    @controller: IController?
+
+    @view: IView?
+
+    @multiton_key: String
 
     # Message Constants
-    MULTITON_MSG = "Facade instance for this Multiton key already constructed!"
-    private_constant :MULTITON_MSG
+    MULTITON_MSG: "Facade instance for this Multiton key already constructed!"
 
-    class << self
-      # The Multiton IFacade instanceMap.
-      # @return [Hash{String => IFacade}]
-      def instance_map = (@instance_map ||= {})
+    # The Multiton IFacade instanceMap.
+    # @return [Hash{String => IFacade}]
+    def self.instance_map: () -> Hash[String, IFacade]
 
-      # Mutex used to synchronize access to the instance map for thread safety.
-      # @return [Mutex]
-      def mutex = (@mutex ||= Mutex.new)
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
+    def self.mutex: () -> Mutex
 
-      # Facade Multiton Factory method.
-      #
-      # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String) -> IFacade>] the unique key passed to the factory block
-      # @return [IFacade] the Multiton instance of the Facade
-      def get_instance(key, &factory)
-        mutex.synchronize do
-          instance_map[key] ||= factory.call(key)
-        end
-      end
+    # Facade Multiton Factory method.
+    #
+    # @param key [String] the unique key identifying the Multiton instance
+    # @param factory [Proc<(String) -> IFacade>] the unique key passed to the factory block
+    # @return [IFacade] the Multiton instance of the Facade
+    def self.get_instance: (String key) { () -> IFacade } -> IFacade
 
-      # Check if a Core is registered or not.
-      #
-      # @param key [String] the multiton key for the Core in question
-      # @return [Boolean] whether a Core is registered with the given <code>key</code>.
-      def has_core?(key)
-        instance_map.key?(key)
-      end
+    # Check if a Core is registered or not.
+    #
+    # @param key [String] the multiton key for the Core in question
+    # @return [Boolean] whether a Core is registered with the given <code>key</code>.
+    def self.has_core?: (String key) -> bool
 
-      # Remove a Core.
-      #
-      # Removes the Model, View, Controller, and Facade
-      # instances associated with the given key.
-      #
-      # @param key [String] the key of the Core to remove
-      # @return [void]
-      def remove_core(key)
-        mutex.synchronize do
-          Model::remove_model(key)
-          View::remove_view(key)
-          Controller::remove_controller(key)
-          instance_map.delete(key)
-        end
-      end
-    end
+    # Remove a Core.
+    #
+    # Removes the Model, View, Controller, and Facade
+    # instances associated with the given key.
+    #
+    # @param key [String] the key of the Core to remove
+    # @return [void]
+    def self.remove_core: (String key) -> void
 
     # Constructor.
     #
@@ -75,13 +68,7 @@ module PureMVC
     # @param key [String]
     # @return [void]
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
-    def initialize(key)
-      raise MULTITON_MSG if self.class.instance_map[key]
-      self.class.instance_map[key] = self
-      @model = @view = @controller = nil
-      initialize_notifier(key)
-      initialize_facade
-    end
+    def initialize: (String key) -> void
 
     # Initialize the Multiton <code>Facade</code> instance.
     #
@@ -90,11 +77,7 @@ module PureMVC
     #
     # @note Be sure to call <code>super.initialize_facade</code> when overriding.
     # @return [void]
-    def initialize_facade
-      initialize_model
-      initialize_controller
-      initialize_view
-    end
+    def initialize_facade: () -> void
 
     # Initialize the <code>Controller</code>.
     #
@@ -108,9 +91,7 @@ module PureMVC
     # at the beginning of your method, then register <code>Command</code>s.
     #
     # @return [void]
-    def initialize_controller
-      @controller = Controller::get_instance(@multiton_key) { |key| Controller.new(key) }
-    end
+    def initialize_controller: () -> void
 
     # Initialize the <code>Model</code>.
     #
@@ -126,9 +107,7 @@ module PureMVC
     # since <code>Proxy</code>s with mutable data will likely need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
     #
     # @return [void]
-    def initialize_model
-      @model = Model::get_instance(@multiton_key) { |key| Model.new(key) }
-    end
+    def initialize_model: () -> void
 
     # Initialize the <code>View</code>.
     #
@@ -140,101 +119,78 @@ module PureMVC
     #
     # If you don't want to initialize a different <code>IView</code>, call <code>super.initialize_view()</code> at the beginning of your method, then register <code>IMediator</code> instances.
     #
-    # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>, #
+    # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>,
     # since <code>IMediator</code> instances will need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
+    #
     # @return [void]
-    def initialize_view
-      @view = View::get_instance(@multiton_key) { |key| View.new(key) }
-    end
+    def initialize_view: () -> void
 
     # Register an <code>ICommand</code> with the <code>Controller</code> by Notification name.
     #
     # @param notification_name [String] the name of the <code>INotification</code> to associate the <code>ICommand</code> with
     # @param factory [Proc<() -> ICommand>] a reference to the Class of the <code>ICommand</code>
     # @return [void]
-    def register_command(notification_name, &factory)
-      @controller&.register_command(notification_name, &factory)
-    end
+    def register_command: (String notification_name) { () -> ICommand } -> void
 
     # Check if a Command is registered for a given Notification
     #
     # @param notification_name [String] The name of the Notification to check
     # @return [Boolean] whether a Command is currently registered for the given <code>notification_name</code>.
-    def has_command?(notification_name)
-      !!@controller&.has_command?(notification_name)
-    end
+    def has_command?: (String notification_name) -> bool
 
     # Remove a previously registered <code>ICommand</code> to <code>INotification</code> mapping from the Controller.
     #
     # @param notification_name [String] the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
-    # @return [void]
-    def remove_command(notification_name)
-      @controller&.remove_command(notification_name)
-    end
+    # @param [void]
+    def remove_command: (String notification_name) -> void
 
     # Register an <code>IProxy</code> with the <code>Model</code> by name.
     #
     # @param proxy [IProxy] the <code>IProxy</code> instance to be registered with the <code>Model</code>.
     # @return [void]
-    def register_proxy(proxy)
-      @model&.register_proxy(proxy)
-    end
+    def register_proxy: (IProxy proxy) -> void
 
     # Retrieve an <code>IProxy</code> from the <code>Model</code> by name.
     #
     # @param proxy_name [String] the name of the proxy to be retrieved.
     # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if not found.
-    def retrieve_proxy(proxy_name)
-      @model&.retrieve_proxy(proxy_name)
-    end
+    def retrieve_proxy: (String proxy_name) -> IProxy?
 
     # Check if a Proxy is registered
     #
     # @param proxy_name [String] the name of the Proxy
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxyName</code>.
-    def has_proxy?(proxy_name)
-      !!@model&.has_proxy?(proxy_name)
-    end
+    def has_proxy?: (String proxy_name) -> bool
 
     # Remove an <code>IProxy</code> from the <code>Model</code> by name.
     #
     # @param proxy_name [String] the <code>IProxy</code> to remove from the <code>Model</code>.
     # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none was found.
-    def remove_proxy(proxy_name)
-      @model&.remove_proxy(proxy_name)
-    end
+    def remove_proxy: (String proxy_name) -> IProxy?
 
     # Register an <code>IMediator</code> with the <code>View</code>.
     #
     # @param mediator [IMediator] a reference to the <code>IMediator</code>
     # @return [void]
-    def register_mediator(mediator)
-      @view&.register_mediator(mediator)
-    end
+    def register_mediator: (IMediator mediator) -> void
 
     # Retrieve an <code>IMediator</code> from the <code>View</code>.
     #
     # @param mediator_name [String] the name of the <code>IMediator</code> to retrieve
     # @return [IMediator, nil] the <code>IMediator</code> previously registered with the given <code>mediator_name</code>, or nil if not found
-    def retrieve_mediator(mediator_name)
-      @view&.retrieve_mediator(mediator_name)
-    end
+    def retrieve_mediator: (String mediator_name) -> IMediator?
 
     # Check if a Mediator is registered or not
     #
     # @param mediator_name [String] the name of the Mediator
     # @return [Boolean] whether a Mediator is registered with the given <code>mediator_name</code>.
-    def has_mediator?(mediator_name)
-      !!@view&.has_mediator?(mediator_name)
-    end
+    def has_mediator?: (String mediator_name) -> bool
 
     # Remove an <code>IMediator</code> from the <code>View</code>.
     #
     # @param mediator_name [String] name of the <code>IMediator</code> to be removed.
     # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
-    def remove_mediator(mediator_name)
-      @view&.remove_mediator(mediator_name)
-    end
+    def remove_mediator: (String mediator_name) -> IMediator?
 
     # Notify <code>Observer</code>s.
     #
@@ -247,9 +203,7 @@ module PureMVC
     #
     # @param notification [INotification] the notification to have the <code>View</code> notify <code>Observers</code> of.
     # @return [void]
-    def notify_observers(notification)
-      @view&.notify_observers(notification)
-    end
+    def notify_observers: (INotification notification) -> void
 
     # Create and send an <code>INotification</code>.
     #
@@ -259,9 +213,7 @@ module PureMVC
     # @param body [Object, nil] the body of the notification (optional)
     # @param type [String, nil] the type of the notification (optional)
     # @return [void]
-    def send_notification(name, body = nil, type = nil)
-      notify_observers(Notification.new(name, body, type))
-    end
+    def send_notification: (String name, Object? body, String? type) -> void
 
     # Set the Multiton key for this facade instance.
     #
@@ -271,11 +223,6 @@ module PureMVC
     #
     # @param key [String] the multiton key for this instance
     # @return [void]
-    def initialize_notifier(key)
-      @multiton_key = key
-    end
-
-
+    def initialize_notifier: (String key) -> void
   end
-
 end

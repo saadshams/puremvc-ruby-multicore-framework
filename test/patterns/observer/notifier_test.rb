@@ -11,7 +11,7 @@ require_relative '../../../src/puremvc'
 
 # Test the PureMVC Notifier class.
 #
-# @see PureMVC::Notifier Notifier
+# @see PureMVC::Notifier
 class NotifierTest < Minitest::Test
   # Tests notifier methods.
   def test_notifier
