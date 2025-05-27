@@ -83,7 +83,7 @@ module PureMVC
       @multiton_key = key
       # Local reference to View
       @view = nil
-      # Mapping of Notification names to Command Class factories
+      # Mapping of Notification names to Command factories
       # @type Hash[String, () -> ICommand]
       @command_map = {}
       # Mutex used to synchronize access to the @command_map

@@ -15,6 +15,7 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 
 ## Reference
 * [YARD: Yay! A Ruby Documentation Tool](https://rubydoc.info/gems/yard)
+* [RBS](https://github.com/ruby/rbs)
 
 ---
 ## Development
