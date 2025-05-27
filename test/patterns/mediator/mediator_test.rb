@@ -7,7 +7,7 @@
 # Your reuse is governed by the BSD 3-Clause License
 
 require 'minitest/autorun'
-require_relative '../../../src/puremvc'
+require_relative '../../../lib/puremvc'
 
 # Test the PureMVC Mediator class.
 #

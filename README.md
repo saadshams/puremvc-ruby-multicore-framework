@@ -26,13 +26,13 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 `
 ### Generate Documentation
 ```shell
-yard doc src/**/*.rb --protected --private
+yard doc lib/**/*.rb --protected --private
 open doc/index.html
 ```
 
 ### Generate RBS Signatures
 ```shell
-rbs prototype rb src/**/*.rb --out-dir=sig
+rbs prototype rb lib/**/*.rb --out-dir=sig
 Update???
 ```
 
