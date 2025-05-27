@@ -39,7 +39,7 @@ module PureMVC
     @view: IView?
 
     # Mapping of Notification names to Command Class factories
-    @command_map: Hash[String, untyped]
+    @command_map: Hash[String, Method]
 
     # Mutex used to synchronize access to the @command_map
     @command_mutex: Mutex
