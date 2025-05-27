@@ -20,6 +20,7 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 
 ---
 ## Development
+
 ### Install Dependencies
 `bundle install 
 `
@@ -39,6 +40,7 @@ Update???
 ```shell
 steep check
 ```
+
 ### Test
 ```shell
 ruby -Itest -e 'Dir["test/**/*_test.rb"].each { |file| require_relative file }'
