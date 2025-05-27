@@ -14,8 +14,9 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 * [Cross-platform software](https://en.wikipedia.org/wiki/Cross-platform_software)
 
 ## Reference
-* [YARD: Yay! A Ruby Documentation Tool](https://rubydoc.info/gems/yard)
+* [Ruby](https://www.ruby-lang.org/en/)
 * [RBS](https://github.com/ruby/rbs)
+* [YARD: Yay! A Ruby Documentation Tool](https://rubydoc.info/gems/yard)
 
 ---
 ## Development
@@ -36,11 +37,11 @@ rbs prototype rb src/**/*.rb --out-dir=sig
 ### Run Type Checking
 ```shell
 steep check
-steep stats --log-level-=fatal
 ```
 ### Test
 ```shell
 ruby -Itest -e 'Dir["test/**/*_test.rb"].each { |file| require_relative file }'
+RubyMine: Test file name mask: **/{*_test,test_*,*_spec}.rb
 ```
 ---
 
