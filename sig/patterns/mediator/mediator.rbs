@@ -14,12 +14,10 @@ module PureMVC
     NAME: "Mediator"
 
     @name: String
-
-    @view: Object?
-
     # @return [String] The name of the Mediator.
     attr_reader name: String
 
+    @view: Object?
     # @return [Object, nil] The view component associated with this Mediator.
     attr_accessor view: Object?
 
