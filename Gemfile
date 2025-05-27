@@ -2,7 +2,12 @@
 
 source "https://rubygems.org"
 
-gem "minitest"
-gem "yard"
+group :test do
+  gem "minitest"
+end
 
-gem "steep", group: :development
+group :development do
+  gem "yard"
+  gem "typeprof"
+  gem "steep"
+end

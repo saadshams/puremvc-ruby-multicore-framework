@@ -60,6 +60,7 @@ module PureMVC
       # Remove an IController instance
       #
       # @param key [String] the multiton key of the IController instance to remove
+      # @return [void]
       def remove_controller(key)
         mutex.synchronize do
           instance_map.delete(key)
@@ -82,7 +83,8 @@ module PureMVC
       @multiton_key = key
       # Local reference to View
       @view = nil
-      # Mapping of Notification names to Command Class references
+      # Mapping of Notification names to Command Class factories
+      # @type Hash[String, () -> ICommand]
       @command_map = {}
       # Mutex used to synchronize access to the @command_map
       @command_mutex = Mutex.new
@@ -134,6 +136,7 @@ module PureMVC
     # @param notification [INotification] the notification to handle
     # @return [void]
     def execute_command(notification)
+      # @type factory [() -> ICommand | nil]
       factory = nil
       @command_mutex.synchronize do
         factory = @command_map[notification.name]
@@ -158,7 +161,7 @@ module PureMVC
     # Remove a previously registered ICommand to INotification mapping.
     #
     # @param notification_name [String] the name of the INotification to remove the ICommand mapping for
-    # @return void
+    # @return [void]
     def remove_command(notification_name)
       @command_mutex.synchronize do
         command = @command_map[notification_name]

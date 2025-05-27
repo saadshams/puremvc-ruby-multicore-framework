@@ -66,6 +66,8 @@ GEM
     strscan (3.1.5)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
+    typeprof (0.21.11)
+      rbs (>= 1.8.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -81,6 +83,7 @@ PLATFORMS
 DEPENDENCIES
   minitest
   steep
+  typeprof
   yard
 
 BUNDLED WITH

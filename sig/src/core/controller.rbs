@@ -38,7 +38,7 @@ module PureMVC
     # Local reference to View
     @view: IView?
 
-    # Mapping of Notification names to Command Class references
+    # Mapping of Notification names to Command Class factories
     @command_map: Hash[String, untyped]
 
     # Mutex used to synchronize access to the @command_map

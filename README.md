@@ -16,12 +16,31 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 ## Reference
 * [YARD: Yay! A Ruby Documentation Tool](https://rubydoc.info/gems/yard)
 
-<!--
-bundle install 
-
+---
+## Development
+### Install Dependencies
+`bundle install 
+`
+### Generate Documentation
+```shell
 yard doc src/**/*.rb --protected --private
 open doc/index.html
--->
+```
+
+### Generate RBS Signatures
+```shell
+rbs prototype rb src/**/*.rb --out-dir=sig
+
+typeprof src/core/controller.rs -o sig/src/core/controller.rs
+bundle exec rbs prototype rb src/patterns/proxy/proxy.rb
+```
+
+### Run Type Checking
+```shell
+steep check
+steep stats --log-level-=fatal
+```
+---
 
 ## Status
 Production - [Version 1.0.0](https://github.com/PureMVC/puremvc-ruby-multicore-framework/blob/master/VERSION)

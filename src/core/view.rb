@@ -74,6 +74,7 @@ module PureMVC
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
       self.class.instance_map[key] = self
+      # @type multiton_key: String
       @multiton_key = key
       # Mapping of Notification names to Observer lists
       @observer_map = {}
