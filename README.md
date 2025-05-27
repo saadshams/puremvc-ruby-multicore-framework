@@ -30,15 +30,16 @@ open doc/index.html
 ### Generate RBS Signatures
 ```shell
 rbs prototype rb src/**/*.rb --out-dir=sig
-
-typeprof src/core/controller.rs -o sig/src/core/controller.rs
-bundle exec rbs prototype rb src/patterns/proxy/proxy.rb
 ```
 
 ### Run Type Checking
 ```shell
 steep check
 steep stats --log-level-=fatal
+```
+### Test
+```shell
+ruby -Itest -e 'Dir["test/**/*_test.rb"].each { |file| require_relative file }'
 ```
 ---
 
