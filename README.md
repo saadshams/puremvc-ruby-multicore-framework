@@ -32,6 +32,7 @@ open doc/index.html
 ### Generate RBS Signatures
 ```shell
 rbs prototype rb src/**/*.rb --out-dir=sig
+Update???
 ```
 
 ### Run Type Checking

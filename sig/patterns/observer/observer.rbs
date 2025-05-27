@@ -17,13 +17,12 @@ module PureMVC
 
     include IObserver
 
-    @notify: untyped
+    @notify: (^(INotification) -> void)?
 
     @context: Object?
 
     # @return [Method] notify The callback method to be called on notification.
-    attr_accessor notify: Method
-
+    attr_accessor notify: ^(INotification) -> void
 
     # @return [Object] context The object context for the callback.
     attr_accessor context: Object

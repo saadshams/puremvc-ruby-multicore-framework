@@ -16,7 +16,7 @@ module PureMVC
 
     include ICommand
 
-    @sub_commands: untyped
+    @sub_commands: Array[^() -> ICommand]
 
     # Constructor.
     #

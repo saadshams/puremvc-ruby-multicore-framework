@@ -22,7 +22,7 @@ module PureMVC
   #
   # Your application must register <code>ICommands</code> with the <code>Controller</code>.
   #
-  # The simplest way is to subclass <code>Facade</code>, and use its <code>initializeController</code> method
+  # The simplest way is to subclass <code>Facade</code>, and use its <code>initializeController</code> method.
   # to add your registrations.
   #
   # @see View
@@ -44,7 +44,7 @@ module PureMVC
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      def mutex = (@mutex ||= Mutex.new)
+      private def mutex = (@mutex ||= Mutex.new)
 
       # Gets an instance using the provided factory block
       #

@@ -39,7 +39,7 @@ module PureMVC
     @view: IView?
 
     # Mapping of Notification names to Command factories
-    @command_map: Hash[String, Method]
+    @command_map: Hash[String, ^() -> ICommand]
 
     # Mutex used to synchronize access to the @command_map
     @command_mutex: Mutex
@@ -51,9 +51,13 @@ module PureMVC
     # @return [Hash{String => IController}]
     def self.instance_map: () -> Hash[String, IController]
 
+    private
+
     # Mutex used to synchronize access to the instance map for thread safety.
     # @return [Mutex]
     def self.mutex: () -> Mutex
+
+    public
 
     # Gets an instance using the provided factory block
     #
@@ -74,9 +78,9 @@ module PureMVC
     # directly. Instead, call the static factory method, passing the unique key for this instance:
     # <code>PureMVC::Controller.getInstance(key) { |key| PureMVC::Controller.new(key) }</code>
     #
-    # @raise [RuntimeError] if an instance for this Multiton key has already been constructed
     # @param key [String]
     # @return [void]
+    # @raise [RuntimeError] if an instance for this Multiton key has already been constructed
     def initialize: (String key) -> void
 
     # Initialize the Multiton Controller instance.

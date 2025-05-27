@@ -127,7 +127,7 @@ class ControllerTest < Minitest::Test
     note = PureMVC::Notification.new("ControllerTest2", vo)
 
     # retrieve a reference to the View from the same core.
-    view = PureMVC::View.get_instance("ControllerTestKey5")
+    view = PureMVC::View.get_instance("ControllerTestKey5") { |key| PureMVC::View.new(key) }
 
     # send the Notification
     view.notify_observers(note)

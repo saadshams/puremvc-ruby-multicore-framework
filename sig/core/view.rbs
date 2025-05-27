@@ -46,14 +46,18 @@ module PureMVC
     # @return [Hash{String => IView}]
     def self.instance_map: () -> Hash[String, IView]
 
+    private
+
     # Mutex used to synchronize access to the instance map for thread safety.
     # @return [Mutex]
     def self.mutex: () -> Mutex
 
+    public
+
     # View Multiton Factory method.
     #
     # @param key [String]
-    # @return [View] the Multiton instance of <code>View</code>
+    # @return [IView] the Multiton instance of <code>View</code>
     def self.get_instance: (String key) { () -> IView } -> IView
 
     # Remove an <code>IView</code> instance.

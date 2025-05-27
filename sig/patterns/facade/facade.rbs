@@ -33,9 +33,13 @@ module PureMVC
     # @return [Hash{String => IFacade}]
     def self.instance_map: () -> Hash[String, IFacade]
 
+    private
+
     # Mutex used to synchronize access to the instance map for thread safety.
     # @return [Mutex]
     def self.mutex: () -> Mutex
+
+    public
 
     # Facade Multiton Factory method.
     #

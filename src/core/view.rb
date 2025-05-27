@@ -37,13 +37,13 @@ module PureMVC
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      def mutex = (@mutex ||= Mutex.new)
+      private def mutex = (@mutex ||= Mutex.new)
 
       # View Multiton Factory method.
       #
       # @param key [String] the unique key identifying the Multiton instance
       # @param factory [Proc<(String) -> IView>] the unique key passed to the factory block
-      # @return [View] the Multiton instance of <code>View</code>
+      # @return [IView] the Multiton instance of <code>View</code>
       def get_instance(key, &factory)
         mutex.synchronize do
           instance_map[key] ||= factory.call(key)
