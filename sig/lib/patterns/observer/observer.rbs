@@ -17,33 +17,34 @@ module PureMVC
 
     include IObserver
 
-    @notify: (^(INotification) -> void)?
+    @notify: Method?
 
     @context: Object?
 
-    # @return [Method] notify The callback method to be called on notification.
-    attr_accessor notify: ^(INotification) -> void
+    # @return [Method | nil] notify The callback method to be called on notification.
+    attr_accessor notify: Method?
 
-    # @return [Object] context The object context for the callback.
-    attr_accessor context: Object
+    # @return [Object | nil] context The object context for the callback.
+    attr_accessor context: Object?
 
     # Initialize an Observer with a notify method and context.
     #
     # @param notify [Method, nil] the callback method to invoke on notification.
     # @param context [Object, nil] the object context for the callback.
     # @return [void]
-    def initialize: (?Method? notify, Object? context) -> void
+    def initialize: (Method? notify, Object? context) -> void
+    #def initialize: ((^(INotification) -> void)?, Object?) -> void
 
     # Calls the notify method with the given notification.
     #
     # @param notification [INotification] the notification to send.
     # @return [void]
-    def notify_observer: (INotification notification) -> void
+    def notify_observer: (INotification) -> void
 
     # Compares the given object with the Observer's context.
     #
     # @param object [Object] the object to compare.
     # @return [Boolean] true if the given object is the same as the context.
-    def compare_notify_context?: (Object object) -> bool
+    def compare_notify_context?: (Object) -> bool
   end
 end

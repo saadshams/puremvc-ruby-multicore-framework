@@ -26,15 +26,15 @@ module PureMVC
   class Observer
     include IObserver
 
-    # @return [Method] notify The callback method to be called on notification.
+    # @return [Method | nil] notify The callback method to be called on notification.
     attr_accessor :notify
 
-    # @return [Object] context The object context for the callback.
+    # @return [Object | nil] context The object context for the callback.
     attr_accessor :context
 
     # Initialize an Observer with a notify method and context.
     #
-    # @param notify [Proc(<INotification) -> void>, nil] the callback method to invoke on notification.
+    # @param notify [Method, nil] the callback method to invoke on notification.
     # @param context [Object, nil] the object context for the callback.
     def initialize(notify = nil, context = nil)
       @notify = notify

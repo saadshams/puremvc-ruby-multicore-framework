@@ -42,8 +42,8 @@ module PureMVC
     end
 
     # @return [Object, nil] The view component associated with this Mediator.
-    def data
-      raise NotImplementedError, "#{self.class} must implement #data"
+    def view
+      raise NotImplementedError, "#{self.class} must implement #view"
     end
     # List <code>INotification</code> interests.
     #

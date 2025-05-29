@@ -41,7 +41,7 @@ module PureMVC
     #
     # In your subclass, override this method to
     # initialize the MacroCommand's SubCommand list with
-    # ICommand class references, like this:
+    # ICommand factory references, like this:
     #
     # @example
     #   def initialize_macro_command
