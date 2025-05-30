@@ -80,13 +80,16 @@ module PureMVC
       raise MULTITON_MSG if self.class.instance_map[key]
       self.class.instance_map[key] = self
       # The Multiton Key for this Core
+      # @type @multiton_key [String]
       @multiton_key = key
       # Local reference to View
+      # @type @view [IView | nil]
       @view = nil
       # Mapping of Notification names to Command factories
-      # @type Hash[String, () -> ICommand]
+      # @type @command_map Hash[String, ^() -> ICommand]
       @command_map = {}
       # Mutex used to synchronize access to the @command_map
+      # @type @command_mutex [Mutex]
       @command_mutex = Mutex.new
       initialize_controller
     end
@@ -164,6 +167,7 @@ module PureMVC
     # @return [void]
     def remove_command(notification_name)
       @command_mutex.synchronize do
+        # @type command [^() -> ICommand]
         command = @command_map[notification_name]
         # if the Command is registered...
         if command
