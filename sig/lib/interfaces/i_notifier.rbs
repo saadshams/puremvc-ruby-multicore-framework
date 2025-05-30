@@ -4,7 +4,7 @@ module PureMVC
   # <code>MacroCommand, Command, Mediator</code> and <code>Proxy</code>
   # all have a need to send <code>Notifications</code>.
   #
-  # The <code>INotifier</code> interface provides a common method called
+  # The <code>_INotifier</code> interface provides a common method called
   # <code>sendNotification</code> that relieves implementation code of
   # the necessity to actually construct <code>Notifications</code>.
   #
@@ -17,8 +17,8 @@ module PureMVC
   #
   # @see IFacade
   # @see INotification
-  module INotifier
-    # Send a <code>INotification</code>.
+  interface _INotifier
+    # Send a <code>_INotification</code>.
     #
     # Convenience method to prevent having to construct new
     # notification instances in our implementation code.
@@ -29,7 +29,7 @@ module PureMVC
     # @return [void]
     def send_notification: (String name, Object? body, String? type) -> void
 
-    # Initialize this INotifier instance.
+    # Initialize this _INotifier instance.
     #
     # This is how a </code>Notifier</code> gets its multitonKey.
     # Calls to <code>send_notification</code> or to access the

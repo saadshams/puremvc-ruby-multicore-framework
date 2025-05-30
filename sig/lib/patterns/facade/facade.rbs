@@ -6,32 +6,32 @@ module PureMVC
   # @see Controller
   class Facade
 
-    include IFacade
+    include _IFacade
 
-    include INotifier
+    include _INotifier
 
     # The Multiton IFacade instanceMap.
-    # @return [Hash{String => IFacade}]
-    self.@instance_map: Hash[String, IFacade]
+    # @return [Hash{String => _IFacade}]
+    self.@instance_map: Hash[String, _IFacade]
 
     # Mutex used to synchronize access to the instance map for thread safety.
     # @return [Mutex]
     self.@mutex: Mutex
 
-    @model: IModel?
+    @model: _IModel?
 
-    @controller: IController?
+    @controller: _IController?
 
-    @view: IView?
+    @view: _IView?
 
     @multiton_key: String
 
     # Message Constants
     MULTITON_MSG: "Facade instance for this Multiton key already constructed!"
 
-    # The Multiton IFacade instanceMap.
-    # @return [Hash{String => IFacade}]
-    def self.instance_map: () -> Hash[String, IFacade]
+    # The Multiton _IFacade instanceMap.
+    # @return [Hash{String => _IFacade}]
+    def self.instance_map: () -> Hash[String, _IFacade]
 
     private
 
@@ -44,9 +44,9 @@ module PureMVC
     # Facade Multiton Factory method.
     #
     # @param key [String] the unique key identifying the Multiton instance
-    # @param factory [Proc<(String) -> IFacade>] the unique key passed to the factory block
-    # @return [IFacade] the Multiton instance of the Facade
-    def self.get_instance: (String key) { () -> IFacade } -> IFacade
+    # @param factory [Proc<(String) -> _IFacade>] the unique key passed to the factory block
+    # @return [_IFacade] the Multiton instance of the Facade
+    def self.get_instance: (String key) { () -> _IFacade } -> _IFacade
 
     # Check if a Core is registered or not.
     #
@@ -65,7 +65,7 @@ module PureMVC
 
     # Constructor.
     #
-    # This <code>IFacade</code> implementation is a Multiton, so you should not call the constructor
+    # This <code>_IFacade</code> implementation is a Multiton, so you should not call the constructor
     # directly. Instead, use the static factory method and pass the unique key for this instance with factory:
     # <code>PureMVC::Facade.get_instance(key) { |key| PureMVC::Facade.new(key) }</code>.
     #
@@ -88,10 +88,10 @@ module PureMVC
     # Called by the <code>initialize_facade</code> method.
     #
     # Override this method in your subclass of <code>Facade</code> if one or both of the following are true:
-    # - You wish to initialize a different <code>IController</code>.
+    # - You wish to initialize a different <code>_IController</code>.
     # - You have <code>Commands</code> to register with the <code>Controller</code> at startup.
     #
-    # If you don't want to initialize a different <code>IController</code>, call <code>super.initialize_controller()</code>
+    # If you don't want to initialize a different <code>_IController</code>, call <code>super.initialize_controller()</code>
     # at the beginning of your method, then register <code>Command</code>s.
     #
     # @return [void]
@@ -102,13 +102,13 @@ module PureMVC
     # Called by the <code>initializeFacade</code> method.
     #
     # Override this method in your subclass of <code>Facade</code> if one or both of the following are true:
-    # - You wish to initialize a different <code>IModel</code>.
+    # - You wish to initialize a different <code>_IModel</code>.
     # - You have <code>Proxy</code>s to register with the Model that do not retrieve a reference to the <code>Facade</code> at construction time.
     #
-    # If you don't want to initialize a different <code>IModel</code>, call <code>super.initialize_model()</code> at the beginning of your method, then register <code>Proxy</code>s.
+    # If you don't want to initialize a different <code>_IModel</code>, call <code>super.initialize_model()</code> at the beginning of your method, then register <code>Proxy</code>s.
     #
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Proxy</code>s with the <code>Model</code>,
-    # since <code>Proxy</code>s with mutable data will likely need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
+    # since <code>Proxy</code>s with mutable data will likely need to send <code>_INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
     #
     # @return [void]
     def initialize_model: () -> void
@@ -118,23 +118,23 @@ module PureMVC
     # Called by the <code>initializeFacade</code> method.
     #
     # Override this method in your subclass of <code>Facade</code> if one or both of the following are true:
-    # - You wish to initialize a different <code>IView</code>.
+    # - You wish to initialize a different <code>_IView</code>.
     # - You have <code>Observers</code> to register with the <code>View</code>.
     #
-    # If you don't want to initialize a different <code>IView</code>, call <code>super.initialize_view()</code> at the beginning of your method, then register <code>IMediator</code> instances.
+    # If you don't want to initialize a different <code>_IView</code>, call <code>super.initialize_view()</code> at the beginning of your method, then register <code>_IMediator</code> instances.
     #
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>,
-    # since <code>IMediator</code> instances will need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
+    # since <code>+IMediator</code> instances will need to send <code>+INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
     #
     # @return [void]
     def initialize_view: () -> void
 
-    # Register an <code>ICommand</code> with the <code>Controller</code> by Notification name.
+    # Register an <code>_ICommand</code> with the <code>Controller</code> by Notification name.
     #
-    # @param notification_name [String] the name of the <code>INotification</code> to associate the <code>ICommand</code> with
-    # @param factory [Proc<() -> ICommand>] a reference to the Class of the <code>ICommand</code>
+    # @param notification_name [String] the name of the <code>_INotification</code> to associate the <code>_ICommand</code> with
+    # @param factory [Proc<() -> _ICommand>] a reference to the Class of the <code>_ICommand</code>
     # @return [void]
-    def register_command: (String notification_name) { () -> ICommand } -> void
+    def register_command: (String notification_name) { () -> _ICommand } -> void
 
     # Check if a Command is registered for a given Notification
     #
@@ -142,23 +142,23 @@ module PureMVC
     # @return [Boolean] whether a Command is currently registered for the given <code>notification_name</code>.
     def has_command?: (String notification_name) -> bool
 
-    # Remove a previously registered <code>ICommand</code> to <code>INotification</code> mapping from the Controller.
+    # Remove a previously registered <code>_ICommand</code> to <code>_INotification</code> mapping from the Controller.
     #
-    # @param notification_name [String] the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
+    # @param notification_name [String] the name of the <code>_INotification</code> to remove the <code>_ICommand</code> mapping for
     # @param [void]
     def remove_command: (String notification_name) -> void
 
-    # Register an <code>IProxy</code> with the <code>Model</code> by name.
+    # Register an <code>_IProxy</code> with the <code>Model</code> by name.
     #
-    # @param proxy [IProxy] the <code>IProxy</code> instance to be registered with the <code>Model</code>.
+    # @param proxy [_IProxy] the <code>_IProxy</code> instance to be registered with the <code>Model</code>.
     # @return [void]
-    def register_proxy: (IProxy proxy) -> void
+    def register_proxy: (_IProxy proxy) -> void
 
-    # Retrieve an <code>IProxy</code> from the <code>Model</code> by name.
+    # Retrieve an <code>_IProxy</code> from the <code>Model</code> by name.
     #
     # @param proxy_name [String] the name of the proxy to be retrieved.
-    # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if not found.
-    def retrieve_proxy: (String proxy_name) -> IProxy?
+    # @return [_IProxy, nil] the <code>_IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if not found.
+    def retrieve_proxy: (String proxy_name) -> _IProxy?
 
     # Check if a Proxy is registered
     #
@@ -166,23 +166,23 @@ module PureMVC
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxyName</code>.
     def has_proxy?: (String proxy_name) -> bool
 
-    # Remove an <code>IProxy</code> from the <code>Model</code> by name.
+    # Remove an <code>_IProxy</code> from the <code>Model</code> by name.
     #
-    # @param proxy_name [String] the <code>IProxy</code> to remove from the <code>Model</code>.
-    # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none was found.
-    def remove_proxy: (String proxy_name) -> IProxy?
+    # @param proxy_name [String] the <code>_IProxy</code> to remove from the <code>Model</code>.
+    # @return [_IProxy, nil] the <code>_IProxy</code> that was removed from the <code>Model</code>, or nil if none was found.
+    def remove_proxy: (String proxy_name) -> _IProxy?
 
-    # Register an <code>IMediator</code> with the <code>View</code>.
+    # Register an <code>_IMediator</code> with the <code>View</code>.
     #
-    # @param mediator [IMediator] a reference to the <code>IMediator</code>
+    # @param mediator [_IMediator] a reference to the <code>_IMediator</code>
     # @return [void]
-    def register_mediator: (IMediator mediator) -> void
+    def register_mediator: (_IMediator mediator) -> void
 
-    # Retrieve an <code>IMediator</code> from the <code>View</code>.
+    # Retrieve an <code>_IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String] the name of the <code>IMediator</code> to retrieve
-    # @return [IMediator, nil] the <code>IMediator</code> previously registered with the given <code>mediator_name</code>, or nil if not found
-    def retrieve_mediator: (String mediator_name) -> IMediator?
+    # @param mediator_name [String] the name of the <code>_IMediator</code> to retrieve
+    # @return [_IMediator, nil] the <code>_IMediator</code> previously registered with the given <code>mediator_name</code>, or nil if not found
+    def retrieve_mediator: (String mediator_name) -> _IMediator?
 
     # Check if a Mediator is registered or not
     #
@@ -190,11 +190,11 @@ module PureMVC
     # @return [Boolean] whether a Mediator is registered with the given <code>mediator_name</code>.
     def has_mediator?: (String mediator_name) -> bool
 
-    # Remove an <code>IMediator</code> from the <code>View</code>.
+    # Remove an <code>_IMediator</code> from the <code>View</code>.
     #
     # @param mediator_name [String] name of the <code>IMediator</code> to be removed.
-    # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
-    def remove_mediator: (String mediator_name) -> IMediator?
+    # @return [_IMediator, nil] the <code>_IMediator</code> that was removed from the <code>View</code>, or nil if none found.
+    def remove_mediator: (String mediator_name) -> _IMediator?
 
     # Notify <code>Observer</code>s.
     #
@@ -205,11 +205,11 @@ module PureMVC
     # and pass the parameters, never having to
     # construct the notification yourself.
     #
-    # @param notification [INotification] the notification to have the <code>View</code> notify <code>Observers</code> of.
+    # @param notification [_INotification] the notification to have the <code>View</code> notify <code>Observers</code> of.
     # @return [void]
-    def notify_observers: (INotification notification) -> void
+    def notify_observers: (_INotification notification) -> void
 
-    # Create and send an <code>INotification</code>.
+    # Create and send an <code>_INotification</code>.
     #
     # Keeps us from having to construct new notification instances in our implementation code.
     #
@@ -223,7 +223,7 @@ module PureMVC
     #
     # This is not meant to be called directly. It is invoked internally by the
     # constructor when <code>get_instance</code> is called. However, it must be public
-    # to implement <code>INotifier</code>.
+    # to implement <code>_INotifier</code>.
     #
     # @param key [String] the multiton key for this instance
     # @return [void]

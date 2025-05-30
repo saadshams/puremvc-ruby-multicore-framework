@@ -1,7 +1,7 @@
 module PureMVC
-  # A base ICommand implementation that executes other ICommand instances.
+  # A base _ICommand implementation that executes other ICommand instances.
   #
-  # A MacroCommand maintains a list of ICommand class references called SubCommands.
+  # A MacroCommand maintains a list of _ICommand class references called SubCommands.
   #
   # When <code>execute</code>is called, the MacroCommand instantiates and calls <code>execute</code>on each of its SubCommands in turn.
   # Each SubCommand will be passed a reference to the original INotification that was passed to the MacroCommand's <code>execute</code>method.
@@ -14,9 +14,9 @@ module PureMVC
   # @see SimpleCommand
   class MacroCommand < Notifier
 
-    include ICommand
+    include _ICommand
 
-    @sub_commands: Array[^() -> ICommand]
+    @sub_commands: Array[^() -> _ICommand]
 
     # Constructor.
     #
@@ -41,7 +41,7 @@ module PureMVC
     #     add_sub_command  { ThirdCommand.new }
     #   end
     #
-    # Note that SubCommands may be any ICommand implementor;
+    # Note that SubCommands may be any _ICommand implementor;
     # MacroCommands or SimpleCommands are both acceptable.
     # @return [void]
     def initialize_macro_command: () -> void
@@ -49,16 +49,16 @@ module PureMVC
     # Add a SubCommand.
     # SubCommands will be called in First In/First Out (FIFO) order.
     #
-    # @param factory [Proc<() -> ICommand>] A block or callable that returns an instance of ICommand when called.
+    # @param factory [Proc<() -> _ICommand>] A block or callable that returns an instance of _ICommand when called.
     # @return [void]
-    def add_sub_command: () { () -> ICommand } -> void
+    def add_sub_command: () { () -> _ICommand } -> void
 
     # Execute this MacroCommand's SubCommands.
     #
     # The SubCommands will be called in First In/First Out (FIFO) order.
     #
-    # @param notification [INotification] the notification object to be passed to each SubCommand.
+    # @param notification [_INotification] the notification object to be passed to each SubCommand.
     # @return [void]
-    def execute: (INotification notification) -> void
+    def execute: (_INotification notification) -> void
   end
 end

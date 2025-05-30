@@ -66,7 +66,7 @@ module PureMVC
       raise NotImplementedError, "#{self.class} must implement #on_register"
     end
 
-    # Called by the View when the Mediator is registered.
+    # Called by the View when the Mediator is removed.
     # @return [void]
     def on_remove
       raise NotImplementedError, "#{self.class} must implement #on_remove"

@@ -1,10 +1,10 @@
 module PureMVC
-  # A base <code>INotifier</code> implementation.
+  # A base <code>_INotifier</code> implementation.
   #
   # <code>MacroCommand</code>, <code>SimpleCommand</code>, <code>Mediator</code>, and <code>Proxy</code>
   # all need to send <code>Notification</code>s.
   #
-  # The <code>INotifier</code> interface provides a common method called
+  # The <code>_INotifier</code> interface provides a common method called
   # <code>send_notification</code> that relieves implementation code of
   # the necessity to actually construct <code>Notification</code>s.
   #
@@ -31,7 +31,7 @@ module PureMVC
   # @see SimpleCommand
   class Notifier
 
-    include INotifier
+    include _INotifier
 
     @multiton_key: String?
 
@@ -52,7 +52,7 @@ module PureMVC
     # @return [void]
     def send_notification: (String name, Object? body, String? type) -> void
 
-    # Initialize this INotifier instance.
+    # Initialize this _INotifier instance.
     #
     # This is how a Notifier receives its <code>multiton_key</code>.
     # Any calls to <code>send_notification</code> or attempts to access the <code>facade</code>
@@ -64,14 +64,14 @@ module PureMVC
     # within the constructor of these classes, because <code>initialize_notifier</code>
     # will not yet have been called at that point.
     #
-    # @param key [String] the <code>multiton_key</code> this <code>INotifier</code> will use
+    # @param key [String] the <code>multiton_key</code> this <code>_INotifier</code> will use
     # @return [void]
     def initialize_notifier: (String key) -> void
 
     # Return the Multiton Facade instance
     #
     # @raise [RuntimeError] if the <code>multiton_key</code> is not set
-    # @return [IFacade] the facade instance for the notifier's key
-    def facade: () -> IFacade
+    # @return [_IFacade] the facade instance for the notifier's key
+    def facade: () -> _IFacade
   end
 end

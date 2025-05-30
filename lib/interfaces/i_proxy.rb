@@ -27,7 +27,7 @@ module PureMVC
       raise NotImplementedError, "#{self.class} must implement #name"
     end
 
-    # @return [Object] The data managed by the proxy
+    # @return [Object, nil] The data managed by the proxy, or nil if none set.
     def data
       raise NotImplementedError, "#{self.class} must implement #data"
     end
@@ -43,7 +43,5 @@ module PureMVC
     def on_remove
       raise NotImplementedError, "#{self.class} must implement #on_remove"
     end
-
   end
-
 end

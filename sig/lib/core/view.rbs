@@ -1,26 +1,25 @@
 module PureMVC
-  # A Multiton <code>IView</code> implementation.
+  # A Multiton <code>_IView</code> implementation.
   #
-  # In PureMVC, the <code>IView</code> class assumes these responsibilities:
+  # In PureMVC, the <code>_IView</code> class assumes these responsibilities:
   #
-  # - Maintains a cache of <code>IMediator</code>instances.
-  # - Provides methods for registering, retrieving, and removing <code>IMediators</code>.
-  # - Notifies <code>IMediators</code>when they are registered or removed.
-  # - Manages the observer lists for each <code>INotification</code>in the application.
-  # - Provides a method for attaching <code>IObservers</code>to an <code>INotification<code>'s observer list.
-  # - Provides a method for broadcasting an <code>INotification</code>.
-  # - Notifies the <code>IObservers</code>of a given <code>INotification</code>when it is broadcast.
+  # - Maintains a cache of <code>_IMediator</code>instances.
+  # - Provides methods for registering, retrieving, and removing <code>_IMediators</code>.
+  # - Notifies <code>_IMediators</code>when they are registered or removed.
+  # - Manages the observer lists for each <code>_INotification</code>in the application.
+  # - Provides a method for attaching <code>_IObservers</code>to an <code>_INotification</code>'s observer list.
+  # - Provides a method for broadcasting an <code>_INotification</code>.
+  # - Notifies the <code>IObservers</code>of a given <code>_INotification</code>when it is broadcast.
   #
   # @see Mediator
   # @see Observer
   # @see Notification
   class View
 
-    include IView
 
     # The Multiton IModel instanceMap.
-    # @return [Hash{String => IView}]
-    self.@instance_map: Hash[String, IView]
+    # @return [Hash{String => _IView}]
+    self.@instance_map: Hash[String, _IView]
 
     # Mutex used to synchronize access to the instance map for thread safety.
     # @return [Mutex]
@@ -29,13 +28,13 @@ module PureMVC
     @multiton_key: String
 
     # Mapping of Notification names to Observer lists
-    @observer_map: Hash[String, IObserver]
+    @observer_map: Hash[String, _IObserver]
 
     # Mutex used to synchronize access to the observer_map
     @observer_mutex: Mutex
 
     # Mapping of Mediator names to Mediator instances
-    @mediator_map: Hash[String, IMediator]
+    @mediator_map: Hash[String, _IMediator]
 
     # Mutex used to synchronize access to the mediator_map
     @mediator_mutex: Mutex
@@ -43,8 +42,8 @@ module PureMVC
     MULTITON_MSG: "View instance for this Multiton key already constructed!"
 
     # The Multiton IModel instanceMap.
-    # @return [Hash{String => IView}]
-    def self.instance_map: () -> Hash[String, IView]
+    # @return [Hash{String => _IView}]
+    def self.instance_map: () -> Hash[String, _IView]
 
     private
 
@@ -58,17 +57,17 @@ module PureMVC
     #
     # @param key [String]
     # @return [IView] the Multiton instance of <code>View</code>
-    def self.get_instance: (String key) { () -> IView } -> IView
+    def self.get_instance: (String key) { () -> _IView } -> _IView
 
-    # Remove an <code>IView</code> instance.
+    # Remove an <code>_IView</code> instance.
     #
-    # @param key [String] the key of the <code>IView</code> instance to remove
+    # @param key [String] the key of the <code>_IView</code> instance to remove
     # @return [void]
     def self.remove_view: (String key) -> void
 
     # Constructor.
     #
-    # This <code>IView</code> implementation is a Multiton,
+    # This <code>_IView</code> implementation is a Multiton,
     # so you should not call the constructor directly.
     # Instead, call the static Multiton factory method <code>View.get_instance(multiton_key) { |key| View.new(key) }</code>.
     #
@@ -87,23 +86,23 @@ module PureMVC
     # @return [void]
     def initialize_view: () -> void
 
-    # Register an <code>IObserver</code> to be notified
-    # of <code>INotifications</code> with a given name.
+    # Register an <code>_IObserver</code> to be notified
+    # of <code>_INotifications</code> with a given name.
     #
-    # @param notification_name [String] the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
-    # @param observer [IObserver] the <code>IObserver</code> to register
+    # @param notification_name [String] the name of the <code>_INotifications</code> to notify this <code>_IObserver</code> of
+    # @param observer [_IObserver] the <code>_IObserver</code> to register
     # @return [void]
-    def register_observer: (String notification_name, IObserver observer) -> void
+    def register_observer: (String notification_name, _IObserver observer) -> void
 
-    # Notify the <code>IObservers</code> for a particular <code>INotification</code>.
+    # Notify the <code>_IObservers</code> for a particular <code>_INotification</code>.
     #
-    # All previously attached <code>IObservers</code> for this <code>INotification</code>'s
-    # list are notified and are passed a reference to the <code>INotification</code> in
+    # All previously attached <code>_IObservers</code> for this <code>_INotification</code>'s
+    # list are notified and are passed a reference to the <code>_INotification</code> in
     # the order in which they were registered.
     #
-    # @param notification [INotification] the <code>INotification</code> to notify <code>IObservers</code> of.
+    # @param notification [_INotification] the <code>_INotification</code> to notify <code>_IObservers</code> of.
     # @return [void]
-    def notify_observers: (INotification notification) -> void
+    def notify_observers: (_INotification notification) -> void
 
     # Remove the observer for a given notifyContext from an observer list for a given Notification name.
     #
@@ -112,27 +111,27 @@ module PureMVC
     # @return [void]
     def remove_observer: (String notification_name, Object notify_context) -> void
 
-    # Register an <code>IMediator</code> instance with the <code>View</code>.
+    # Register an <code>_IMediator</code> instance with the <code>View</code>.
     #
-    # Registers the <code>IMediator</code> so that it can be retrieved by name,
-    # and further interrogates the <code>IMediator</code> for its
-    # <code>INotification</code> interests.
+    # Registers the <code>_IMediator</code> so that it can be retrieved by name,
+    # and further interrogates the <code>_IMediator</code> for its
+    # <code>_INotification</code> interests.
     #
-    # If the <code>IMediator</code> returns any <code>INotification</code>
+    # If the <code>_IMediator</code> returns any <code>_INotification</code>
     # names to be notified about, an <code>Observer</code> is created encapsulating
-    # the <code>IMediator</code> instance's <code>handleNotification</code> method
-    # and registering it as an <code>Observer</code> for all <code>INotifications</code> the
-    # <code>IMediator</code> is interested in.
+    # the <code>_IMediator</code> instance's <code>handleNotification</code> method
+    # and registering it as an <code>Observer</code> for all <code>_INotifications</code> the
+    # <code>_IMediator</code> is interested in.
     #
-    # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
+    # @param mediator [_IMediator] a reference to the <code>_IMediator</code> instance
     # @return [void]
-    def register_mediator: (IMediator mediator) -> void
+    def register_mediator: (_IMediator mediator) -> void
 
-    # Retrieve an <code>IMediator</code> from the <code>View</code>.
+    # Retrieve an <code>_IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String] the name of the <code>IMediator</code> instance to retrieve.
-    # @return [IMediator, nil] the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
-    def retrieve_mediator: (String mediator_name) -> IMediator?
+    # @param mediator_name [String] the name of the <code>_IMediator</code> instance to retrieve.
+    # @return [_IMediator, nil] the <code>_IMediator</code> instance previously registered with the given <code>mediatorName</code>.
+    def retrieve_mediator: (String mediator_name) -> _IMediator?
 
     # Check if a Mediator is registered or not.
     #
@@ -140,10 +139,10 @@ module PureMVC
     # @return [Boolean] whether a Mediator is registered with the given <code>mediatorName</code>.
     def has_mediator?: (String mediator_name) -> bool
 
-    # Remove an <code>IMediator</code> from the <code>View</code>.
+    # Remove an <code>_IMediator</code> from the <code>View</code>.
     #
-    # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
-    # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
-    def remove_mediator: (String mediator_name) -> IMediator?
+    # @param mediator_name [String] name of the <code>_IMediator</code> instance to be removed.
+    # @return [_IMediator, nil] the <code>_IMediator</code> that was removed from the <code>View</code>, or nil if none found.
+    def remove_mediator: (String mediator_name) -> _IMediator?
   end
 end
