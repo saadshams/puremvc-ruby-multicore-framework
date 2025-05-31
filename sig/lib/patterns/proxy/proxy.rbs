@@ -1,5 +1,5 @@
 module PureMVC
-  # A base <code>IProxy</code> implementation.
+  # A base <code>_IProxy</code> implementation.
   #
   # In PureMVC, <code>Proxy</code> classes are used to manage parts of the application's data model.
   #
@@ -14,7 +14,7 @@ module PureMVC
   # @see Model
   class Proxy < Notifier
 
-    include IProxy
+    include _IProxy
 
     # The name of the <code>Proxy</code>.
     NAME: "Proxy"

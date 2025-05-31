@@ -17,7 +17,7 @@ module PureMVC
   # - Provides methods for registering, retrieving, and removing <code>IMediators</code>.
   # - Notifies <code>IMediators</code>when they are registered or removed.
   # - Manages the observer lists for each <code>INotification</code>in the application.
-  # - Provides a method for attaching <code>IObservers</code>to an <code>INotification<code>'s observer list.
+  # - Provides a method for attaching <code>IObservers</code>to an <code>INotification</code>'s observer list.
   # - Provides a method for broadcasting an <code>INotification</code>.
   # - Notifies the <code>IObservers</code>of a given <code>INotification</code>when it is broadcast.
   #

@@ -1,26 +1,24 @@
 module PureMVC
-  # A Multiton <code>IModel</code> implementation.
+  # A Multiton <code>_IModel</code> implementation.
   #
   # In PureMVC, the <code>Model</code> class provides access to model objects (Proxies) by named lookup.
   #
   # The <code>Model</code> assumes these responsibilities:
   #
-  # - Maintains a cache of <code>IProxy</code> instances.
-  # - Provides methods for registering, retrieving, and removing <code>IProxy</code> instances.
+  # - Maintains a cache of <code>_IProxy</code> instances.
+  # - Provides methods for registering, retrieving, and removing <code>_IProxy</code> instances.
   #
-  # Your application must register <code>IProxy</code> instances with the <code>Model</code>. Typically,
-  # an <code>ICommand</code> is used to create and register <code>IProxy</code> instances after the <code>Facade<code>
+  # Your application must register <code>_IProxy</code> instances with the <code>Model</code>. Typically,
+  # an <code>_ICommand</code> is used to create and register <code>_IProxy</code> instances after the <code>Facade<code>
   # has initialized the Core actors.
   #
   # @see Proxy
   # @see IProxy
   class Model
 
-    include IModel
-
     # The Multiton IModel instanceMap.
-    # @return [Hash{String => IModel}]
-    self.@instance_map: Hash[String, IModel]
+    # @return [Hash{String => _IModel}]
+    self.@instance_map: Hash[String, _IModel]
 
     # Mutex used to synchronize access to the instance map for thread safety.
     # @return [Mutex]
@@ -28,7 +26,7 @@ module PureMVC
 
     @multiton_key: String
 
-    @proxy_map: Hash[String, IProxy]
+    @proxy_map: Hash[String, _IProxy]
 
     @proxy_mutex: Mutex
 
@@ -36,8 +34,8 @@ module PureMVC
     MULTITON_MSG: "Model instance for this Multiton key already constructed!"
 
     # The Multiton IModel instanceMap.
-    # @return [Hash{String => IModel}]
-    def self.instance_map: () -> Hash[String, IModel]
+    # @return [Hash{String => _IModel}]
+    def self.instance_map: () -> Hash[String, _IModel]
 
     private
 
@@ -52,9 +50,9 @@ module PureMVC
     # @param key [String] the unique key identifying the Multiton instance
     # @param factory [Proc<(String) -> IModel>] the unique key passed to the factory block
     # @return [IModel] the instance for this Multiton key
-    def self.get_instance: (String key) { () -> IModel } -> IModel
+    def self.get_instance: (String key) { () -> _IModel } -> _IModel
 
-    # Remove an IModel instance
+    # Remove an _IModel instance
     #
     # @param key [String] the multiton key of the IModel instance to remove
     # @return [void]
@@ -62,7 +60,7 @@ module PureMVC
 
     # Constructor.
     #
-    # This <code>IModel</code> implementation is a Multiton,
+    # This <code>_IModel</code> implementation is a Multiton,
     # so you should not call the constructor directly, but instead call
     # the static Multiton Factory method <code>PureMVC::Model.get_instance(key) { |key| PureMVC::Model.new(key) }</code>.
     #
@@ -81,17 +79,17 @@ module PureMVC
     # @return [void]
     def initialize_model: () -> void
 
-    # Register an <code>IProxy</code> with the <code>Model</code>.
+    # Register an <code>_IProxy</code> with the <code>Model</code>.
     #
-    # @param proxy [IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
+    # @param proxy [_IProxy] an <code>_IProxy</code> to be held by the <code>Model</code>.
     # @return [void]
-    def register_proxy: (IProxy proxy) -> void
+    def register_proxy: (_IProxy proxy) -> void
 
-    # Retrieve an <code>IProxy</code> from the <code>Model</code>.
+    # Retrieve an <code>_IProxy</code> from the <code>Model</code>.
     #
     # @param proxy_name [String] the name of the proxy to retrieve.
-    # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
-    def retrieve_proxy: (String proxy_name) -> IProxy?
+    # @return [_IProxy, nil] the <code>_IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
+    def retrieve_proxy: (String proxy_name) -> _IProxy?
 
     # Check if a Proxy is registered.
     #
@@ -99,10 +97,10 @@ module PureMVC
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxy_name</code>.
     def has_proxy?: (String proxy_name) -> bool
 
-    # Remove an <code>IProxy</code> from the <code>Model</code>.
+    # Remove an <code>_IProxy</code> from the <code>Model</code>.
     #
-    # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
-    # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
-    def remove_proxy: (String proxy_name) -> IProxy?
+    # @param proxy_name [String] name of the <code>_IProxy</code> instance to be removed.
+    # @return [_IProxy, nil] the <code>_IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
+    def remove_proxy: (String proxy_name) -> _IProxy?
   end
 end

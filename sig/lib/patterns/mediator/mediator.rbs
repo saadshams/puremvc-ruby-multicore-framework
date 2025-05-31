@@ -1,10 +1,10 @@
 module PureMVC
-  # A base <code>IMediator</code> implementation.
+  # A base <code>_IMediator</code> implementation.
   #
   # @see View
   class Mediator < Notifier
 
-    include IMediator
+    include _IMediator
 
     # The name of the <code>Mediator</code>.
     #
@@ -35,9 +35,9 @@ module PureMVC
 
     # Handles a notification.
     #
-    # @param notification [INotification] the notification to handle
+    # @param notification [_INotification] the notification to handle
     # @return [void]
-    def handle_notification: (INotification notification) -> void
+    def handle_notification: (_INotification notification) -> void
 
     # Called when the mediator is registered.
     # @return [void]

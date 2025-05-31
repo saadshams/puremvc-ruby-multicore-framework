@@ -1,5 +1,5 @@
 module PureMVC
-  # A base <code>INotification</code>implementation.
+  # A base <code>_INotification</code>implementation.
   #
   # PureMVC does not rely upon underlying event models such
   # as the one provided with Flash, and ActionScript 3 does
@@ -10,12 +10,12 @@ module PureMVC
   # application and the actors of the MVC triad.
   #
   # Notifications are not meant to be a replacement for Events
-  # in Flex/Flash/Apollo. Generally, <code>IMediator</code>implementors
+  # in Flex/Flash/Apollo. Generally, <code>_IMediator</code>implementors
   # place event listeners on their view components, which they
   # then handle in the usual way. This may lead to the broadcast of <code>Notification</code>s to
-  # trigger <code>ICommand</code>s or to communicate with other <code>IMediator</code>s. <code>IProxy</code>and <code>ICommand</code>
-  # instances communicate with each other and <code>IMediator</code>s
-  # by broadcasting <code>INotification</code>s.
+  # trigger <code>_ICommand</code>s or to communicate with other <code>_IMediator</code>s. <code>_IProxy</code>and <code>_ICommand</code>
+  # instances communicate with each other and <code>_IMediator</code>s
+  # by broadcasting <code>_INotification</code>s.
   #
   # A key difference between Flash <code>Event</code>s and PureMVC
   # <code>Notification</code>s is that <code>Event</code>s follow the
@@ -29,7 +29,7 @@ module PureMVC
   # @see Observer
   class Notification
 
-    include INotification
+    include _INotification
 
     @name: String
 

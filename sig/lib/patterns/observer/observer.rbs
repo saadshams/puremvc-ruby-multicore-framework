@@ -1,9 +1,9 @@
 module PureMVC
-  # A base <code>IObserver</code> implementation.
+  # A base <code>_IObserver</code> implementation.
   #
   # An <code>Observer</code> is an object that encapsulates information
   # about an interested object with a method that should
-  # be called when a particular <code>INotification</code> is broadcast.
+  # be called when a particular <code>_INotification</code> is broadcast.
   #
   # In PureMVC, the <code>Observer</code> class assumes these responsibilities:
   # - Encapsulate the notification (callback) method of the interested object.
@@ -15,7 +15,7 @@ module PureMVC
   # @see Notification
   class Observer
 
-    include IObserver
+    include _IObserver
 
     @notify: Method?
 
@@ -33,13 +33,13 @@ module PureMVC
     # @param context [Object, nil] the object context for the callback.
     # @return [void]
     def initialize: (Method? notify, Object? context) -> void
-    #def initialize: ((^(INotification) -> void)?, Object?) -> void
+    #def initialize: ((^(_INotification) -> void)?, Object?) -> void
 
     # Calls the notify method with the given notification.
     #
-    # @param notification [INotification] the notification to send.
+    # @param notification [_INotification] the notification to send.
     # @return [void]
-    def notify_observer: (INotification) -> void
+    def notify_observer: (_INotification) -> void
 
     # Compares the given object with the Observer's context.
     #

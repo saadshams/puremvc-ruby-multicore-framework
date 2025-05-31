@@ -1,24 +1,24 @@
 module PureMVC
-  # A base <code>ICommand</code>implementation.
+  # A base <code>_ICommand</code>implementation.
   #
   # Subclasses should override the <code>execute</code>method, where business logic
-  # will handle the <code>INotification</code>.
+  # will handle the <code>_INotification</code>.
   #
   # @see Controller
   # @see Notification
   # @see MacroCommand
   class SimpleCommand < Notifier
 
-    include ICommand
+    include _ICommand
 
-    # Fulfill the use-case initiated by the given <code>INotification</code>.
+    # Fulfill the use-case initiated by the given <code>_INotification</code>.
     #
     # In the Command Pattern, an application use-case typically begins with some user action,
-    # which results in an <code>INotification</code>being broadcast, handled by business logic in the
-    # <code>execute</code>method of an <code>ICommand</code>.
+    # which results in an <code>_INotification</code>being broadcast, handled by business logic in the
+    # <code>execute</code>method of an <code>_ICommand</code>.
     #
-    # @param notification [INotification] the notification to handle
+    # @param notification [_INotification] the notification to handle
     # @return [void]
-    def execute: (INotification notification) -> void
+    def execute: (_INotification notification) -> void
   end
 end

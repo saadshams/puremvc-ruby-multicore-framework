@@ -1,25 +1,25 @@
 module PureMVC
   # The interface definition for a PureMVC Model.
   #
-  # In PureMVC, <code>IModel</code> implementors provide
-  # access to <code>IProxy</code> objects by named lookup.
+  # In PureMVC, <code>_IModel</code> implementors provide
+  # access to <code>_IProxy</code> objects by named lookup.
   #
-  # An <code>IModel</code> assumes these responsibilities:
+  # An <code>_IModel</code> assumes these responsibilities:
   #
-  # - Maintain a cache of <code>IProxy</code> instances
-  # - Provide methods for registering, retrieving, and removing <code>IProxy</code> instances
-  module IModel
-    # Register an <code>IProxy</code> instance with the <code>Model</code>.
+  # - Maintain a cache of <code>_IProxy</code> instances
+  # - Provide methods for registering, retrieving, and removing <code>_IProxy</code> instances
+  interface _IModel
+    # Register an <code>_IProxy</code> instance with the <code>Model</code>.
     #
-    # @param proxy [IProxy] an object reference to be held by the <code>Model</code>.
+    # @param proxy [_IProxy] an object reference to be held by the <code>Model</code>.
     # @return [void]
-    def register_proxy: (IProxy proxy) -> void
+    def register_proxy: (_IProxy proxy) -> void
 
-    # Retrieve an <code>IProxy</code> instance from the <code>Model</code>.
+    # Retrieve an <code>_IProxy</code> instance from the <code>Model</code>.
     #
     # @param proxy_name [String]
-    # @return [IProxy] the <code>IProxy</code> instance previously registered with the given <code>proxyName</code>.
-    def retrieve_proxy: (String proxy_name) -> IProxy
+    # @return [_IProxy] the <code>_IProxy</code> instance previously registered with the given <code>proxyName</code>.
+    def retrieve_proxy: (String proxy_name) -> _IProxy
 
     # Check if a <code>Proxy</code> is registered.
     #
@@ -27,10 +27,10 @@ module PureMVC
     # @return [Boolean] whether a <code>Proxy</code> is currently registered with the given <code>proxyName</code>.
     def has_proxy?: (String proxy_name) -> bool
 
-    # Remove an <code>IProxy</code> instance from the <code>Model</code>.
+    # Remove an <code>_IProxy</code> instance from the <code>Model</code>.
     #
-    # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
-    # @return [IProxy | nil] the <code>IProxy</code> that was removed from the <code>Model</code>.
-    def remove_proxy: (String proxy_name) -> IProxy?
+    # @param proxy_name [String] name of the <code>_IProxy</code> instance to be removed.
+    # @return [_IProxy | nil] the <code>_IProxy</code> that was removed from the <code>Model</code>.
+    def remove_proxy: (String proxy_name) -> _IProxy?
   end
 end
