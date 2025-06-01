@@ -23,7 +23,6 @@ module PureMVC
   # @see Notification
   # @see SimpleCommand
   class MacroCommand < Notifier
-    include ICommand
 
     # Constructor.
     #
@@ -80,6 +79,8 @@ module PureMVC
         command.execute(notification)
       end
     end
+
+    implements ICommand
 
   end
 

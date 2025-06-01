@@ -24,8 +24,6 @@ module PureMVC
   # @see View
   # @see Notification
   class Observer
-    include IObserver
-
     # @return [Method | nil] notify The callback method to be called on notification.
     attr_accessor :notify
 
@@ -56,6 +54,8 @@ module PureMVC
     def compare_notify_context?(object)
       object.equal?(@context)
     end
+
+    implements IObserver
 
   end
 end

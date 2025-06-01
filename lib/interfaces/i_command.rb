@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_command.rb
 # PureMVC Ruby Multicore
@@ -10,7 +11,9 @@ module PureMVC
   # The interface definition for a PureMVC Command.
   #
   # @see INotification
-  module ICommand
+  ICommand = interface {
+    required_methods :execute
+
     # Execute the <code>ICommand</code>'s logic to handle a given <code>INotification</code>.
     #
     # @abstract This method must be implemented by the concrete command.
@@ -19,5 +22,5 @@ module PureMVC
     def execute(notification)
       raise NotImplementedError, "#{self.class} must implement #execute"
     end
-  end
+  }
 end

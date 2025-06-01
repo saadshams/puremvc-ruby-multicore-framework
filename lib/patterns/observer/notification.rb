@@ -38,8 +38,6 @@ module PureMVC
   #
   # @see Observer
   class Notification
-    include INotification
-
     # @return [String] the name of the notification
     attr_reader :name
 
@@ -68,6 +66,8 @@ module PureMVC
         "\nBody: #{@body.inspect}" \
         "\nType: #{@type}"
     end
+
+    implements INotification
 
   end
 end

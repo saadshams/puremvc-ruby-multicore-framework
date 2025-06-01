@@ -31,7 +31,6 @@ module PureMVC
   # @see SimpleCommand
   # @see MacroCommand
   class Controller
-    include IController
 
     # Message Constants
     MULTITON_MSG = "Controller instance for this Multiton key already constructed!"
@@ -179,5 +178,6 @@ module PureMVC
       end
     end
 
+    implements IController
   end
 end

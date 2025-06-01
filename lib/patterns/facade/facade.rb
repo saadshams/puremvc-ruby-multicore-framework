@@ -15,7 +15,6 @@ module PureMVC
   # @see View
   # @see Controller
   class Facade
-    include IFacade, INotifier
 
     # Message Constants
     MULTITON_MSG = "Facade instance for this Multiton key already constructed!"
@@ -275,6 +274,7 @@ module PureMVC
       @multiton_key = key
     end
 
+    implements IFacade, INotifier
 
   end
 

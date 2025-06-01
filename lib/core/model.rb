@@ -25,8 +25,6 @@ module PureMVC
   # @see Proxy
   # @see IProxy
   class Model
-    include IModel
-
     # Message Constants
     MULTITON_MSG = "Model instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
@@ -136,5 +134,7 @@ module PureMVC
       proxy&.on_remove
       proxy
     end
+
+    implements IModel
   end
 end

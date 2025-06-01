@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_mediator.rb
 # PureMVC Ruby Multicore
@@ -35,7 +36,14 @@ module PureMVC
   # and register it as an Observer for each <code>INotification</code> name returned by <code>list_notification_interests</code>.
   #
   # @see INotification
-  module IMediator
+  IMediator = interface {
+    required_methods :name,
+                     :view,
+                     :list_notification_interests,
+                     :handle_notification,
+                     :on_register,
+                     :on_remove
+
     # @return [String] The name of the Mediator.
     def name
       raise NotImplementedError, "#{self.class} must implement #name"
@@ -71,5 +79,5 @@ module PureMVC
     def on_remove
       raise NotImplementedError, "#{self.class} must implement #on_remove"
     end
-  end
+  }
 end

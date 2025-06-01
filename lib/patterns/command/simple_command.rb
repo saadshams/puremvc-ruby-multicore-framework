@@ -18,7 +18,6 @@ module PureMVC
   # @see Notification
   # @see MacroCommand
   class SimpleCommand < Notifier
-    include ICommand
 
     # Fulfill the use-case initiated by the given <code>INotification</code>.
     #
@@ -31,6 +30,8 @@ module PureMVC
     def execute(notification)
 
     end
+
+    implements ICommand
 
   end
 

@@ -23,8 +23,6 @@ module PureMVC
   #
   # @see Model
   class Proxy < Notifier
-    include IProxy
-
     # The name of the <code>Proxy</code>.
     NAME = "Proxy"
 
@@ -53,6 +51,8 @@ module PureMVC
     def on_remove
 
     end
+
+    implements IProxy
 
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_model.rb
 # PureMVC Ruby Multicore
@@ -16,7 +17,11 @@ module PureMVC
   #
   # - Maintain a cache of <code>IProxy</code> instances
   # - Provide methods for registering, retrieving, and removing <code>IProxy</code> instances
-  module IModel
+  IModel = interface {
+    required_methods :register_proxy,
+                     :retrieve_proxy,
+                     :has_proxy?,
+                     :remove_proxy
     # Register an <code>IProxy</code> instance with the <code>Model</code>.
     #
     # @param proxy [IProxy] an object reference to be held by the <code>Model</code>.
@@ -48,6 +53,6 @@ module PureMVC
       raise NotImplementedError, "#{self.class} must implement #remove_proxy"
     end
 
-  end
+  }
 
 end

@@ -25,7 +25,6 @@ module PureMVC
   # @see Observer
   # @see Notification
   class View
-    include IView
 
     MULTITON_MSG = "View instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
@@ -232,6 +231,8 @@ module PureMVC
       mediator.on_remove
       mediator
     end
+
+    implements IView
 
   end
 

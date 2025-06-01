@@ -2,6 +2,8 @@
 
 source "https://rubygems.org"
 
+gem "interface"
+
 group :test do
   gem "minitest"
 end

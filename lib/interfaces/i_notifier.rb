@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_notifier.rb
 # PureMVC Ruby Multicore
@@ -25,7 +26,10 @@ module PureMVC
   #
   # @see IFacade
   # @see INotification
-  module INotifier
+  INotifier = interface {
+    required_methods :send_notification,
+                     :initialize_notifier
+
     # Send a <code>INotification</code>.
     #
     # Convenience method to prevent having to construct new
@@ -51,6 +55,6 @@ module PureMVC
       raise NotImplementedError, "#{self.class} must implement #initialize_notifier"
     end
 
-  end
+  }
 
 end

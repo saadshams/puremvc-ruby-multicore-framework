@@ -40,8 +40,6 @@ module PureMVC
   # @see MacroCommand
   # @see SimpleCommand
   class Notifier
-    include INotifier
-
     # Message Constants
     MULTITON_MSG = "multitonKey for this Notifier not yet initialized!"
 
@@ -87,6 +85,8 @@ module PureMVC
       raise MULTITON_MSG if @multiton_key.nil?
       Facade.get_instance(@multiton_key) { |key| Facade.new(key) }
     end
+
+    implements INotifier
 
   end
 end
