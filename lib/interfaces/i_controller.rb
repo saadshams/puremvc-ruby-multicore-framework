@@ -1,5 +1,6 @@
-require 'interface'
 # frozen_string_literal: true
+
+require 'interface'
 
 # i_controller.rb
 # PureMVC Ruby Multicore

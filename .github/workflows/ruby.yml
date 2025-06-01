@@ -39,4 +39,4 @@ jobs:
       run: bundle install --verbose
 
     - name: Run tests
-      run: ruby -Itest -e 'Dir["test/**/*_test.rb"].each { |file| require_relative file }' --verbose
+      run: bundle exec ruby -Itest -e 'Dir["test/**/*_test.rb"].each { |file| require_relative file }' --verbose
