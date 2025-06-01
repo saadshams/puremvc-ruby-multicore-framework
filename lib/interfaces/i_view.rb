@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_view.rb
 # PureMVC Ruby Multicore
@@ -18,7 +19,7 @@ module PureMVC
   # - Providing a method for attaching <code>IObservers</code> to an <code>INotification</code>'s observer list.
   # - Providing a method for broadcasting an <code>INotification</code>.
   # - Notifying the <code>IObservers</code> of a given <code>INotification</code> when it is broadcast.
-  module IView
+  IView = interface {
     # Register an <code>IObserver</code> to be notified of <code>INotifications</code> with a given name.
     #
     # @param notification_name [String] the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
@@ -90,5 +91,5 @@ module PureMVC
     def remove_mediator(mediator_name)
       raise NotImplementedError, "#{self.class} must implement #remove_mediator"
     end
-  end
+  }
 end

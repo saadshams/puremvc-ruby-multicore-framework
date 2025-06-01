@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_observer.rb
 # PureMVC Ruby Multicore
@@ -37,7 +38,7 @@ module PureMVC
   #
   # @see IView
   # @see INotification
-  module IObserver
+  IObserver = interface {
     # Notify the interested object.
     #
     # @param notification [INotification] the <code>INotification</code> to pass to the interested object's notification method
@@ -53,5 +54,5 @@ module PureMVC
     def compare_notify_context?(object)
       raise NotImplementedError, "#{self.class} must implement #compare_notify_context?"
     end
-  end
+  }
 end

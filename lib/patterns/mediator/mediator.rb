@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../interfaces/i_mediator'
-
 # mediator.rb
 # PureMVC Ruby Multicore
 #
@@ -13,7 +11,7 @@ module PureMVC
   #
   # @see View
   class Mediator < Notifier
-    include IMediator
+    implements IMediator
 
     # The name of the <code>Mediator</code>.
     #

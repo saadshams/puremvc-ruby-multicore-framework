@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../../interfaces/i_notifier'
-
 module PureMVC
   # A base <code>INotifier</code> implementation.
   #
@@ -40,7 +38,7 @@ module PureMVC
   # @see MacroCommand
   # @see SimpleCommand
   class Notifier
-    include INotifier
+    implements INotifier
 
     # Message Constants
     MULTITON_MSG = "multitonKey for this Notifier not yet initialized!"

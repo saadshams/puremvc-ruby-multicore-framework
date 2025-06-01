@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_facade.rb
 # PureMVC Ruby Multicore
@@ -22,8 +23,8 @@ module PureMVC
   # @see IController
   # @see ICommand
   # @see INotification
-  module IFacade
-    include INotifier
+  IFacade = interface {
+    implements INotifier
 
     # Register an <code>ICommand</code> with the <code>Controller</code>.
     #
@@ -125,5 +126,5 @@ module PureMVC
       raise NotImplementedError, "#{self.class} must implement #notify_observers"
     end
 
-  end
+  }
 end

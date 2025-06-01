@@ -10,4 +10,5 @@ group :development do
   gem "yard"
   gem "typeprof"
   gem "steep"
+  gem "interface"
 end

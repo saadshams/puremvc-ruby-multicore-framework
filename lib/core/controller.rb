@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../interfaces/i_controller'
-
 module PureMVC
   # A Multiton <code>IController</code> implementation.
   #
@@ -31,7 +29,7 @@ module PureMVC
   # @see SimpleCommand
   # @see MacroCommand
   class Controller
-    include IController
+    implements IController
 
     # Message Constants
     MULTITON_MSG = "Controller instance for this Multiton key already constructed!"

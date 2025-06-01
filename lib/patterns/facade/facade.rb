@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../../interfaces/i_facade'
-
 module PureMVC
   # A base Multiton <code>IFacade</code> implementation.
   #
@@ -15,7 +13,7 @@ module PureMVC
   # @see View
   # @see Controller
   class Facade
-    include IFacade, INotifier
+    implements IFacade, INotifier
 
     # Message Constants
     MULTITON_MSG = "Facade instance for this Multiton key already constructed!"

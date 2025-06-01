@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_notification.rb
 # PureMVC Ruby Multicore
@@ -37,7 +38,7 @@ module PureMVC
   #
   # @see IView
   # @see IObserver
-  module INotification
+  INotification = interface {
     # @return [String] the name of the notification
     def name
       raise NotImplementedError, "#{self.class} must implement #name"
@@ -59,5 +60,5 @@ module PureMVC
     def to_s
       raise NotImplementedError, "#{self.class} must implement #to_s"
     end
-  end
+  }
 end

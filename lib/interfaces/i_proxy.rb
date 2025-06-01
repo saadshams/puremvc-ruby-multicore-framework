@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'interface'
 
 # i_proxy.rb
 # PureMVC Ruby Multicore
@@ -21,7 +22,7 @@ module PureMVC
   # - Encapsulate interaction with local or remote services used to fetch and persist model data.
   #
   # @see INotifier
-  module IProxy
+  IProxy = interface {
     # @return [String] The proxy name
     def name
       raise NotImplementedError, "#{self.class} must implement #name"
@@ -43,5 +44,5 @@ module PureMVC
     def on_remove
       raise NotImplementedError, "#{self.class} must implement #on_remove"
     end
-  end
+  }
 end

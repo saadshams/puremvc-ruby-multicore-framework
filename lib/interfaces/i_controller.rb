@@ -1,3 +1,4 @@
+require 'interface'
 # frozen_string_literal: true
 
 # i_controller.rb
@@ -25,7 +26,7 @@ module PureMVC
   #
   # @see INotification
   # @see ICommand
-  module IController
+  IController = interface {
     # Register a particular <code>ICommand</code> class as the handler
     # for a particular <code>INotification</code>.
     #
@@ -65,5 +66,5 @@ module PureMVC
       raise NotImplementedError, "#{self.class} must implement #remove_command"
     end
 
-  end
+  }
 end

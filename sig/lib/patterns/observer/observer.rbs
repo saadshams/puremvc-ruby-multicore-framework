@@ -33,7 +33,6 @@ module PureMVC
     # @param context [Object, nil] the object context for the callback.
     # @return [void]
     def initialize: (Method? notify, Object? context) -> void
-    #def initialize: ((^(_INotification) -> void)?, Object?) -> void
 
     # Calls the notify method with the given notification.
     #
