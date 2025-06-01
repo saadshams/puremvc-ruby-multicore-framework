@@ -20,6 +20,14 @@ module PureMVC
   # - Providing a method for broadcasting an <code>INotification</code>.
   # - Notifying the <code>IObservers</code> of a given <code>INotification</code> when it is broadcast.
   IView = interface {
+    required_methods :register_observer,
+                     :notify_observers,
+                     :remove_observer,
+                     :register_mediator,
+                     :retrieve_mediator,
+                     :has_mediator?,
+                     :remove_mediator
+
     # Register an <code>IObserver</code> to be notified of <code>INotifications</code> with a given name.
     #
     # @param notification_name [String] the name of the <code>INotifications</code> to notify this <code>IObserver</code> of

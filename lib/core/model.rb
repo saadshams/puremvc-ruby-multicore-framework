@@ -6,6 +6,8 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
+require_relative '../interfaces/i_model'
+
 module PureMVC
   # A Multiton <code>IModel</code> implementation.
   #
@@ -23,8 +25,6 @@ module PureMVC
   # @see Proxy
   # @see IProxy
   class Model
-    implements IModel
-
     # Message Constants
     MULTITON_MSG = "Model instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
@@ -134,5 +134,7 @@ module PureMVC
       proxy&.on_remove
       proxy
     end
+
+    implements IModel
   end
 end

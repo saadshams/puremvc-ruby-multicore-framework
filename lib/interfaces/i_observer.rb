@@ -39,6 +39,8 @@ module PureMVC
   # @see IView
   # @see INotification
   IObserver = interface {
+    required_methods :notify_observer,
+                     :compare_notify_context?
     # Notify the interested object.
     #
     # @param notification [INotification] the <code>INotification</code> to pass to the interested object's notification method

@@ -23,6 +23,11 @@ module PureMVC
   #
   # @see INotifier
   IProxy = interface {
+    required_methods :name,
+                     :data,
+                     :on_register,
+                     :on_remove
+
     # @return [String] The proxy name
     def name
       raise NotImplementedError, "#{self.class} must implement #name"

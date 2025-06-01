@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../interfaces/i_mediator'
+
 # mediator.rb
 # PureMVC Ruby Multicore
 #
@@ -11,8 +13,6 @@ module PureMVC
   #
   # @see View
   class Mediator < Notifier
-    implements IMediator
-
     # The name of the <code>Mediator</code>.
     #
     # Typically, a <code>Mediator</code> will be written to serve
@@ -61,6 +61,8 @@ module PureMVC
     def on_remove
 
     end
+
+    implements IMediator
 
   end
 

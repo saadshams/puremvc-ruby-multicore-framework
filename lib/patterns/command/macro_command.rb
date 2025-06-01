@@ -6,6 +6,8 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
+require_relative '../../interfaces/i_command'
+
 module PureMVC
   # A base ICommand implementation that executes other ICommand instances.
   #
@@ -21,7 +23,6 @@ module PureMVC
   # @see Notification
   # @see SimpleCommand
   class MacroCommand < Notifier
-    implements ICommand
 
     # Constructor.
     #
@@ -78,6 +79,8 @@ module PureMVC
         command.execute(notification)
       end
     end
+
+    implements ICommand
 
   end
 

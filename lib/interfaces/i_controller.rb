@@ -27,6 +27,10 @@ module PureMVC
   # @see INotification
   # @see ICommand
   IController = interface {
+    required_methods :register_command,
+                     :execute_command,
+                     :has_command?,
+                     :remove_command
     # Register a particular <code>ICommand</code> class as the handler
     # for a particular <code>INotification</code>.
     #

@@ -6,6 +6,8 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
+require_relative '../../interfaces/i_observer'
+
 module PureMVC
   # A base <code>IObserver</code> implementation.
   #
@@ -22,8 +24,6 @@ module PureMVC
   # @see View
   # @see Notification
   class Observer
-    implements IObserver
-
     # @return [Method | nil] notify The callback method to be called on notification.
     attr_accessor :notify
 
@@ -54,6 +54,8 @@ module PureMVC
     def compare_notify_context?(object)
       object.equal?(@context)
     end
+
+    implements IObserver
 
   end
 end

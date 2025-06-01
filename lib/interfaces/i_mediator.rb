@@ -37,6 +37,13 @@ module PureMVC
   #
   # @see INotification
   IMediator = interface {
+    required_methods :name,
+                     :view,
+                     :list_notification_interests,
+                     :handle_notification,
+                     :on_register,
+                     :on_remove
+
     # @return [String] The name of the Mediator.
     def name
       raise NotImplementedError, "#{self.class} must implement #name"

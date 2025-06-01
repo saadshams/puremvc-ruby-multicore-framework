@@ -6,6 +6,8 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
+require_relative '../../interfaces/i_proxy'
+
 module PureMVC
   # A base <code>IProxy</code> implementation.
   #
@@ -21,8 +23,6 @@ module PureMVC
   #
   # @see Model
   class Proxy < Notifier
-    implements IProxy
-
     # The name of the <code>Proxy</code>.
     NAME = "Proxy"
 
@@ -51,6 +51,8 @@ module PureMVC
     def on_remove
 
     end
+
+    implements IProxy
 
   end
 end

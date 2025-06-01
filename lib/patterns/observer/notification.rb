@@ -6,6 +6,8 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
+require_relative '../../interfaces/i_notification'
+
 module PureMVC
   # A base <code>INotification</code>implementation.
   #
@@ -36,8 +38,6 @@ module PureMVC
   #
   # @see Observer
   class Notification
-    implements INotification
-
     # @return [String] the name of the notification
     attr_reader :name
 
@@ -66,6 +66,8 @@ module PureMVC
         "\nBody: #{@body.inspect}" \
         "\nType: #{@type}"
     end
+
+    implements INotification
 
   end
 end

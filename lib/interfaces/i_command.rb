@@ -12,6 +12,8 @@ module PureMVC
   #
   # @see INotification
   ICommand = interface {
+    required_methods :execute
+
     # Execute the <code>ICommand</code>'s logic to handle a given <code>INotification</code>.
     #
     # @abstract This method must be implemented by the concrete command.

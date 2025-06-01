@@ -39,6 +39,11 @@ module PureMVC
   # @see IView
   # @see IObserver
   INotification = interface {
+    required_methods :name,
+                     :body,
+                     :type,
+                     :to_s
+
     # @return [String] the name of the notification
     def name
       raise NotImplementedError, "#{self.class} must implement #name"

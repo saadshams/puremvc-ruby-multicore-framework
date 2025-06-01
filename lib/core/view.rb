@@ -6,6 +6,8 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
+require_relative '../interfaces/i_view'
+
 module PureMVC
   # A Multiton <code>IView</code> implementation.
   #
@@ -23,7 +25,6 @@ module PureMVC
   # @see Observer
   # @see Notification
   class View
-    implements IView
 
     MULTITON_MSG = "View instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
@@ -230,6 +231,8 @@ module PureMVC
       mediator.on_remove
       mediator
     end
+
+    implements IView
 
   end
 
