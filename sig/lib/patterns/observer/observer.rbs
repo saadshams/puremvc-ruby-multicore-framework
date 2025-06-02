@@ -46,4 +46,7 @@ module PureMVC
     # @return [Boolean] true if the given object is the same as the context.
     def compare_notify_context?: (Object) -> bool
   end
+
+  # Type-level assertion that Observer conforms to _IObserver
+  type observer_validation = validate_observer[Observer]
 end

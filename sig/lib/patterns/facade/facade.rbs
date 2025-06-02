@@ -229,4 +229,7 @@ module PureMVC
     # @return [void]
     def initialize_notifier: (String key) -> void
   end
+
+  # Type-level assertion that Facade conforms to _IFacade
+  type facade_validation = validate_facade[Facade]
 end

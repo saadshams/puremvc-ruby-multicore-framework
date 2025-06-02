@@ -33,4 +33,6 @@ module PureMVC
     # @return [_IProxy | nil] the <code>_IProxy</code> that was removed from the <code>Model</code>.
     def remove_proxy: (String proxy_name) -> _IProxy?
   end
+
+  type validate_model[Model < _IModel] = top
 end

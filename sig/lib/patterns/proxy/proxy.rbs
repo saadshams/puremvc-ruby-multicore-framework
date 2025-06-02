@@ -41,4 +41,7 @@ module PureMVC
     # @return [void]
     def on_remove: () -> void
   end
+
+  # Type-level assertion that Proxy conforms to _IProxy
+  type proxy_validation = validate_proxy[Proxy]
 end

@@ -74,4 +74,7 @@ module PureMVC
     # @return [_IFacade] the facade instance for the notifier's key
     def facade: () -> _IFacade
   end
+
+  # Type-level assertion that Notifier conforms to _INotifier
+  type notifier_validation = validate_notifier[Notifier]
 end

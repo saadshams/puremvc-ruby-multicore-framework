@@ -16,6 +16,7 @@ module PureMVC
   # @see Notification
   class View
 
+    include _IView
 
     # The Multiton IModel instanceMap.
     # @return [Hash{String => _IView}]
@@ -145,4 +146,7 @@ module PureMVC
     # @return [_IMediator, nil] the <code>_IMediator</code> that was removed from the <code>View</code>, or nil if none found.
     def remove_mediator: (String mediator_name) -> _IMediator?
   end
+
+  # Type-level assertion that View conforms to _IView
+  type view_validation = validate_view[View]
 end
