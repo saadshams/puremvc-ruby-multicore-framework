@@ -167,15 +167,19 @@ module PureMVC
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
     # @return [void]
     def register_mediator(mediator)
-      # do not allow re-registration (you must to removeMediator first)
-      return if has_mediator?(mediator.name)
+      exists = false
+      @mediator_mutex.synchronize do
+        # do not allow re-registration (you must to removeMediator first)
+        exists = @mediator_map.key?(mediator.name)
+        unless exists
+          # Register the Mediator for retrieval by name
+          @mediator_map[mediator.name] = mediator
+        end
+      end
+
+      return if exists
 
       mediator.initialize_notifier(@multiton_key)
-
-      @mediator_mutex.synchronize do
-        # Register the Mediator for retrieval by name
-        @mediator_map[mediator.name] = mediator
-      end
 
       # Create Observer referencing this mediator's handleNotification method
       observer = Observer.new(mediator.method(:handle_notification), mediator)
