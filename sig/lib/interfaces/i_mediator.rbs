@@ -30,6 +30,12 @@ module PureMVC
   interface _IMediator
     include _INotifier
 
+    # @return [String] The name of the Mediator.
+    def name: () -> String
+
+    # @return [Object, nil] The view component associated with this Mediator.
+    def view: () -> Object?
+
     # List <code>_INotification</code> interests.
     #
     # @return [Array] an <code>Array</code> of the <code>_INotification</code> names this <code>_IMediator</code> has an interest in.

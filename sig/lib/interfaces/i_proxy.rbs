@@ -17,6 +17,12 @@ module PureMVC
 
     include _INotifier
 
+    # @return [String] The proxy name
+    def name: () -> String
+
+    # @return [Object | nil] The data managed by the proxy
+    def data: () -> Object?
+
     # Called by the Model when the Proxy is registered
     # @return [void]
     def on_register: () -> void
