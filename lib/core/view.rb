@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # view.rb
 # PureMVC Ruby Multicore
@@ -121,6 +122,7 @@ module PureMVC
     # @param notification [INotification] the <code>INotification</code> to notify <code>IObservers</code> of.
     # @return [void]
     def notify_observers(notification)
+      # @type observers [Array<IObserver>?]
       observers = nil
       @observer_mutex.synchronize do
         # Get a reference to the observers list for this notification name
@@ -141,6 +143,7 @@ module PureMVC
     def remove_observer(notification_name, notify_context)
       @observer_mutex.synchronize do
         # the observer list for the notification under inspection
+        # @type observers [Array<IObserver>?]
         observers = @observer_map[notification_name]
         # find and remove the sole Observer for the given notify_context
         # there can only be one Observer for a given notify_context
@@ -167,6 +170,7 @@ module PureMVC
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
     # @return [void]
     def register_mediator(mediator)
+      # @type exists [Boolean]
       exists = false
       @mediator_mutex.synchronize do
         # do not allow re-registration (you must to removeMediator first)
@@ -182,9 +186,11 @@ module PureMVC
       mediator.initialize_notifier(@multiton_key)
 
       # Create Observer referencing this mediator's handleNotification method
+      # @type observer [Observer]
       observer = Observer.new(mediator.method(:handle_notification), mediator)
 
       # Get Notification interests, if any.
+      # @type interests [Array<String>]
       interests = mediator.list_notification_interests
       # Register Mediator as Observer for its list of Notification interests
       interests.each { |interest| register_observer(interest, observer) }
@@ -218,6 +224,7 @@ module PureMVC
     # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
     # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
     def remove_mediator(mediator_name)
+      # @type mediator [IMediator?]
       mediator = nil
       @mediator_mutex.synchronize do
         # retrieve the named mediator and delete from the mediator map
@@ -227,6 +234,7 @@ module PureMVC
       return unless mediator
 
       # for every notification this mediator is interested in...
+      # @type interests [Array<String>]
       interests = mediator.list_notification_interests
       # remove the observer linking the mediator
       # to the notification interest

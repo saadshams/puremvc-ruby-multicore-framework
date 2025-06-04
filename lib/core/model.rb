@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # model.rb
 # PureMVC Ruby Multicore
@@ -129,6 +130,7 @@ module PureMVC
     # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
     # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy(proxy_name)
+      # @type proxy [_IProxy?]
       proxy = nil
       @proxy_mutex.synchronize do
         proxy = @proxy_map.delete(proxy_name)
