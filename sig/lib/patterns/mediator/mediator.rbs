@@ -47,4 +47,7 @@ module PureMVC
     # @return [void]
     def on_remove: () -> void
   end
+
+  # Type-level assertion that Mediator conforms to _IMediator
+  type mediator_validation = validate_mediator[Mediator]
 end

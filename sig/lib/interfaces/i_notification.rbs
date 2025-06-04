@@ -30,18 +30,11 @@ module PureMVC
   # @see IView
   # @see IObserver
   interface _INotification
-    # @return [String] the name of the notification
-    def name: () -> String
-
-    # @return [Object, nil] the body of the notification
-    def body: () -> Object?
-
-    # @return [String, nil] the type of the notification
-    def type: () -> String?
-
     # Get the string representation of the <code>_INotification</code> instance
     #
     # @return [String]
     def to_s: () -> String
   end
+
+  type validate_notification[Notification < _INotification] = top
 end

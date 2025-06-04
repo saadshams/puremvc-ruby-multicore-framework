@@ -16,6 +16,8 @@ module PureMVC
   # @see IProxy
   class Model
 
+    include _IModel
+
     # The Multiton IModel instanceMap.
     # @return [Hash{String => _IModel}]
     self.@instance_map: Hash[String, _IModel]
@@ -103,4 +105,7 @@ module PureMVC
     # @return [_IProxy, nil] the <code>_IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy: (String proxy_name) -> _IProxy?
   end
+
+  # Type-level assertion that Model conforms to _IModel
+  type model_validation = validate_model[Model]
 end

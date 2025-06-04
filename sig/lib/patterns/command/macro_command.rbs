@@ -61,4 +61,7 @@ module PureMVC
     # @return [void]
     def execute: (_INotification notification) -> void
   end
+
+  # Type-level assertion that MacroCommand conforms to _ICommand
+  type macro_command_validation = validate_command[MacroCommand]
 end

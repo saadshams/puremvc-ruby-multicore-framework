@@ -99,4 +99,6 @@ module PureMVC
     # @return [void]
     def notify_observers: (_INotification notification) -> void
   end
+
+  type validate_facade[Facade < _IFacade] = top
 end

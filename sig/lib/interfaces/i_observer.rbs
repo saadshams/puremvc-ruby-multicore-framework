@@ -42,4 +42,6 @@ module PureMVC
     # @return [Boolean] indicating if the notification context and the object are the same.
     def compare_notify_context?: (Object object) -> bool
   end
+
+  type validate_observer[Observer < _IObserver] = top
 end

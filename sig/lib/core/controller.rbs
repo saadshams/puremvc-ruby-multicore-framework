@@ -22,6 +22,8 @@ module PureMVC
   # @see MacroCommand
   class Controller
 
+    include _IController
+
     # The Multiton IController instanceMap.
     # @return [Hash{String => _IController}]
     self.@instance_map: Hash[String, _IController]
@@ -130,4 +132,7 @@ module PureMVC
     # @return [void]
     def remove_command: (String notification_name) -> void
   end
+
+  # Type-level assertion that Controller conforms to _IController
+  type controller_validation = validate_controller[Controller]
 end

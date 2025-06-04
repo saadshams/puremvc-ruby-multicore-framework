@@ -49,4 +49,6 @@ module PureMVC
     # @return [void]
     def remove_command: (String notification_name) -> void
   end
+
+  type validate_controller[Controller < _IController] = top
 end

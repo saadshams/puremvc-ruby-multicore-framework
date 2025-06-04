@@ -39,4 +39,6 @@ module PureMVC
     # @return [void]
     def initialize_notifier: (String key) -> void
   end
+
+  type validate_notifier[Notifier < _INotifier] = top
 end
