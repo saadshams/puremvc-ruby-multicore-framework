@@ -125,11 +125,10 @@ module PureMVC
       # @type observers [Array<IObserver>?]
       observers = nil
       @observer_mutex.synchronize do
-        # Get a reference to the observers list for this notification name
-        observers_ref = @observer_map[notification.name]
-        # Iteration safe, copy observers from reference array to working array,
+        # Get a reference to the observer list for this notification name
+        # Iteration safe, copy observers from reference array to a working array,
         # since the reference array may change during the notification loop
-        observers = observers_ref.dup
+        observers = @observer_map[notification.name].dup
       end
       # Notify Observers from the working array
       observers&.each { | observer | observer.notify_observer(notification) }
@@ -186,7 +185,7 @@ module PureMVC
       mediator.initialize_notifier(@multiton_key)
 
       # Create Observer referencing this mediator's handleNotification method
-      # @type observer [Observer]
+      # @type observer [IObserver]
       observer = Observer.new(mediator.method(:handle_notification), mediator)
 
       # Get Notification interests, if any.
@@ -233,7 +232,7 @@ module PureMVC
 
       return unless mediator
 
-      # for every notification this mediator is interested in...
+      # for every notification, this mediator is interested in...
       # @type interests [Array<String>]
       interests = mediator.list_notification_interests
       # remove the observer linking the mediator

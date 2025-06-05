@@ -14,7 +14,7 @@ module PureMVC
     # Execute the <code>ICommand</code>'s logic to handle a given <code>INotification</code>.
     #
     # @abstract This method must be implemented by the concrete command.
-    # @param notification [INotification] an INotification to handle.
+    # @param notification [_INotification] an INotification to handle.
     # @return [void]
     def execute(notification)
       raise NotImplementedError, "#{self.class} must implement #execute"

@@ -52,7 +52,8 @@ RubyMine: Test file name mask: **/{*_test,test_*,*_spec}.rb
 Production - [Version 1.0.0](https://github.com/PureMVC/puremvc-ruby-multicore-framework/blob/master/VERSION)
 
 ## License
-* PureMVC MultiCore Framework for Ruby - Copyright © 2025 [Saad Shams](https://www.linkedin.com/in/muizz/)
+* PureMVC MultiCore Framework for Ruby 
+* PureMVC - Copyright © 2025 [Saad Shams](https://www.linkedin.com/in/muizz/)
 * PureMVC - Copyright © 2025 [Futurescale, Inc.](http://futurescale.com/)
 * All rights reserved.
 
