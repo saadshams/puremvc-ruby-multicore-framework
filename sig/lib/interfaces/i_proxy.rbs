@@ -32,5 +32,6 @@ module PureMVC
     def on_remove: () -> void
   end
 
+  # Assert that the given `Proxy` type parameter is a subtype of `_IProxy`
   type validate_proxy[Proxy < _IProxy] = top
 end

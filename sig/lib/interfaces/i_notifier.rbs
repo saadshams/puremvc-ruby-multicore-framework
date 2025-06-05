@@ -40,5 +40,6 @@ module PureMVC
     def initialize_notifier: (String key) -> void
   end
 
+  # Assert that the given `Notifier` type parameter is a subtype of `_INotifier`
   type validate_notifier[Notifier < _INotifier] = top
 end

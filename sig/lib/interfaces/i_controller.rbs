@@ -50,5 +50,6 @@ module PureMVC
     def remove_command: (String notification_name) -> void
   end
 
+  # Assert that the given `Controller` type parameter is a subtype of `_IController`
   type validate_controller[Controller < _IController] = top
 end

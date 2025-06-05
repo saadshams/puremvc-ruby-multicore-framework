@@ -56,5 +56,6 @@ module PureMVC
     def on_remove: () -> void
   end
 
+  # Assert that the given `Mediator` type parameter is a subtype of `_IMediator`
   type validate_mediator[Mediator < _IMediator] = top
 end

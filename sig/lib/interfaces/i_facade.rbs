@@ -100,5 +100,6 @@ module PureMVC
     def notify_observers: (_INotification notification) -> void
   end
 
+  # Assert that the given `Facade` type parameter is a subtype of `_IFacade`
   type validate_facade[Facade < _IFacade] = top
 end

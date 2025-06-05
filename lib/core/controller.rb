@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # controller.rb
 # PureMVC Ruby Multicore
@@ -164,7 +165,7 @@ module PureMVC
     # @return [void]
     def remove_command(notification_name)
       @command_mutex.synchronize do
-        # @type command [ICommand]
+        # @type command [(() -> ICommand)?]
         command = @command_map[notification_name]
 
         # if the Command is registered...

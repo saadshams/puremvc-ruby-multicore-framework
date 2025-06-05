@@ -14,5 +14,6 @@ module PureMVC
     def execute: (_INotification notification) -> void
   end
 
+  # Assert that the given `Command` type parameter is a subtype of `_ICommand`
   type validate_command[Command < _ICommand] = top
 end
