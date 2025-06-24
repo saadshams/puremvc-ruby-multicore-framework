@@ -35,9 +35,11 @@ module PureMVC
 
     # @return [Object, nil] the body of the notification
     def body: () -> Object?
+    def body=: (Object?) -> void
 
     # @return [String, nil] the type of the notification
     def type: () -> String?
+    def type=: (String?) -> void
 
     # Get the string representation of the <code>_INotification</code> instance
     #

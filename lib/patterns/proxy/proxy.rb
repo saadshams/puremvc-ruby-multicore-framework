@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../../interfaces/i_proxy'
-
 module PureMVC
   # A base <code>IProxy</code> implementation.
   #
@@ -22,20 +20,21 @@ module PureMVC
   # to be sent when the <code>Proxy</code> has retrieved the data from the service.
   #
   # @see Model
-  class Proxy < Notifier
-    include IProxy
+  class Proxy # < Notifier
 
     # The name of the <code>Proxy</code>.
     NAME = "Proxy"
+    public_constant :NAME
 
     # @return [String] The proxy name
     attr_reader :name
+
     # @return [Object] The data managed by the proxy
     attr_accessor :data
 
     # Initializes a new Proxy instance.
     #
-    # @param [String | nil] name the name of the proxy (defaults to <code>NAME</code>)
+    # @param [String, nil] name the name of the proxy (defaults to <code>NAME</code>)
     # @param [Object, nil] data optional data to be managed by the proxy
     def initialize(name = nil, data = nil)
       @name =  name || NAME

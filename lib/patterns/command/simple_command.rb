@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../../interfaces/i_command'
-
 module PureMVC
   # A base <code>ICommand</code>implementation.
   #
@@ -17,8 +15,7 @@ module PureMVC
   # @see Controller
   # @see Notification
   # @see MacroCommand
-  class SimpleCommand < Notifier
-    include ICommand
+  class SimpleCommand # < Notifier
 
     # Fulfill the use-case initiated by the given <code>INotification</code>.
     #
@@ -26,7 +23,7 @@ module PureMVC
     # which results in an <code>INotification</code>being broadcast, handled by business logic in the
     # <code>execute</code>method of an <code>ICommand</code>.
     #
-    # @param notification [INotification] the notification to handle
+    # @param notification [_INotification] the notification to handle
     # @return [void]
     def execute(notification)
 

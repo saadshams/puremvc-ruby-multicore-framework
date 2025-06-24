@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../interfaces/i_controller'
-
 module PureMVC
   # A Multiton <code>IController</code> implementation.
   #
@@ -31,7 +29,6 @@ module PureMVC
   # @see SimpleCommand
   # @see MacroCommand
   class Controller
-    include IController
 
     # Message Constants
     MULTITON_MSG = "Controller instance for this Multiton key already constructed!"
@@ -82,6 +79,7 @@ module PureMVC
       # The Multiton Key for this Core
       @multiton_key = key
       # Local reference to View
+      # @type var view: PureMVC::_IView?
       @view = nil
       # Mapping of Notification names to Command factories
       @command_map = {}
@@ -144,7 +142,7 @@ module PureMVC
 
       # @type command [ICommand]
       command = factory.call
-      command.initialize_notifier(@multiton_key)
+      # command.initialize_notifier(@multiton_key)
       command.execute(notification)
     end
 

@@ -30,9 +30,18 @@ module PureMVC
   # @see IView
   # @see INotification
   interface _IObserver
+
+    # @return [Method, nil] The callback method to be called on notification.
+    def notify: () -> Method?
+    def notify=: (Method?) -> void
+
+    # @return [Object, nil] The object context for the callback.
+    def context: () -> Object?
+    def context=: (Object?) -> void
+
     # Notify the interested object.
     #
-    # @param notification [INotification] the <code>_INotification</code> to pass to the interested object's notification method
+    # @param notification [_INotification] the <code>_INotification</code> to pass to the interested object's notification method
     # @return [void]
     def notify_observer: (_INotification notification) -> void
 

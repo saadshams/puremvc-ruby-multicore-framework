@@ -15,13 +15,14 @@ module PureMVC
   # @see INotifier
   interface _IProxy
 
-    include _INotifier
+    # include _INotifier
 
     # @return [String] The proxy name
     def name: () -> String
 
     # @return [Object | nil] The data managed by the proxy
     def data: () -> Object?
+    def data=: (Object?) -> void
 
     # Called by the Model when the Proxy is registered
     # @return [void]

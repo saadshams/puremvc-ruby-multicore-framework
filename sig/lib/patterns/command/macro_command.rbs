@@ -12,7 +12,7 @@ module PureMVC
   # @see Controller
   # @see Notification
   # @see SimpleCommand
-  class MacroCommand < Notifier
+  class MacroCommand # < Notifier
 
     include _ICommand
 
@@ -52,14 +52,6 @@ module PureMVC
     # @param factory [Proc<() -> _ICommand>] A block or callable that returns an instance of _ICommand when called.
     # @return [void]
     def add_sub_command: () { () -> _ICommand } -> void
-
-    # Execute this MacroCommand's SubCommands.
-    #
-    # The SubCommands will be called in First In/First Out (FIFO) order.
-    #
-    # @param notification [_INotification] the notification object to be passed to each SubCommand.
-    # @return [void]
-    def execute: (_INotification notification) -> void
   end
 
   # Type-level assertion that MacroCommand conforms to _ICommand

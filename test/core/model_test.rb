@@ -18,7 +18,6 @@ class ModelTest < Minitest::Test
 
     # test assertions
     refute_nil model, "Expecting instance not nil"
-    assert_kind_of PureMVC::IModel, model, "Expecting instance implements IModel"
   end
 
   # Tests the proxy registration and retrieval methods.

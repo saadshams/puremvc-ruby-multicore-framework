@@ -19,7 +19,7 @@ module PureMVC
     #
     # @param proxy_name [String]
     # @return [_IProxy] the <code>_IProxy</code> instance previously registered with the given <code>proxyName</code>.
-    def retrieve_proxy: (String proxy_name) -> _IProxy
+    def retrieve_proxy: (String proxy_name) -> _IProxy?
 
     # Check if a <code>Proxy</code> is registered.
     #

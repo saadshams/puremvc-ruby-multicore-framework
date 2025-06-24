@@ -32,9 +32,6 @@ module PureMVC
 
     @proxy_mutex: Mutex
 
-    # Message Constants
-    MULTITON_MSG: "Model instance for this Multiton key already constructed!"
-
     # The Multiton IModel instanceMap.
     # @return [Hash{String => _IModel}]
     def self.instance_map: () -> Hash[String, _IModel]
@@ -52,7 +49,7 @@ module PureMVC
     # @param key [String] the unique key identifying the Multiton instance
     # @param factory [Proc<(String) -> IModel>] the unique key passed to the factory block
     # @return [IModel] the instance for this Multiton key
-    def self.get_instance: (String key) { () -> _IModel } -> _IModel
+    def self.get_instance: (String key) { (String k) -> _IModel } -> _IModel
 
     # Remove an _IModel instance
     #
@@ -85,25 +82,25 @@ module PureMVC
     #
     # @param proxy [_IProxy] an <code>_IProxy</code> to be held by the <code>Model</code>.
     # @return [void]
-    def register_proxy: (_IProxy proxy) -> void
+    # def register_proxy: (_IProxy proxy) -> void
 
     # Retrieve an <code>_IProxy</code> from the <code>Model</code>.
     #
     # @param proxy_name [String] the name of the proxy to retrieve.
     # @return [_IProxy, nil] the <code>_IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
-    def retrieve_proxy: (String proxy_name) -> _IProxy?
+    # def retrieve_proxy: (String proxy_name) -> _IProxy?
 
     # Check if a Proxy is registered.
     #
     # @param proxy_name [String] the name of the proxy to check.
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxy_name</code>.
-    def has_proxy?: (String proxy_name) -> bool
+    # def has_proxy?: (String proxy_name) -> bool
 
     # Remove an <code>_IProxy</code> from the <code>Model</code>.
     #
     # @param proxy_name [String] name of the <code>_IProxy</code> instance to be removed.
     # @return [_IProxy, nil] the <code>_IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
-    def remove_proxy: (String proxy_name) -> _IProxy?
+    # def remove_proxy: (String proxy_name) -> _IProxy?
   end
 
   # Type-level assertion that Model conforms to _IModel

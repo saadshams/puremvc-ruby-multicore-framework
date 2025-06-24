@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../interfaces/i_model'
-
 module PureMVC
   # A Multiton <code>IModel</code> implementation.
   #
@@ -25,7 +23,6 @@ module PureMVC
   # @see Proxy
   # @see IProxy
   class Model
-    include IModel
 
     # Message Constants
     MULTITON_MSG = "Model instance for this Multiton key already constructed!"
@@ -94,10 +91,10 @@ module PureMVC
 
     # Register an <code>IProxy</code> with the <code>Model</code>.
     #
-    # @param proxy [IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
+    # @param proxy [_IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
     # @return [void]
     def register_proxy(proxy)
-      proxy.initialize_notifier(@multiton_key)
+      # proxy.initialize_notifier(@multiton_key)
       @proxy_mutex.synchronize do
         @proxy_map[proxy.name] = proxy
       end
@@ -107,7 +104,7 @@ module PureMVC
     # Retrieve an <code>IProxy</code> from the <code>Model</code>.
     #
     # @param proxy_name [String] the name of the proxy to retrieve.
-    # @return [IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
+    # @return [_IProxy, nil] the <code>IProxy</code> instance previously registered with the given <code>proxy_name</code>, or nil if none found.
     def retrieve_proxy(proxy_name)
       @proxy_mutex.synchronize do
         @proxy_map[proxy_name]
@@ -127,8 +124,9 @@ module PureMVC
     # Remove an <code>IProxy</code> from the <code>Model</code>.
     #
     # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
-    # @return [IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
+    # @return [_IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy(proxy_name)
+      # @type var proxy: PureMVC::_IProxy?
       proxy = nil
       @proxy_mutex.synchronize do
         proxy = @proxy_map.delete(proxy_name)

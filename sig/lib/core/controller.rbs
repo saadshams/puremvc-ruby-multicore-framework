@@ -44,9 +44,6 @@ module PureMVC
     # Mutex used to synchronize access to the @command_map
     @command_mutex: Mutex
 
-    # Message Constants
-    MULTITON_MSG: "Controller instance for this Multiton key already constructed!"
-
     # The Multiton IController instanceMap.
     # @return [Hash{String => IController}]
     def self.instance_map: () -> Hash[String, _IController]
@@ -64,7 +61,7 @@ module PureMVC
     # @param key [String] the unique key identifying the Multiton instance
     # @param factory [Proc<(String) -> IController>] the unique key passed to the factory block
     # @return [IController] The controller instance created by the factory
-    def self.get_instance: (String key) { () -> _IController } -> _IController
+    def self.get_instance: (String key) { (String k) -> _IController } -> _IController
 
     # Remove an IController instance
     #
@@ -100,37 +97,6 @@ module PureMVC
     #
     # @return [void]
     def initialize_controller: () -> void
-
-    # Register a particular _ICommand class as the handler for a particular INotification.
-    #
-    # If an ICommand has already been registered to handle INotifications with this name,
-    # it is replaced by the new _ICommand.
-    #
-    # The Observer for the new _ICommand is only created if this is the first time
-    # an ICommand has been registered for this notification name.
-    #
-    # @param notification_name [String] the name of the INotification
-    # @param factory [Proc<() -> _ICommand>] the factory to produce an instance of the _ICommand
-    # @return [void]
-    def register_command: (String notification_name) { () -> _ICommand } -> void
-
-    # If an ICommand has previously been registered to handle the given _INotification, then it is executed.
-    #
-    # @param notification [_INotification] the notification to handle
-    # @return [void]
-    def execute_command: (_INotification notification) -> void
-
-    # Check if a Command is registered for a given Notification.
-    #
-    # @param notification_name [String] the name of the Notification
-    # @return [Boolean] whether a Command is currently registered for the given notification_name
-    def has_command?: (String notification_name) -> bool
-
-    # Remove a previously registered ICommand to INotification mapping.
-    #
-    # @param notification_name [String] the name of the INotification to remove the ICommand mapping for
-    # @return [void]
-    def remove_command: (String notification_name) -> void
   end
 
   # Type-level assertion that Controller conforms to _IController

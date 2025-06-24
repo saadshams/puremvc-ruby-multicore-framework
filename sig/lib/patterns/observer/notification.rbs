@@ -31,12 +31,6 @@ module PureMVC
 
     include _INotification
 
-    @name: String
-
-    @body: Object?
-
-    @type: String?
-
     # @return [String] the name of the notification
     attr_reader name: String
 
@@ -53,11 +47,6 @@ module PureMVC
     # @param type [String, nil] optional type identifier
     # @return [void]
     def initialize: (String name, Object? body, String? type) -> void
-
-    # Returns a string representation of the notification.
-    #
-    # @return [String]
-    def to_s: () -> ::String
   end
 
   # Type-level assertion that Notification conforms to _INotification

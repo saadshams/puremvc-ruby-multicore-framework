@@ -12,18 +12,16 @@ module PureMVC
   # to be sent when the <code>Proxy</code> has retrieved the data from the service.
   #
   # @see Model
-  class Proxy < Notifier
+  class Proxy # < Notifier
 
     include _IProxy
 
     # The name of the <code>Proxy</code>.
-    NAME: "Proxy"
+    NAME: String
 
-    @name: String
     # @return [String] The proxy name
     attr_reader name: String
 
-    @data: Object?
     # @return [Object | nil] The data managed by the proxy
     attr_accessor data: Object?
 
@@ -32,14 +30,6 @@ module PureMVC
     # @param [String | nil] name the name of the proxy (defaults to <code>NAME</code>)
     # @param [Object, nil] data optional data to be managed by the proxy
     def initialize: (String? name, Object? data) -> void
-
-    # Called by the Model when the Proxy is registered
-    # @return [void]
-    def on_register: () -> void
-
-    # Called by the Model when the Proxy is removed
-    # @return [void]
-    def on_remove: () -> void
   end
 
   # Type-level assertion that Proxy conforms to _IProxy

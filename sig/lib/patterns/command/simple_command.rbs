@@ -7,19 +7,10 @@ module PureMVC
   # @see Controller
   # @see Notification
   # @see MacroCommand
-  class SimpleCommand < Notifier
+  class SimpleCommand # < Notifier
 
     include _ICommand
 
-    # Fulfill the use-case initiated by the given <code>_INotification</code>.
-    #
-    # In the Command Pattern, an application use-case typically begins with some user action,
-    # which results in an <code>_INotification</code>being broadcast, handled by business logic in the
-    # <code>execute</code>method of an <code>_ICommand</code>.
-    #
-    # @param notification [_INotification] the notification to handle
-    # @return [void]
-    def execute: (_INotification notification) -> void
   end
 
   # Type-level assertion that SimpleCommand conforms to _ICommand

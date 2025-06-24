@@ -2,7 +2,7 @@ module PureMVC
   # A base <code>_IMediator</code> implementation.
   #
   # @see View
-  class Mediator < Notifier
+  class Mediator # < Notifier
 
     include _IMediator
 
@@ -13,11 +13,9 @@ module PureMVC
     # will not have a need to be dynamically named.
     NAME: "Mediator"
 
-    @name: String
     # @return [String] The name of the Mediator.
     attr_reader name: String
 
-    @view: Object?
     # @return [Object, nil] The view component associated with this Mediator.
     attr_accessor view: Object?
 
@@ -27,25 +25,6 @@ module PureMVC
     # @param view [Object, nil] the view component this mediator manages (default: <code>nil</code>)
     # @return [void]
     def initialize: (String? name, Object? view) -> void
-
-    # Returns an array of notification names this mediator is interested in.
-    #
-    # @return [Array<String>] list of notification names
-    def list_notification_interests: () -> Array[String]
-
-    # Handles a notification.
-    #
-    # @param notification [_INotification] the notification to handle
-    # @return [void]
-    def handle_notification: (_INotification notification) -> void
-
-    # Called when the mediator is registered.
-    # @return [void]
-    def on_register: () -> void
-
-    # Called when the mediator is removed.
-    # @return [void]
-    def on_remove: () -> void
   end
 
   # Type-level assertion that Mediator conforms to _IMediator

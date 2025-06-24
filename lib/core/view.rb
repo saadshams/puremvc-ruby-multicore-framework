@@ -6,8 +6,6 @@
 # Copyright(c) 2025 Saad Shams <saad.shams@puremvc.org>
 # Your reuse is governed by the BSD 3-Clause License
 
-require_relative '../interfaces/i_view'
-
 module PureMVC
   # A Multiton <code>IView</code> implementation.
   #
@@ -25,7 +23,6 @@ module PureMVC
   # @see Observer
   # @see Notification
   class View
-    include IView
 
     MULTITON_MSG = "View instance for this Multiton key already constructed!"
     private_constant :MULTITON_MSG
@@ -75,14 +72,19 @@ module PureMVC
       raise MULTITON_MSG if self.class.instance_map[key]
       self.class.instance_map[key] = self
       # The Multiton Key for this Core
+      # @type var @multiton_key: String
       @multiton_key = key
       # Mapping of Notification names to Observer lists
+      # @type var @observer_map: Hash[String, Array[PureMVC::_IObserver]]
       @observer_map = {}
       # Mutex used to synchronize access to the observer_map
+      # @type var @observer_mutex: Mutex
       @observer_mutex = Mutex.new
       # Mapping of Mediator names to Mediator instances
+      # @type var @mediator_map: Hash[String, PureMVC::_IMediator]
       @mediator_map = {}
       # Mutex used to synchronize access to the mediator_map
+      # @type var @mediator_mutex: Mutex
       @mediator_mutex = Mutex.new
       initialize_view
     end
@@ -121,9 +123,11 @@ module PureMVC
     # @param notification [INotification] the <code>INotification</code> to notify <code>IObservers</code> of.
     # @return [void]
     def notify_observers(notification)
+      # @type var observers: Array[PureMVC::_IObserver]?
       observers = nil
       @observer_mutex.synchronize do
         # Get a reference to the observers list for this notification name
+        # @type var observers_ref: Array[PureMVC::_IObserver]?
         observers_ref = @observer_map[notification.name]
         # Iteration safe, copy observers from reference array to working array,
         # since the reference array may change during the notification loop
@@ -141,14 +145,15 @@ module PureMVC
     def remove_observer(notification_name, notify_context)
       @observer_mutex.synchronize do
         # the observer list for the notification under inspection
+        # @type var observers: Array[PureMVC::_IObserver]?
         observers = @observer_map[notification_name]
         # find and remove the sole Observer for the given notify_context
         # there can only be one Observer for a given notify_context
         # in any given Observer list, so remove it
-        observers.reject! { |observer| observer.compare_notify_context?(notify_context) }
+        observers&.reject! { |observer| observer.compare_notify_context?(notify_context) }
         # Also, when a Notification's Observer list length falls to
         # zero, delete the notification key from the observer map
-        @observer_map.delete(notification_name) if observers.empty?
+        @observer_map.delete(notification_name) if observers&.empty?
       end
     end
 
@@ -179,7 +184,7 @@ module PureMVC
 
       return if exists
 
-      mediator.initialize_notifier(@multiton_key)
+      # mediator.initialize_notifier(@multiton_key)
 
       # Create Observer referencing this mediator's handleNotification method
       observer = Observer.new(mediator.method(:handle_notification), mediator)
@@ -218,6 +223,7 @@ module PureMVC
     # @param mediator_name [String] name of the <code>IMediator</code> instance to be removed.
     # @return [IMediator, nil] the <code>IMediator</code> that was removed from the <code>View</code>, or nil if none found.
     def remove_mediator(mediator_name)
+      # @type var mediator: PureMVC::_IMediator?
       mediator = nil
       @mediator_mutex.synchronize do
         # retrieve the named mediator and delete from the mediator map
@@ -227,10 +233,11 @@ module PureMVC
       return unless mediator
 
       # for every notification this mediator is interested in...
+      # @type var interests: Array[String]
       interests = mediator.list_notification_interests
       # remove the observer linking the mediator
       # to the notification interest
-      interests.each { |interest| remove_observer(interest, mediator) }
+      interests.each { |interest| remove_observer(interest, mediator: Object) }
 
       # alert the mediator that it has been removed
       mediator.on_remove

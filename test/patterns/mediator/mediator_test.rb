@@ -18,7 +18,7 @@ class MediatorTest < Minitest::Test
   # Tests getting the name using Mediator class accessor method.
   def test_name_accessor
     # Create a new Mediator and use accessors to set the mediator name
-    mediator = PureMVC::Mediator.new
+    mediator = PureMVC::Mediator.new(nil, nil)
 
     # test assertions
     assert_equal PureMVC::Mediator::NAME, mediator.name, "Expecting mediator.name == Mediator::NAME"

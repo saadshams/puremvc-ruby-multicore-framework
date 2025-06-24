@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../interfaces/i_mediator'
-
 # mediator.rb
 # PureMVC Ruby Multicore
 #
@@ -12,8 +10,7 @@ module PureMVC
   # A base <code>IMediator</code> implementation.
   #
   # @see View
-  class Mediator < Notifier
-    include IMediator
+  class Mediator #< Notifier
 
     # The name of the <code>Mediator</code>.
     #
@@ -21,6 +18,7 @@ module PureMVC
     # one specific control or group controls and so,
     # will not have a need to be dynamically named.
     NAME = "Mediator"
+    public_constant :NAME
 
     # @return [String] The name of the Mediator.
     attr_reader :name
@@ -46,7 +44,7 @@ module PureMVC
 
     # Handles a notification.
     #
-    # @param notification [INotification] the notification to handle
+    # @param notification [_INotification] the notification to handle
     # @return [void]
     def handle_notification(notification)
 

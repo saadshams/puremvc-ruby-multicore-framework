@@ -17,10 +17,6 @@ module PureMVC
 
     include _IObserver
 
-    @notify: Method?
-
-    @context: Object?
-
     # @return [Method | nil] notify The callback method to be called on notification.
     attr_accessor notify: Method?
 
