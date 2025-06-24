@@ -21,7 +21,7 @@ module PureMVC
   # @see Controller
   # @see Notification
   # @see SimpleCommand
-  class MacroCommand # < Notifier
+  class MacroCommand < Notifier
 
     # Constructor.
     #
@@ -77,7 +77,7 @@ module PureMVC
 
         # @type var command: _ICommand
         command = factory.call
-        # command.initialize_notifier(@multiton_key)
+        command.initialize_notifier(@multiton_key)
         command.execute(notification)
       end
     end

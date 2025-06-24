@@ -310,7 +310,7 @@ class ViewTest < Minitest::Test
     # count of 8, since 8 mediators will respond.
     view.notify_observers(PureMVC::Notification.new(NOTE6))
     # verify the count is correct
-    # assert_equal 8, @counter, "Expecting @counter == 8"
+    assert_equal 8, @counter, "Expecting @counter == 8"
 
     # clear the counter
     @counter = 0
@@ -445,7 +445,7 @@ class ViewTestMediator6 < PureMVC::Mediator
   end
 
   def handle_notification(notification)
-    # facade.remove_mediator(self.name)
+    facade.remove_mediator(self.name)
   end
 
   def on_remove

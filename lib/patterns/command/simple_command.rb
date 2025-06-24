@@ -15,7 +15,7 @@ module PureMVC
   # @see Controller
   # @see Notification
   # @see MacroCommand
-  class SimpleCommand # < Notifier
+  class SimpleCommand < Notifier
 
     # Fulfill the use-case initiated by the given <code>INotification</code>.
     #

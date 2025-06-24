@@ -145,7 +145,7 @@ module PureMVC
         # @type command: _ICommand
         command = factory.call
 
-        # command.initialize_notifier(@multiton_key)
+        command.initialize_notifier(@multiton_key)
         command.execute(notification)
       end
     end

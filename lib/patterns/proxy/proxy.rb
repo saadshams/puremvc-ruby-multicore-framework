@@ -20,7 +20,7 @@ module PureMVC
   # to be sent when the <code>Proxy</code> has retrieved the data from the service.
   #
   # @see Model
-  class Proxy # < Notifier
+  class Proxy < Notifier
 
     # The name of the <code>Proxy</code>.
     NAME = "Proxy"

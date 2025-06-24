@@ -184,7 +184,7 @@ module PureMVC
 
       return if exists
 
-      # mediator.initialize_notifier(@multiton_key)
+      mediator.initialize_notifier(@multiton_key)
 
       # Create Observer referencing this mediator's handleNotification method
       # @type observer [IObserver]

@@ -95,7 +95,7 @@ module PureMVC
     # @param proxy [_IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
     # @return [void]
     def register_proxy(proxy)
-      # proxy.initialize_notifier(@multiton_key)
+      proxy.initialize_notifier(@multiton_key)
       @proxy_mutex.synchronize do
         @proxy_map[proxy.name] = proxy
       end
