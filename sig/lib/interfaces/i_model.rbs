@@ -34,5 +34,6 @@ module PureMVC
     def remove_proxy: (String proxy_name) -> _IProxy?
   end
 
+  # Assert that the given `Model` type parameter is a subtype of `_IModel`
   type validate_model[Model < _IModel] = top
 end

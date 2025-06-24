@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # view.rb
 # PureMVC Ruby Multicore
@@ -131,7 +132,7 @@ module PureMVC
         observers_ref = @observer_map[notification.name]
         # Iteration safe, copy observers from reference array to working array,
         # since the reference array may change during the notification loop
-        observers = observers_ref.dup
+        observers = @observer_map[notification.name].dup
       end
       # Notify Observers from the working array
       observers&.each { | observer | observer.notify_observer(notification) }
@@ -172,6 +173,7 @@ module PureMVC
     # @param mediator [IMediator] a reference to the <code>IMediator</code> instance
     # @return [void]
     def register_mediator(mediator)
+      # @type exists [Boolean]
       exists = false
       @mediator_mutex.synchronize do
         # do not allow re-registration (you must to removeMediator first)
@@ -187,9 +189,11 @@ module PureMVC
       # mediator.initialize_notifier(@multiton_key)
 
       # Create Observer referencing this mediator's handleNotification method
+      # @type observer [IObserver]
       observer = Observer.new(mediator.method(:handle_notification), mediator)
 
       # Get Notification interests, if any.
+      # @type interests [Array<String>]
       interests = mediator.list_notification_interests
       # Register Mediator as Observer for its list of Notification interests
       interests.each { |interest| register_observer(interest, observer) }

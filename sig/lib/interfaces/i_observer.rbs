@@ -52,5 +52,6 @@ module PureMVC
     def compare_notify_context?: (Object object) -> bool
   end
 
+  # Assert that the given `Observer` type parameter is a subtype of `_IObserver`
   type validate_observer[Observer < _IObserver] = top
 end

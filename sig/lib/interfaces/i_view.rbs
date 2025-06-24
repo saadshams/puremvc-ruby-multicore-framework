@@ -70,5 +70,6 @@ module PureMVC
     def remove_mediator: (String mediator_name) -> _IMediator?
   end
 
+  # Assert that the given `View` type parameter is a subtype of `_IView`
   type validate_view[View < _IView] = top
 end

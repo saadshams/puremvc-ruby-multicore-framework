@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # macro_command.rb
 # PureMVC Ruby Multicore
@@ -71,7 +72,10 @@ module PureMVC
     # @return [void]
     def execute(notification)
       while @sub_commands.any?
+        # @type factory [() -> ICommand]
         factory = @sub_commands.shift
+
+        # @type command [ICommand]
         command = factory.call
         # command.initialize_notifier(@multiton_key)
         command.execute(notification)

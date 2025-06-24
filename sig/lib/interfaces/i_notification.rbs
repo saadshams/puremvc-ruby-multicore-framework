@@ -47,5 +47,6 @@ module PureMVC
     def to_s: () -> String
   end
 
+  # Assert that the given `Notification` type parameter is a subtype of `_INotification`
   type validate_notification[Notification < _INotification] = top
 end
