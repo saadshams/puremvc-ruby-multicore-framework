@@ -2,7 +2,7 @@ module PureMVC
   # A base <code>_IMediator</code> implementation.
   #
   # @see View
-  class Mediator # < Notifier
+  class Mediator < Notifier
 
     include _IMediator
 

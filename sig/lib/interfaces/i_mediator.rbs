@@ -28,7 +28,8 @@ module PureMVC
   #
   # @see INotification
   interface _IMediator
-    # include _INotifier
+
+    include _INotifier
 
     # @return [String] The name of the Mediator.
     def name: () -> String

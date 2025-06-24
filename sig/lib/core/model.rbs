@@ -18,6 +18,8 @@ module PureMVC
 
     include _IModel
 
+    MULTITON_MSG: String
+
     # The Multiton IModel instanceMap.
     # @return [Hash{String => _IModel}]
     self.@instance_map: Hash[String, _IModel]

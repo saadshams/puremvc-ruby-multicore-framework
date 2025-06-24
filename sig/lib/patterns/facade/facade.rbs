@@ -1,0 +1,134 @@
+module PureMVC
+  # A base Multiton <code>IFacade</code> implementation.
+  #
+  # @see Model
+  # @see View
+  # @see Controller
+  class Facade
+
+    include _IFacade
+
+    # The Multiton IFacade instanceMap.
+    # @return [Hash{String => _IFacade}]
+    self.@instance_map: Hash[String, _IFacade]
+
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
+    self.@mutex: Mutex
+
+    @model: _IModel?
+
+    @controller: _IController?
+
+    @view: _IView?
+
+    @multiton_key: String
+
+    # Message Constants
+    MULTITON_MSG: String
+
+    # The Multiton _IFacade instanceMap.
+    # @return [Hash{String => _IFacade}]
+    def self.instance_map: () -> Hash[String, _IFacade]
+
+    private
+
+    # Mutex used to synchronize access to the instance map for thread safety.
+    # @return [Mutex]
+    def self.mutex: () -> Mutex
+
+    public
+
+    # Facade Multiton Factory method.
+    #
+    # @param key [String] the unique key identifying the Multiton instance
+    # @param factory [Proc<(String) -> _IFacade>] the unique key passed to the factory block
+    # @return [_IFacade] the Multiton instance of the Facade
+    def self.get_instance: (String key) { (String k) -> _IFacade } -> _IFacade
+
+    # Check if a Core is registered or not.
+    #
+    # @param key [String] the multiton key for the Core in question
+    # @return [Boolean] whether a Core is registered with the given <code>key</code>.
+    def self.has_core?: (String key) -> bool
+
+    # Remove a Core.
+    #
+    # Removes the Model, View, Controller, and Facade
+    # instances associated with the given key.
+    #
+    # @param key [String] the key of the Core to remove
+    # @return [void]
+    def self.remove_core: (String key) -> void
+
+    # Constructor.
+    #
+    # This <code>_IFacade</code> implementation is a Multiton, so you should not call the constructor
+    # directly. Instead, use the static factory method and pass the unique key for this instance with factory:
+    # <code>PureMVC::Facade.get_instance(key) { |key| PureMVC::Facade.new(key) }</code>.
+    #
+    # @param key [String]
+    # @return [void]
+    # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
+    def initialize: (String key) -> void
+
+    # Initialize the Multiton <code>Facade</code> instance.
+    #
+    # This method is called automatically by the constructor. Override it in your
+    # subclass to perform any subclass-specific initialization.
+    #
+    # @note Be sure to call <code>super.initialize_facade</code> when overriding.
+    # @return [void]
+    def initialize_facade: () -> void
+
+    # Initialize the <code>Controller</code>.
+    #
+    # Called by the <code>initialize_facade</code> method.
+    #
+    # Override this method in your subclass of <code>Facade</code> if one or both of the following are true:
+    # - You wish to initialize a different <code>_IController</code>.
+    # - You have <code>Commands</code> to register with the <code>Controller</code> at startup.
+    #
+    # If you don't want to initialize a different <code>_IController</code>, call <code>super.initialize_controller()</code>
+    # at the beginning of your method, then register <code>Command</code>s.
+    #
+    # @return [void]
+    def initialize_controller: () -> void
+
+    # Initialize the <code>Model</code>.
+    #
+    # Called by the <code>initializeFacade</code> method.
+    #
+    # Override this method in your subclass of <code>Facade</code> if one or both of the following are true:
+    # - You wish to initialize a different <code>_IModel</code>.
+    # - You have <code>Proxy</code>s to register with the Model that do not retrieve a reference to the <code>Facade</code> at construction time.
+    #
+    # If you don't want to initialize a different <code>_IModel</code>, call <code>super.initialize_model()</code> at the beginning of your method, then register <code>Proxy</code>s.
+    #
+    # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Proxy</code>s with the <code>Model</code>,
+    # since <code>Proxy</code>s with mutable data will likely need to send <code>_INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
+    #
+    # @return [void]
+    def initialize_model: () -> void
+
+    # Initialize the <code>View</code>.
+    #
+    # Called by the <code>initializeFacade</code> method.
+    #
+    # Override this method in your subclass of <code>Facade</code> if one or both of the following are true:
+    # - You wish to initialize a different <code>_IView</code>.
+    # - You have <code>Observers</code> to register with the <code>View</code>.
+    #
+    # If you don't want to initialize a different <code>_IView</code>, call <code>super.initialize_view()</code> at the beginning of your method, then register <code>_IMediator</code> instances.
+    #
+    # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>,
+    # since <code>+IMediator</code> instances will need to send <code>+INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
+    #
+    # @return [void]
+    def initialize_view: () -> void
+
+  end
+
+  # Type-level assertion that Facade conforms to _IFacade
+  type facade_validation = validate_facade[Facade]
+end

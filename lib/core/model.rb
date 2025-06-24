@@ -41,7 +41,7 @@ module PureMVC
       # <code>Model</code> Multiton Factory method.
       #
       # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String) -> IModel>] the unique key passed to the factory block
+      # @param factory [^(String) -> IModel] the unique key passed to the factory block
       # @return [IModel] the instance for this Multiton key
       def get_instance(key, &factory)
         mutex.synchronize do

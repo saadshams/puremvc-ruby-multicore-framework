@@ -1,0 +1,47 @@
+module PureMVC
+  # A base <code>_INotifier</code> implementation.
+  #
+  # <code>MacroCommand</code>, <code>SimpleCommand</code>, <code>Mediator</code>, and <code>Proxy</code>
+  # all need to send <code>Notification</code>s.
+  #
+  # The <code>_INotifier</code> interface provides a common method called
+  # <code>send_notification</code> that relieves implementation code of
+  # the necessity to actually construct <code>Notification</code>s.
+  #
+  # The <code>Notifier</code> class, which all the above-mentioned classes
+  # extend, provides an initialized reference to the <code>Facade</code>
+  # Multiton, which is required for the convenience method
+  # for sending <code>Notification</code>s. It also eases implementation,
+  # as these classes have frequent <code>Facade</code> interactions and
+  # usually require access to it anyway.
+  #
+  # NOTE: In the MultiCore version of the framework, there is one caveat:
+  # notifiers cannot send notifications or reach the facade until they
+  # have a valid <code>multiton_key</code>.
+  #
+  # The <code>multiton_key</code> is set:
+  # * on a <code>SimpleCommand</code> when it is executed by the <code>Controller<c/ode>
+  # * on a <code>Mediator</code> when registered with the <code>View</code>
+  # * on a <code>Proxy</code> when registered with the <code>Model</code>
+  #
+  # @see Proxy
+  # @see Facade
+  # @see Mediator
+  # @see MacroCommand
+  # @see SimpleCommand
+  class Notifier
+
+    include _INotifier
+
+    @multiton_key: String
+
+    # Message Constants
+    MULTITON_MSG: String
+
+    def multiton_key: () -> String
+
+  end
+
+  # Type-level assertion that Notifier conforms to _INotifier
+  type notifier_validation = validate_notifier[Notifier]
+end

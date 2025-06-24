@@ -40,8 +40,8 @@ module PureMVC
       # View Multiton Factory method.
       #
       # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String) -> IView>] the unique key passed to the factory block
-      # @return [IView] the Multiton instance of <code>View</code>
+      # @param factory [^(String) -> _IView] the unique key passed to the factory block
+      # @return [_IView] the Multiton instance of <code>View</code>
       def get_instance(key, &factory)
         mutex.synchronize do
           instance_map[key] ||= factory.call(key)
@@ -73,19 +73,19 @@ module PureMVC
       raise MULTITON_MSG if self.class.instance_map[key]
       self.class.instance_map[key] = self
       # The Multiton Key for this Core
-      # @type var @multiton_key: String
+      # @type var multiton_key: String
       @multiton_key = key
       # Mapping of Notification names to Observer lists
-      # @type var @observer_map: Hash[String, Array[PureMVC::_IObserver]]
+      # @type var observer_map: Hash[String, Array[PureMVC::_IObserver]]
       @observer_map = {}
       # Mutex used to synchronize access to the observer_map
-      # @type var @observer_mutex: Mutex
+      # @type var observer_mutex: Mutex
       @observer_mutex = Mutex.new
       # Mapping of Mediator names to Mediator instances
-      # @type var @mediator_map: Hash[String, PureMVC::_IMediator]
+      # @type var mediator_map: Hash[String, PureMVC::_IMediator]
       @mediator_map = {}
       # Mutex used to synchronize access to the mediator_map
-      # @type var @mediator_mutex: Mutex
+      # @type var mediator_mutex: Mutex
       @mediator_mutex = Mutex.new
       initialize_view
     end
@@ -128,8 +128,6 @@ module PureMVC
       observers = nil
       @observer_mutex.synchronize do
         # Get a reference to the observers list for this notification name
-        # @type var observers_ref: Array[PureMVC::_IObserver]?
-        observers_ref = @observer_map[notification.name]
         # Iteration safe, copy observers from reference array to working array,
         # since the reference array may change during the notification loop
         observers = @observer_map[notification.name].dup
@@ -241,7 +239,7 @@ module PureMVC
       interests = mediator.list_notification_interests
       # remove the observer linking the mediator
       # to the notification interest
-      interests.each { |interest| remove_observer(interest, mediator: Object) }
+      interests.each { |interest| remove_observer(interest, mediator) }
 
       # alert the mediator that it has been removed
       mediator.on_remove

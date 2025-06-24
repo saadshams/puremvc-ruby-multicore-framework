@@ -47,7 +47,7 @@ module PureMVC
       # Gets an instance using the provided factory block
       #
       # @param key [String] the unique key identifying the Multiton instance
-      # @param factory [Proc<(String) -> IController>] the unique key passed to the factory block
+      # @param factory [^(String) -> _IController] the unique key passed to the factory block
       # @return [IController] The controller instance created by the factory
       def get_instance(key, &factory)
         mutex.synchronize do
@@ -78,13 +78,16 @@ module PureMVC
       raise MULTITON_MSG if self.class.instance_map[key]
       self.class.instance_map[key] = self
       # The Multiton Key for this Core
+      # @type var multiton_key: String
       @multiton_key = key
       # Local reference to View
       # @type var view: PureMVC::_IView?
       @view = nil
       # Mapping of Notification names to Command factories
+      # @type var command_map: Hash[String, Array[PureMVC::_IObserver]]
       @command_map = {}
       # Mutex used to synchronize access to the @command_map
+      # @type var command_mutex: Mutex
       @command_mutex = Mutex.new
       initialize_controller
     end
@@ -134,17 +137,17 @@ module PureMVC
     # @param notification [INotification] the notification to handle
     # @return [void]
     def execute_command(notification)
-      # @type factory [() -> ICommand | nil]
-      factory = nil
       @command_mutex.synchronize do
+        # @type factory [^() -> ICommand]
         factory = @command_map[notification.name]
-      end
-      return if factory.nil?
+        return if factory.nil?
 
-      # @type command [ICommand]
-      command = factory.call
-      # command.initialize_notifier(@multiton_key)
-      command.execute(notification)
+        # @type command: _ICommand
+        command = factory.call
+
+        # command.initialize_notifier(@multiton_key)
+        command.execute(notification)
+      end
     end
 
     # Check if a Command is registered for a given Notification.
@@ -163,7 +166,7 @@ module PureMVC
     # @return [void]
     def remove_command(notification_name)
       @command_mutex.synchronize do
-        # @type command [(() -> ICommand)?]
+        # @type command [^() -> ICommand]?
         command = @command_map[notification_name]
 
         # if the Command is registered...

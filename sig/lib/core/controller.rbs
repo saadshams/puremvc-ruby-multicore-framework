@@ -24,6 +24,8 @@ module PureMVC
 
     include _IController
 
+    MULTITON_MSG: String
+
     # The Multiton IController instanceMap.
     # @return [Hash{String => _IController}]
     self.@instance_map: Hash[String, _IController]

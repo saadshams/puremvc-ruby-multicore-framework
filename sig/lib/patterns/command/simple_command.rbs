@@ -7,7 +7,7 @@ module PureMVC
   # @see Controller
   # @see Notification
   # @see MacroCommand
-  class SimpleCommand # < Notifier
+  class SimpleCommand < Notifier
 
     include _ICommand
 

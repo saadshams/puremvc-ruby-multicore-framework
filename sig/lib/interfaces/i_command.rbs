@@ -4,7 +4,7 @@ module PureMVC
   # @see INotification
   interface _ICommand
 
-    # include _INotifier
+    include _INotifier
 
     # Execute the <code>_ICommand</code>'s logic to handle a given <code>_INotification</code>.
     #
