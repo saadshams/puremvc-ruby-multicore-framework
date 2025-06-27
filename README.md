@@ -6,7 +6,13 @@ PureMVC is a lightweight framework for creating applications based upon the clas
 * [API Docs](http://puremvc.org/pages/docs/Ruby/multicore/)
 
 ## Installation
-`bundle add puremvc`
+```ruby
+source "https://rubygems.org"
+
+source "https://rubygems.pkg.github.com/NAMESPACE" do
+gem "puremvc"
+end
+```
 
 ## Platforms / Technologies
 * [Ruby](https://en.wikipedia.org/wiki/Ruby_(programming_language))
@@ -46,6 +52,10 @@ steep check
 ruby -Itest -e 'Dir["test/**/*_test.rb"].each { |file| require_relative file }'
 RubyMine: Test file name mask: **/{*_test,test_*,*_spec}.rb
 ```
+
+#### Publish
+gem build puremvc.gemspec
+gem push --host https://rubygems.pkg.github.com/puremvc puremvc-1.0.0.gem
 ---
 
 ## Status
