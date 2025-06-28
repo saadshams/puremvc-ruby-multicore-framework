@@ -24,7 +24,7 @@ class ObserverTest < Minitest::Test
   def test_observer_accessors
     # Create an observer with null args, then
     # use accessors to set notification method and context
-    observer = PureMVC::Observer.new(nil, nil)
+    observer = PureMVC::Observer.new
     observer.context = self
     observer.notify = method(:observer_test_method)
 
