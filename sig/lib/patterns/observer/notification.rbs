@@ -45,7 +45,8 @@ module PureMVC
     # @param name [String] the name of the notification
     # @param body [Object, nil] optional data to pass with the notification
     # @param type [String, nil] optional type identifier
-    def initialize: (String name, ?Object? body, ?String? type) -> void
+    # def initialize: (String name, ?(Object | nil) body, ?(String | nil) type) -> void # works
+    def initialize: (String name, ?Object? body, ?String? type) -> void # doesn't work
   end
 
   # Type-level assertion that Notification conforms to _INotification
