@@ -81,7 +81,7 @@ module PureMVC
       # @type var multiton_key: String
       @multiton_key = key
       # Local reference to View
-      # @type var view: PureMVC::_IView?
+      # @type var component: PureMVC::_IView?
       @view = nil
       # Mapping of Notification names to Command factories
       # @type var command_map: Hash[String, Array[PureMVC::_IObserver]]

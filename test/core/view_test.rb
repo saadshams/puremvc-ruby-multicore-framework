@@ -359,7 +359,7 @@ class ViewTestMediator2 < PureMVC::Mediator
   end
 
   def handle_notification(notification)
-    self.view.last_notification = notification.name
+    self.component.last_notification = notification.name
   end
 end
 
@@ -382,7 +382,7 @@ class ViewTestMediator3 < PureMVC::Mediator
   end
 
   def handle_notification(notification)
-    self.view.last_notification = notification.name
+    self.component.last_notification = notification.name
   end
 end
 
@@ -399,11 +399,11 @@ class ViewTestMediator4 < PureMVC::Mediator
   end
 
   def on_register
-    self.view.on_register_called = true
+    self.component.on_register_called = true
   end
 
   def on_remove
-    self.view.on_remove_called = true
+    self.component.on_remove_called = true
   end
 end
 
@@ -424,7 +424,7 @@ class ViewTestMediator5 < PureMVC::Mediator
   end
 
   def handle_notification(notification)
-    self.view.counter += 1
+    self.component.counter += 1
   end
 end
 
@@ -449,6 +449,6 @@ class ViewTestMediator6 < PureMVC::Mediator
   end
 
   def on_remove
-    self.view.counter += 1
+    self.component.counter += 1
   end
 end

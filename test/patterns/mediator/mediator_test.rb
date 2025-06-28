@@ -26,14 +26,14 @@ class MediatorTest < Minitest::Test
 
   # Tests getting the name using Mediator class accessor method.
   def test_view_accessor
-    # Create a view object
-    view = Object.new
+    # Create a component object
+    component = Object.new
 
     # Create a new Proxy and use accessors to set the proxy name
-    mediator = PureMVC::Mediator.new(PureMVC::Mediator::NAME, view)
+    mediator = PureMVC::Mediator.new(PureMVC::Mediator::NAME, component)
 
     # test assertions
-    assert_equal view, mediator.view, "Expecting view == #{view}"
+    assert_equal component, mediator.component, "Expecting component == #{component}"
   end
 
 end

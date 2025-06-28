@@ -58,7 +58,7 @@ module PureMVC
     # Add a SubCommand.
     # SubCommands will be called in First In/First Out (FIFO) order.
     #
-    # @param factory [Proc<() -> ICommand>] A block or callable that returns an instance of ICommand when called.
+    # @param factory [^() -> _ICommand] A block or callable that returns an instance of ICommand when called.
     # @return [void]
     def add_sub_command(&factory)
       @sub_commands << factory

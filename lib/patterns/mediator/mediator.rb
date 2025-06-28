@@ -23,16 +23,16 @@ module PureMVC
     # @return [String] The name of the Mediator.
     attr_reader :name
 
-    # @return [Object, nil] The view component associated with this Mediator.
-    attr_accessor :view
+    # @return [Object, nil] The component associated with this Mediator.
+    attr_accessor :component
 
     # Initializes a new Mediator instance.
     #
-    # @param name [String | nil] the name of the mediator (default: <code>NAME<code>)
-    # @param view [Object, nil] the view component this mediator manages (default: <code>nil</code>)
-    def initialize(name = nil, view = nil)
+    # @param name [String | nil] the name of the mediator
+    # @param component [Object, nil] the component this mediator manages
+    def initialize(name = nil, component = nil)
       @name = name || NAME
-      @view = view
+      @component = component
     end
 
     # Returns an array of notification names this mediator is interested in.

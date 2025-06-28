@@ -29,12 +29,12 @@ module PureMVC
     # @return [String] The proxy name
     attr_reader :name
 
-    # @return [Object] The data managed by the proxy
+    # @return [Object, nil] The data managed by the proxy
     attr_accessor :data
 
     # Initializes a new Proxy instance.
     #
-    # @param [String, nil] name the name of the proxy (defaults to <code>NAME</code>)
+    # @param [String, nil] name the name of the proxy
     # @param [Object, nil] data optional data to be managed by the proxy
     def initialize(name = nil, data = nil)
       @name =  name || NAME

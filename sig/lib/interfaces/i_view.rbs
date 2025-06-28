@@ -31,9 +31,9 @@ module PureMVC
     # Remove a group of observers from the observer list for a given <code>Notification</code> name.
     #
     # @param notification_name [String] which observer list to remove from
-    # @param notify_context [Object] remove the observers with this object as their notifyContext
+    # @param notify_context [untyped] remove the observers with this object as their notifyContext
     # @return [void]
-    def remove_observer: (String notification_name, Object notify_context) -> void
+    def remove_observer: (String notification_name, untyped notify_context) -> void
 
     # Register an <code>_IMediator</code> instance with the <code>View</code>.
     #

@@ -27,7 +27,7 @@ module PureMVC
 
     # Initializes a new Proxy instance.
     #
-    # @param [String | nil] name the name of the proxy (defaults to <code>NAME</code>)
+    # @param [String | nil] name the name of the proxy
     # @param [Object, nil] data optional data to be managed by the proxy
     def initialize: (String? name, Object? data) -> void
   end

@@ -7,24 +7,19 @@ module PureMVC
     include _IMediator
 
     # The name of the <code>Mediator</code>.
-    #
-    # Typically, a <code>Mediator</code> will be written to serve
-    # one specific control or group controls and so,
-    # will not have a need to be dynamically named.
-    NAME: "Mediator"
+    NAME: String
 
     # @return [String] The name of the Mediator.
     attr_reader name: String
 
-    # @return [Object, nil] The view component associated with this Mediator.
-    attr_accessor view: Object?
+    # @return [Object, nil] The component associated with this Mediator.
+    attr_accessor component: Object?
 
     # Initializes a new Mediator instance.
     #
-    # @param name [String | nil] the name of the mediator (default: <code>NAME<code>)
-    # @param view [Object, nil] the view component this mediator manages (default: <code>nil</code>)
-    # @return [void]
-    def initialize: (String? name, Object? view) -> void
+    # @param name [String | nil] the name of the mediator
+    # @param component [Object, nil] the component this mediator manages (default: <code>nil</code>)
+    def initialize: (String? name, Object? component) -> void
   end
 
   # Type-level assertion that Mediator conforms to _IMediator
