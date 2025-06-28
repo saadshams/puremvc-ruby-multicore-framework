@@ -24,7 +24,6 @@ module PureMVC
     # @abstract This method must be implemented by the concrete command.
     # @param notification_name [String] the name of the <code>_INotification</code>
     # @param factory [Proc<() -> _ICommand>] the class of the _ICommand
-    # @return [void]
     def register_command: (String notification_name) { () -> _ICommand  } -> void
 
     # Execute the <code>ICommand</code> previously registered as the
@@ -32,7 +31,6 @@ module PureMVC
     #
     # @abstract This method must be implemented by the concrete command.
     # @param notification [_INotification] the <code>_INotification</code> to execute the associated <code>_ICommand</code> for
-    # @return [void]
     def execute_command: (_INotification notification) -> void
 
     # Check if a Command is registered for a given Notification.
@@ -46,7 +44,6 @@ module PureMVC
     #
     # @abstract This method must be implemented by the concrete command.
     # @param notification_name [String] the name of the <code>_INotification</code> to remove the <code>_ICommand</code> mapping for
-    # @return [void]
     def remove_command: (String notification_name) -> void
   end
 

@@ -68,7 +68,6 @@ module PureMVC
     # Remove an IController instance
     #
     # @param key [String] the multiton key of the IController instance to remove
-    # @return [void]
     def self.remove_controller: (String key) -> void
 
     # Constructor.
@@ -78,7 +77,6 @@ module PureMVC
     # <code>PureMVC::Controller.getInstance(key) { |key| PureMVC::Controller.new(key) }</code>
     #
     # @param key [String]
-    # @return [void]
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed
     def initialize: (String key) -> void
 
@@ -97,7 +95,6 @@ module PureMVC
     #     @view = MyView::get_instance(key) { |key| MyView.new(key) }
     #   end
     #
-    # @return [void]
     def initialize_controller: () -> void
   end
 

@@ -15,7 +15,6 @@ module PureMVC
     #
     # @param notification_name [String] the name of the <code>_INotifications</code> to notify this <code>_IObserver</code> of
     # @param observer [_IObserver] the <code>_IObserver</code> to register
-    # @return [void]
     def register_observer: (String notification_name, _IObserver observer) -> void
 
     # Notify the <code>_IObservers</code> for a particular <code>_INotification</code>.
@@ -25,14 +24,12 @@ module PureMVC
     # the order in which they were registered.
     #
     # @param notification [_INotification] the <code>_INotification</code> to notify <code>_IObservers</code> of.
-    # @return [void]
     def notify_observers: (_INotification notification) -> void
 
     # Remove a group of observers from the observer list for a given <code>Notification</code> name.
     #
     # @param notification_name [String] which observer list to remove from
     # @param notify_context [untyped] remove the observers with this object as their notifyContext
-    # @return [void]
     def remove_observer: (String notification_name, untyped notify_context) -> void
 
     # Register an <code>_IMediator</code> instance with the <code>View</code>.
@@ -48,7 +45,6 @@ module PureMVC
     # <code>_IMediator</code> is interested in.
     #
     # @param mediator [_IMediator] a reference to the <code>_IMediator</code> instance
-    # @return [void]
     def register_mediator: (_IMediator mediator) -> void
 
     # Retrieve an <code>_IMediator</code> from the <code>View</code>.

@@ -63,7 +63,6 @@ module PureMVC
     # Remove an <code>_IView</code> instance.
     #
     # @param key [String] the key of the <code>_IView</code> instance to remove
-    # @return [void]
     def self.remove_view: (String key) -> void
 
     # Constructor.
@@ -73,7 +72,6 @@ module PureMVC
     # Instead, call the static Multiton factory method <code>View.get_instance(multiton_key) { |key| View.new(key) }</code>.
     #
     # @param key [String]
-    # @return [void]
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize: (String key) -> void
 
@@ -83,8 +81,6 @@ module PureMVC
     # is your opportunity to initialize the Multiton
     # instance in your subclass without overriding the
     # constructor.
-    #
-    # @return [void]
     def initialize_view: () -> void
   end
 

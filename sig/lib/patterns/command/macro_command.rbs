@@ -25,7 +25,6 @@ module PureMVC
     #
     # If your subclass does define a constructor,
     # be sure to call <code>super</code>
-    # @return [void]
     def initialize: () -> void
 
     # Initialize the MacroCommand.
@@ -43,14 +42,12 @@ module PureMVC
     #
     # Note that SubCommands may be any _ICommand implementor;
     # MacroCommands or SimpleCommands are both acceptable.
-    # @return [void]
     def initialize_macro_command: () -> void
 
     # Add a SubCommand.
     # SubCommands will be called in First In/First Out (FIFO) order.
     #
     # @param factory [^() -> _ICommand] A block or callable that returns an instance of _ICommand when called.
-    # @return [void]
     def add_sub_command: () { () -> _ICommand } -> void
   end
 

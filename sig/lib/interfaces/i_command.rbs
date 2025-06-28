@@ -10,7 +10,6 @@ module PureMVC
     #
     # @abstract This method must be implemented by the concrete command.
     # @param notification [_INotification] an _INotification to handle.
-    # @return [void]
     def execute: (_INotification notification) -> void
   end
 

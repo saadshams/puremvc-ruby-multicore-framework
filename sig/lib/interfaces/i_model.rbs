@@ -12,7 +12,6 @@ module PureMVC
     # Register an <code>_IProxy</code> instance with the <code>Model</code>.
     #
     # @param proxy [_IProxy] an object reference to be held by the <code>Model</code>.
-    # @return [void]
     def register_proxy: (_IProxy proxy) -> void
 
     # Retrieve an <code>_IProxy</code> instance from the <code>Model</code>.

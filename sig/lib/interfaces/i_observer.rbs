@@ -42,7 +42,6 @@ module PureMVC
     # Notify the interested object.
     #
     # @param notification [_INotification] the <code>_INotification</code> to pass to the interested object's notification method
-    # @return [void]
     def notify_observer: (_INotification notification) -> void
 
     # Compare the given object to the notification context object.

@@ -25,11 +25,9 @@ module PureMVC
     def data=: (Object?) -> void
 
     # Called by the Model when the Proxy is registered
-    # @return [void]
     def on_register: () -> void
 
     # Called by the Model when the Proxy is removed
-    # @return [void]
     def on_remove: () -> void
   end
 

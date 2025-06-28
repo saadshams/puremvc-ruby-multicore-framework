@@ -46,15 +46,12 @@ module PureMVC
     # Handle an <code>INotification</code>.
     #
     # @param notification [_INotification] the <code>_INotification</code> to be handled
-    # @return [void]
     def handle_notification: (_INotification notification) -> void
 
     # Called by the View when the Mediator is registered.
-    # @return [void]
     def on_register: () -> void
 
     # Called by the View when the Mediator is registered.
-    # @return [void]
     def on_remove: () -> void
   end
 

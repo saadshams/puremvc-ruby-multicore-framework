@@ -56,7 +56,6 @@ module PureMVC
     # Remove an _IModel instance
     #
     # @param key [String] the multiton key of the IModel instance to remove
-    # @return [void]
     def self.remove_model: (String key) -> void
 
     # Constructor.
@@ -66,7 +65,6 @@ module PureMVC
     # the static Multiton Factory method <code>PureMVC::Model.get_instance(key) { |key| PureMVC::Model.new(key) }</code>.
     #
     # @param key [String]
-    # @return [void]
     # @raise [RuntimeError] Error if an instance for this Multiton key has already been constructed.
     def initialize: (String key) -> void
 
@@ -77,7 +75,6 @@ module PureMVC
     # instance in your subclass without overriding the
     # constructor.
     #
-    # @return [void]
     def initialize_model: () -> void
 
     # Register an <code>_IProxy</code> with the <code>Model</code>.

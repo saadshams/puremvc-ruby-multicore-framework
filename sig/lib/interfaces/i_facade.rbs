@@ -20,7 +20,6 @@ module PureMVC
     #
     # @param notification_name [String] the name of the <code>_INotification</code> to associate the <code>_ICommand</code> with.
     # @param factory [Proc<() -> _ICommand>] the factory to produce an instance of the _ICommand
-    # @return [void]
     def register_command: (String notification_name) { () -> _ICommand } -> void
 
     # Check if a Command is registered for a given Notification
@@ -32,13 +31,11 @@ module PureMVC
     # Remove a previously registered <code>_ICommand</code> to <code>_INotification</code> mapping from the Controller.
     #
     # @param notification_name [String] the name of the <code>_INotification</code> to remove the <code>_ICommand</code> mapping for
-    # @return [void]
     def remove_command: (String notification_name) -> void
 
     # Register an <code>_IProxy</code> with the <code>Model</code> by name.
     #
     # @param proxy [_IProxy] the <code>_IProxy</code> to be registered with the <code>Model</code>.
-    # @return [void]
     def register_proxy: (_IProxy proxy) -> void
 
     # Retrieve a <code>IProxy</code> from the <code>Model</code> by name.
@@ -62,7 +59,6 @@ module PureMVC
     # Register an <code>_IMediator</code> instance with the <code>View</code>.
     #
     # @param mediator [_IMediator] a reference to the <code>_IMediator</code> instance
-    # @return [void]
     def register_mediator: (_IMediator mediator) -> void
 
     # Retrieve an <code>_IMediator</code> instance from the <code>View</code>.
@@ -90,7 +86,6 @@ module PureMVC
     # facade will fail until after this method has been called.
     #
     # @param key [String] The multitonKey for this INotifier to use.
-    # @return [void]
     def initialize_notifier: (String key) -> void
 
     # Notify <code>Observer</code>s.
@@ -104,7 +99,6 @@ module PureMVC
     # construct the notification yourself.
     #
     # @param notification [_INotification] the <code>_INotification</code> to have the <code>View</code> notify <code>Observers</code> of.
-    # @return [void]
     def notify_observers: (_INotification notification) -> void
 
     # Send a <code>_INotification</code>.
@@ -115,7 +109,6 @@ module PureMVC
     # @param name [String] The name of the notification to send.
     # @param body [Object, nil] The body of the notification (optional).
     # @param type [String, nil] The type of the notification (optional).
-    # @return [void]
     def send_notification: (String name, Object? body, String? type) -> void
   end
 
