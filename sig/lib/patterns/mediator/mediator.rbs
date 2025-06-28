@@ -19,7 +19,7 @@ module PureMVC
     #
     # @param name [String | nil] the name of the mediator
     # @param component [Object, nil] the component this mediator manages (default: <code>nil</code>)
-    def initialize: (String? name, Object? component) -> void
+    def initialize: (?String? name, ?Object? component) -> void
   end
 
   # Type-level assertion that Mediator conforms to _IMediator

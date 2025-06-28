@@ -29,7 +29,7 @@ module PureMVC
     #
     # @param [String | nil] name the name of the proxy
     # @param [Object, nil] data optional data to be managed by the proxy
-    def initialize: (String? name, Object? data) -> void
+    def initialize: (?String? name, ?Object? data) -> void
   end
 
   # Type-level assertion that Proxy conforms to _IProxy

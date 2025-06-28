@@ -30,7 +30,7 @@ module PureMVC
     #
     # @param name [String | nil] the name of the mediator
     # @param component [Object, nil] the component this mediator manages
-    def initialize(name = nil, component = nil)
+    def initialize(name = nil, component = nil) # Expected a non-nilable type, got nilable instead
       @name = name || NAME
       @component = component
     end
