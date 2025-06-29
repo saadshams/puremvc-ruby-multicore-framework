@@ -9,6 +9,8 @@
 require 'minitest/autorun'
 require_relative '../../../lib/puremvc'
 
+include PureMVC
+
 # Test the PureMVC SimpleCommand class.
 #
 # @see SimpleCommandTestVO
@@ -29,7 +31,7 @@ class SimpleCommandTest < Minitest::Test
     vo = SimpleCommandTestVO.new(5)
 
     # Create the Notification (note)
-    note = PureMVC::Notification.new("SimpleCommandTestNote", vo)
+    note = Notification.new("SimpleCommandTestNote", vo)
 
     # Create the SimpleCommand
     command = SimpleCommandTestCommand.new
@@ -46,7 +48,7 @@ end
 #
 # @see SimpleCommandTest
 # @see SimpleCommandTestVO
-class SimpleCommandTestCommand < PureMVC::SimpleCommand
+class SimpleCommandTestCommand < SimpleCommand
   # Fabricate a result by multiplying the input by 2
   # @param note [INotification] carrying the <code>SimpleCommandTestVO</code>
   def execute(note)

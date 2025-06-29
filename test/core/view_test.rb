@@ -9,6 +9,8 @@
 require 'minitest/autorun'
 require_relative '../../lib/puremvc'
 
+include PureMVC
+
 class ViewTest < Minitest::Test
 
   NOTE1 = "Notification1"
@@ -33,7 +35,7 @@ class ViewTest < Minitest::Test
   # Tests the View Multiton Factory Method
   def test_get_instance
     # Test Factory Method
-    view = PureMVC::View.get_instance("ViewTestKey1") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey1") { |key| View.new(key) }
 
     # test assertions
     refute_nil view, "Expecting instance not nil"
@@ -41,10 +43,10 @@ class ViewTest < Minitest::Test
 
   def test_register_and_notify_observer
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey2") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey2") { |key| View.new(key) }
 
     # Create an observer, passing in notification method and context
-    observer = PureMVC::Observer.new(method(:view_test_method), self)
+    observer = Observer.new(method(:view_test_method), self)
 
     # Register Observer's interest in a particular Notification with the View
     view.register_observer("ViewTestNote", observer)
@@ -56,7 +58,7 @@ class ViewTest < Minitest::Test
     # a successful notification will result in our local
     # viewTestVar being set to the value we pass in
     # on the note body.
-    notification = PureMVC::Notification.new("ViewTestNote", 10)
+    notification = Notification.new("ViewTestNote", 10)
     view.notify_observers(notification)
 
     # test assertions
@@ -72,7 +74,7 @@ class ViewTest < Minitest::Test
   # Tests registering and retrieving a mediator with the View.
   def test_register_and_retrieve_mediator
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey3") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey3") { |key| View.new(key) }
 
     # Create and register the test mediator
     view_test_mediator = ViewTestMediator.new(self)
@@ -88,10 +90,10 @@ class ViewTest < Minitest::Test
   # Tests the has_mediator Method
   def test_has_mediator
     # register a Mediator
-    view = PureMVC::View.get_instance("ViewTestKey4") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey4") { |key| View.new(key) }
 
     # Create and register the test mediator
-    mediator = PureMVC::Mediator.new("hasMediatorTest", self)
+    mediator = Mediator.new("hasMediatorTest", self)
     view.register_mediator(mediator)
 
     # assert that the view.has_mediator method returns true
@@ -107,10 +109,10 @@ class ViewTest < Minitest::Test
   # Tests registering and removing a mediator
   def test_register_and_remove_mediator
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey5") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey5") { |key| View.new(key) }
 
     # Create and register the test mediator
-    mediator = PureMVC::Mediator.new("testing", self)
+    mediator = Mediator.new("testing", self)
     view.register_mediator(mediator)
 
     # Remove the component
@@ -126,7 +128,7 @@ class ViewTest < Minitest::Test
   # Tests that the View calls the on_register and on_remove methods
   def test_on_register_and_on_remove
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey6") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey6") { |key| View.new(key) }
 
     # Create and register the test mediator
     mediator = ViewTestMediator4.new(self)
@@ -145,7 +147,7 @@ class ViewTest < Minitest::Test
   # Tests successive regster and remove of same mediator.
   def test_successive_register_and_remove_mediator
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey7") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey7") { |key| View.new(key) }
 
     # Create and register the test mediator,
     # but not so we have a reference to it
@@ -180,16 +182,16 @@ class ViewTest < Minitest::Test
   # Mediator to be notified.
   def test_remove_mediator_and_subsequent_notify
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey8") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey8") { |key| View.new(key) }
 
     # Create and register the test mediator to be removed.
     view.register_mediator(ViewTestMediator2.new(self))
 
     # test that notifications work
-    view.notify_observers(PureMVC::Notification.new(NOTE1))
+    view.notify_observers(Notification.new(NOTE1))
     assert_equal NOTE1, @last_notification, "Expecting @last_notification == NOTE1"
 
-    view.notify_observers(PureMVC::Notification.new(NOTE2))
+    view.notify_observers(Notification.new(NOTE2))
     assert_equal NOTE2, @last_notification, "Expecting @last_notification == NOTE2"
 
     # Remove the Mediator
@@ -203,10 +205,10 @@ class ViewTest < Minitest::Test
     # on this component, and ViewTestMediator)
     @last_notification = nil
 
-    view.notify_observers(PureMVC::Notification.new(NOTE1))
+    view.notify_observers(Notification.new(NOTE1))
     refute_equal NOTE1, @last_notification, "Expecting @last_notification != NOTE1"
 
-    # view.notify_observers(PureMVC::Notification.new(NOTE2))
+    # view.notify_observers(Notification.new(NOTE2))
     # refute_equal NOTE2, @last_notification, "Expecting @last_notification != NOTE2"
   end
 
@@ -214,7 +216,7 @@ class ViewTest < Minitest::Test
   # that the remaining one still responds.
   def test_remove_one_of_two_mediators_and_subsequent_notify
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey9") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey9") { |key| View.new(key) }
 
     # Create and register that responds to notifications 1 and 2
     view.register_mediator(ViewTestMediator2.new(self))
@@ -223,13 +225,13 @@ class ViewTest < Minitest::Test
     view.register_mediator(ViewTestMediator3.new(self))
 
     # test that all notifications work
-    view.notify_observers(PureMVC::Notification.new(NOTE1))
+    view.notify_observers(Notification.new(NOTE1))
     assert_equal NOTE1, @last_notification, "Expecting @last_notification == NOTE1"
 
-    view.notify_observers(PureMVC::Notification.new(NOTE2))
+    view.notify_observers(Notification.new(NOTE2))
     assert_equal NOTE2, @last_notification, "Expecting @last_notification == NOTE2"
 
-    view.notify_observers(PureMVC::Notification.new(NOTE3))
+    view.notify_observers(Notification.new(NOTE3))
     assert_equal NOTE3, @last_notification, "Expecting @last_notification == NOTE3"
 
     # Remove the Mediator that responds to 1 and 2
@@ -242,13 +244,13 @@ class ViewTest < Minitest::Test
     # for notifications 1 and 2, but still work for 3
     @last_notification = nil
 
-    view.notify_observers(PureMVC::Notification.new(NOTE1))
+    view.notify_observers(Notification.new(NOTE1))
     refute_equal NOTE1, @last_notification, "Expecting @last_notification != NOTE1"
 
-    view.notify_observers(PureMVC::Notification.new(NOTE2))
+    view.notify_observers(Notification.new(NOTE2))
     refute_equal NOTE2, @last_notification, "Expecting @last_notification != NOTE2"
 
-    view.notify_observers(PureMVC::Notification.new(NOTE3))
+    view.notify_observers(Notification.new(NOTE3))
     assert_equal NOTE3, @last_notification, "Expecting @last_notification != NOTE3"
   end
 
@@ -260,7 +262,7 @@ class ViewTest < Minitest::Test
   # be no further response.
   def test_mediator_reregistration
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey10") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey10") { |key| View.new(key) }
 
     # Create and register that responds to notification 5
     view.register_mediator(ViewTestMediator5.new(self))
@@ -270,7 +272,7 @@ class ViewTest < Minitest::Test
 
     # test that the counter is only incremented once (mediator 5's response)
     @counter = 0
-    view.notify_observers(PureMVC::Notification.new(NOTE5))
+    view.notify_observers(Notification.new(NOTE5))
     assert_equal 1, @counter, "Expecting @counter == 1"
 
     # Remove the Mediator
@@ -281,18 +283,17 @@ class ViewTest < Minitest::Test
 
     # test that the counter is no longer incremented
     @counter = 0
-    view.notify_observers(PureMVC::Notification.new(NOTE5))
+    view.notify_observers(Notification.new(NOTE5))
     assert_equal 0, @counter, "Expecting @counter == 0"
   end
 
   def test_modify_observer_list_during_notification
     # Get the Multiton View instance
-    view = PureMVC::View.get_instance("ViewTestKey11") { |key| PureMVC::View.new(key) }
+    view = View.get_instance("ViewTestKey11") { |key| View.new(key) }
 
     # Create and register several mediator instances that respond to notification 6
     # by removing themselves, which will cause the observer list for that notification
-    # to change. versions prior to MultiCore Version 2.0.5 will see every other mediator
-    # fails to be notified.
+    # to change.
     view.register_mediator(ViewTestMediator6.new("ViewTestMediator6/1", self))
     view.register_mediator(ViewTestMediator6.new("ViewTestMediator6/2", self))
     view.register_mediator(ViewTestMediator6.new("ViewTestMediator6/3", self))
@@ -308,13 +309,13 @@ class ViewTest < Minitest::Test
     # Send the notification. Each of the above mediators will respond by removing
     # themselves and incrementing the counter by 1. This should leave us with a
     # count of 8, since 8 mediators will respond.
-    view.notify_observers(PureMVC::Notification.new(NOTE6))
+    view.notify_observers(Notification.new(NOTE6))
     # verify the count is correct
     assert_equal 8, @counter, "Expecting @counter == 8"
 
     # clear the counter
     @counter = 0
-    view.notify_observers(PureMVC::Notification.new(NOTE6))
+    view.notify_observers(Notification.new(NOTE6))
     # verify the count is 0
     assert_equal 0, @counter, "Expecting @counter == 0"
   end
@@ -324,7 +325,7 @@ end
 # A Mediator class used by ViewTest.
 #
 # @ see ViewTest
-class ViewTestMediator < PureMVC::Mediator
+class ViewTestMediator < Mediator
   # The Mediator name
   NAME = "ViewTestMediator"
 
@@ -343,7 +344,7 @@ end
 # A Mediator class used by ViewTest.
 #
 # @ see ViewTest
-class ViewTestMediator2 < PureMVC::Mediator
+class ViewTestMediator2 < Mediator
   # The Mediator name
   NAME = "ViewTestMediator2"
 
@@ -366,7 +367,7 @@ end
 # A Mediator class used by ViewTest.
 #
 # @ see ViewTest
-class ViewTestMediator3 < PureMVC::Mediator
+class ViewTestMediator3 < Mediator
   # The Mediator name
   NAME = "ViewTestMediator3"
 
@@ -389,7 +390,7 @@ end
 # A Mediator class used by ViewTest.
 #
 # @ see ViewTest
-class ViewTestMediator4 < PureMVC::Mediator
+class ViewTestMediator4 < Mediator
   # The Mediator name
   NAME = "ViewTestMediator4"
 
@@ -410,7 +411,7 @@ end
 # A Mediator class used by ViewTest.
 #
 # @ see ViewTest
-class ViewTestMediator5 < PureMVC::Mediator
+class ViewTestMediator5 < Mediator
   # The Mediator name
   NAME = "ViewTestMediator5"
 
@@ -431,7 +432,7 @@ end
 # A Mediator class used by ViewTest.
 #
 # @ see ViewTest
-class ViewTestMediator6 < PureMVC::Mediator
+class ViewTestMediator6 < Mediator
   # he Mediator base name
   NAME = "ViewTestMediator6"
 

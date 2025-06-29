@@ -52,7 +52,6 @@ module PureMVC
       # Remove an IModel instance
       #
       # @param key [String] the multiton key of the IModel instance to remove
-      # @return [void]
       def remove_model(key)
         mutex.synchronize do
           instance_map.delete(key)
@@ -67,7 +66,6 @@ module PureMVC
     # the static Multiton Factory method <code>PureMVC::Model.get_instance(key) { |key| PureMVC::Model.new(key) }</code>.
     #
     # @param key [String]
-    # @return [void]
     # @raise [RuntimeError] Error if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
@@ -84,8 +82,6 @@ module PureMVC
     # is your opportunity to initialize the Multiton
     # instance in your subclass without overriding the
     # constructor.
-    #
-    # @return [void]
     protected def initialize_model
 
     end
@@ -93,7 +89,6 @@ module PureMVC
     # Register an <code>IProxy</code> with the <code>Model</code>.
     #
     # @param proxy [_IProxy] an <code>IProxy</code> to be held by the <code>Model</code>.
-    # @return [void]
     def register_proxy(proxy)
       proxy.initialize_notifier(@multiton_key)
       @proxy_mutex.synchronize do
@@ -127,7 +122,7 @@ module PureMVC
     # @param proxy_name [String] name of the <code>IProxy</code> instance to be removed.
     # @return [_IProxy, nil] the <code>IProxy</code> that was removed from the <code>Model</code>, or nil if none found.
     def remove_proxy(proxy_name)
-      # @type var proxy: PureMVC::_IProxy?
+      # @type var proxy: _IProxy?
       proxy = nil
       @proxy_mutex.synchronize do
         proxy = @proxy_map.delete(proxy_name)
@@ -135,5 +130,6 @@ module PureMVC
       proxy&.on_remove
       proxy
     end
+
   end
 end

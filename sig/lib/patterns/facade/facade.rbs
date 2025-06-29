@@ -16,12 +16,16 @@ module PureMVC
     # @return [Mutex]
     self.@mutex: Mutex
 
+    # Reference to Model
     @model: _IModel?
 
+    # Reference to Controller
     @controller: _IController?
 
+    # Reference to View
     @view: _IView?
 
+    # The Multiton Key for this Core
     @multiton_key: String
 
     # Message Constants
@@ -42,7 +46,7 @@ module PureMVC
     # Facade Multiton Factory method.
     #
     # @param key [String] the unique key identifying the Multiton instance
-    # @param factory [Proc<(String) -> _IFacade>] the unique key passed to the factory block
+    # @param factory [^(String) -> _IFacade] the unique key passed to the factory block
     # @return [_IFacade] the Multiton instance of the Facade
     def self.get_instance: (String key) { (String k) -> _IFacade } -> _IFacade
 
@@ -117,7 +121,6 @@ module PureMVC
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>,
     # since <code>+IMediator</code> instances will need to send <code>+INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
     def initialize_view: () -> void
-
   end
 
   # Type-level assertion that Facade conforms to _IFacade

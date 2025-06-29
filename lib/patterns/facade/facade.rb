@@ -52,7 +52,6 @@ module PureMVC
       # instances associated with the given key.
       #
       # @param key [String] the key of the Core to remove
-      # @return [void]
       def remove_core(key)
         mutex.synchronize do
           Model::remove_model(key)
@@ -70,7 +69,6 @@ module PureMVC
     # <code>PureMVC::Facade.get_instance(key) { |key| PureMVC::Facade.new(key) }</code>.
     #
     # @param key [String]
-    # @return [void]
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
@@ -86,7 +84,6 @@ module PureMVC
     # subclass to perform any subclass-specific initialization.
     #
     # @note Be sure to call <code>super.initialize_facade</code> when overriding.
-    # @return [void]
     def initialize_facade
       initialize_model
       initialize_controller
@@ -103,8 +100,6 @@ module PureMVC
     #
     # If you don't want to initialize a different <code>IController</code>, call <code>super.initialize_controller()</code>
     # at the beginning of your method, then register <code>Command</code>s.
-    #
-    # @return [void]
     def initialize_controller
       @controller = Controller::get_instance(@multiton_key) { |key| Controller.new(key) }
     end
@@ -121,8 +116,6 @@ module PureMVC
     #
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Proxy</code>s with the <code>Model</code>,
     # since <code>Proxy</code>s with mutable data will likely need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
-    #
-    # @return [void]
     def initialize_model
       @model = Model::get_instance(@multiton_key) { |key| Model.new(key) }
     end
@@ -139,7 +132,6 @@ module PureMVC
     #
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>, #
     # since <code>IMediator</code> instances will need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
-    # @return [void]
     def initialize_view
       @view = View::get_instance(@multiton_key) { |key| View.new(key) }
     end
@@ -147,8 +139,7 @@ module PureMVC
     # Register an <code>ICommand</code> with the <code>Controller</code> by Notification name.
     #
     # @param notification_name [String] the name of the <code>INotification</code> to associate the <code>ICommand</code> with
-    # @param factory [Proc<() -> ICommand>] a reference to the Class of the <code>ICommand</code>
-    # @return [void]
+    # @param factory [^<() -> ICommand>] a reference to the Class of the <code>ICommand</code>
     def register_command(notification_name, &factory)
       @controller&.register_command(notification_name, &factory)
     end
@@ -164,7 +155,6 @@ module PureMVC
     # Remove a previously registered <code>ICommand</code> to <code>INotification</code> mapping from the Controller.
     #
     # @param notification_name [String] the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
-    # @return [void]
     def remove_command(notification_name)
       @controller&.remove_command(notification_name)
     end
@@ -172,7 +162,6 @@ module PureMVC
     # Register an <code>IProxy</code> with the <code>Model</code> by name.
     #
     # @param proxy [IProxy] the <code>IProxy</code> instance to be registered with the <code>Model</code>.
-    # @return [void]
     def register_proxy(proxy)
       @model&.register_proxy(proxy)
     end
@@ -204,7 +193,6 @@ module PureMVC
     # Register an <code>IMediator</code> with the <code>View</code>.
     #
     # @param mediator [IMediator] a reference to the <code>IMediator</code>
-    # @return [void]
     def register_mediator(mediator)
       @view&.register_mediator(mediator)
     end
@@ -243,7 +231,6 @@ module PureMVC
     # construct the notification yourself.
     #
     # @param notification [INotification] the notification to have the <code>View</code> notify <code>Observers</code> of.
-    # @return [void]
     def notify_observers(notification)
       @view&.notify_observers(notification)
     end
@@ -255,7 +242,6 @@ module PureMVC
     # @param name [String] the name of the notification to send
     # @param body [Object, nil] the body of the notification (optional)
     # @param type [String, nil] the type of the notification (optional)
-    # @return [void]
     def send_notification(name, body = nil, type = nil)
       notify_observers(Notification.new(name, body, type))
     end
@@ -267,7 +253,6 @@ module PureMVC
     # to implement <code>INotifier</code>.
     #
     # @param key [String] the multiton key for this instance
-    # @return [void]
     def initialize_notifier(key)
       @multiton_key = key
     end

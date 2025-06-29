@@ -50,7 +50,6 @@ module PureMVC
     #
     # Note that SubCommands may be any ICommand implementor;
     # MacroCommands or SimpleCommands are both acceptable.
-    # @return [void]
     def initialize_macro_command
 
     end
@@ -59,7 +58,6 @@ module PureMVC
     # SubCommands will be called in First In/First Out (FIFO) order.
     #
     # @param factory [^() -> _ICommand] A block or callable that returns an instance of ICommand when called.
-    # @return [void]
     def add_sub_command(&factory)
       @sub_commands << factory
     end
@@ -69,7 +67,6 @@ module PureMVC
     # The SubCommands will be called in First In/First Out (FIFO) order.
     #
     # @param notification [INotification] the notification object to be passed to each SubCommand.
-    # @return [void]
     def execute(notification)
       while @sub_commands.any?
         # @type factory: [^() -> ICommand]

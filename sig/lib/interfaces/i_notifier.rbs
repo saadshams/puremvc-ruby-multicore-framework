@@ -18,12 +18,14 @@ module PureMVC
   # @see IFacade
   # @see INotification
   interface _INotifier
-
-    # Return the Multiton Facade instance
+    # Initialize this _INotifier instance.
     #
-    # @raise [RuntimeError] if the <code>multiton_key</code> is not set
-    # @return [_IFacade] the facade instance for the notifier's key
-    def facade: () -> _IFacade
+    # This is how a </code>Notifier</code> gets its multitonKey.
+    # Calls to <code>send_notification</code> or to access the
+    # facade will fail until after this method has been called.
+    #
+    # @param key [String] The multitonKey for this INotifier to use.
+    def initialize_notifier: (String key) -> void
 
     # Send a <code>_INotification</code>.
     #
@@ -33,16 +35,13 @@ module PureMVC
     # @param name [String] The name of the notification to send.
     # @param body [Object, nil] The body of the notification (optional).
     # @param type [String, nil] The type of the notification (optional).
-    def send_notification: (String name, Object? body, String? type) -> void
+    def send_notification: (String name, ?Object? body, ?String? type) -> void
 
-    # Initialize this _INotifier instance.
+    # Return the Multiton Facade instance
     #
-    # This is how a </code>Notifier</code> gets its multitonKey.
-    # Calls to <code>send_notification</code> or to access the
-    # facade will fail until after this method has been called.
-    #
-    # @param key [String] The multitonKey for this INotifier to use.
-    def initialize_notifier: (String key) -> void
+    # @raise [RuntimeError] if the <code>multiton_key</code> is not set
+    # @return [_IFacade] the facade instance for the notifier's key
+    def facade: () -> _IFacade
   end
 
   type validate_notifier[Notifier < _INotifier] = top

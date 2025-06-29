@@ -61,7 +61,7 @@ module PureMVC
     # Gets an instance using the provided factory block
     #
     # @param key [String] the unique key identifying the Multiton instance
-    # @param factory [Proc<(String) -> IController>] the unique key passed to the factory block
+    # @param factory [^(String) -> IController] the unique key passed to the factory block
     # @return [IController] The controller instance created by the factory
     def self.get_instance: (String key) { (String k) -> _IController } -> _IController
 

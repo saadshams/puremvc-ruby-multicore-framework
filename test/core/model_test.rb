@@ -9,12 +9,14 @@
 require 'minitest/autorun'
 require_relative '../../lib/puremvc'
 
+include PureMVC
+
 # Test the PureMVC Model class.
 class ModelTest < Minitest::Test
   # Tests the Model Multiton Factory Method
   def test_get_instance
     # Test Factory Method
-    model = PureMVC::Model.get_instance("ModelTestKey1")  { |key| PureMVC::Model.new(key) }
+    model = Model.get_instance("ModelTestKey1")  { |key| Model.new(key) }
 
     # test assertions
     refute_nil model, "Expecting instance not nil"
@@ -28,15 +30,15 @@ class ModelTest < Minitest::Test
   # methods do not throw exception when called.
   def test_register_and_retrieve_proxy
     # register a proxy and retrieve it.
-    model = PureMVC::Model.get_instance("ModelTestKey2") { |key| PureMVC::Model.new(key) }
-    model.register_proxy(PureMVC::Proxy.new("colors", %w[red green blue]))
+    model = Model.get_instance("ModelTestKey2") { |key| Model.new(key) }
+    model.register_proxy(Proxy.new("colors", %w[red green blue]))
     proxy = model.retrieve_proxy("colors")
-    data = proxy.data
+    data = proxy&.data
 
     # test assertions
     refute_nil data, "Expecting data not nil"
     assert_kind_of Array, data, "Expecting data type is Array"
-    assert_equal 3, data.length, "Expecting data.length == 3"
+    assert_equal 3, data&.length, "Expecting data.length == 3"
     assert_equal "red", data[0], "Expecting data[0] == 'red'"
     assert_equal "green", data[1], "Expecting data[1] == 'green'"
     assert_equal "blue", data[2], "Expecting data[2] == 'blue'"
@@ -45,14 +47,14 @@ class ModelTest < Minitest::Test
   # Tests the proxy removal method.
   def test_register_and_remove_proxy
     # register a proxy, remove it, then try to retrieve it
-    model = PureMVC::Model.get_instance("ModelTestKey3") { |key| PureMVC::Model.new(key) }
-    model.register_proxy(PureMVC::Proxy.new("sizes", [7, 13, 21]))
+    model = Model.get_instance("ModelTestKey3") { |key| Model.new(key) }
+    model.register_proxy(Proxy.new("sizes", [7, 13, 21]))
 
     # remove the proxy
     removed_proxy = model.remove_proxy("sizes")
 
     # assert that we removed the appropriate proxy
-    assert_equal "sizes", removed_proxy.name, "Expecting removed_proxy.name == 'sizes'"
+    assert_equal "sizes", removed_proxy&.name, "Expecting removed_proxy.name == 'sizes'" # Method invocation 'name' may produce 'NoMethodError'
 
     # ensure that the proxy is no longer retrievable from the model
     proxy = model.retrieve_proxy("sizes")
@@ -64,8 +66,8 @@ class ModelTest < Minitest::Test
   # Tests the has_proxy? Method
   def test_has_proxy
     # register a proxy
-    model = PureMVC::Model.get_instance("ModelTestKey4") { |key| PureMVC::Model.new(key) }
-    model.register_proxy(PureMVC::Proxy.new("aces", %w[clubs spades hearts diamonds]))
+    model = Model.get_instance("ModelTestKey4") { |key| Model.new(key) }
+    model.register_proxy(Proxy.new("aces", %w[clubs spades hearts diamonds]))
 
     # assert that the model.hasProxy method returns true
     # for that proxy name
@@ -82,7 +84,7 @@ class ModelTest < Minitest::Test
   # Tests that the Model calls the onRegister and onRemove methods
   def test_on_register_and_on_remove
     # Get a Multiton View instance
-    model = PureMVC::Model.get_instance("ModelTestKey5") { |key| PureMVC::Model.new(key) }
+    model = Model.get_instance("ModelTestKey5") { |key| Model.new(key) }
 
     # Create and register the test mediator
     proxy = ModelTestProxy.new
@@ -99,7 +101,7 @@ class ModelTest < Minitest::Test
   end
 end
 
-class ModelTestProxy < PureMVC::Proxy
+class ModelTestProxy < Proxy
 
   NAME = "ModelTestProxy"
   ON_REGISTER_CALLED = "onRegister Called"

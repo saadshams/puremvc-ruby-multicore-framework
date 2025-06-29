@@ -41,7 +41,6 @@ module PureMVC
     # Calls the notify method with the given notification.
     #
     # @param notification [INotification] the notification to send.
-    # @return [void]
     def notify_observer(notification)
       @notify&.call(notification)
     end

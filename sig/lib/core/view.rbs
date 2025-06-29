@@ -28,6 +28,7 @@ module PureMVC
     # @return [Mutex]
     self.@mutex: Mutex
 
+    # The Multiton Key for this Core
     @multiton_key: String
 
     # Mapping of Notification names to Observer lists

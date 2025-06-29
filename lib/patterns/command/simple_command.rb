@@ -24,7 +24,6 @@ module PureMVC
     # <code>execute</code>method of an <code>ICommand</code>.
     #
     # @param notification [_INotification] the notification to handle
-    # @return [void]
     def execute(notification)
 
     end

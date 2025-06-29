@@ -33,6 +33,7 @@ module PureMVC
 
     include _INotifier
 
+    # The Multiton Key for this Core
     @multiton_key: String
 
     # Message Constants

@@ -9,6 +9,8 @@
 require 'minitest/autorun'
 require_relative '../../../lib/puremvc'
 
+include PureMVC
+
 # Test the PureMVC Facade class.
 #
 # @see FacadeTestVO
@@ -17,11 +19,11 @@ class FacadeTest < Minitest::Test
   # Tests the Facade Multiton Factory Method
   def test_get_instance
     # Test Factory Method
-    facade = PureMVC::Facade.get_instance("FacadeTestKey1") { |key| PureMVC::Facade.new(key) }
+    facade = Facade.get_instance("FacadeTestKey1") { |key| Facade.new(key) }
 
     # test assertions
     refute_nil facade, "Expecting instance not nil"
-    assert_kind_of PureMVC::Facade, facade, "Expecting instance implements IFacade"
+    assert_kind_of Facade, facade, "Expecting instance implements IFacade"
   end
 
   # Tests Command registration and execution via the Facade.
@@ -37,7 +39,7 @@ class FacadeTest < Minitest::Test
   def test_register_command_and_send_notification
     # Create the Facade, register the FacadeTestCommand to
     # handle 'FacadeTest' notifications
-    facade = PureMVC::Facade.get_instance("FacadeTestKey2") { |key| PureMVC::Facade.new(key) }
+    facade = Facade.get_instance("FacadeTestKey2") { |key| Facade.new(key) }
     facade.register_command("FacadeTestNote") { FacadeTestCommand.new }
 
     # Send notification. The Command associated with the event
@@ -63,7 +65,7 @@ class FacadeTest < Minitest::Test
   def test_register_and_remove_command_and_send_notification
     # Create the Facade, register the FacadeTestCommand to
     # handle 'FacadeTest' events
-    facade = PureMVC::Facade.get_instance("FacadeTestKey3") { |key| PureMVC::Facade.new(key) }
+    facade = Facade.get_instance("FacadeTestKey3") { |key| Facade.new(key) }
     facade.register_command("FacadeTestNote") { FacadeTestCommand.new }
     facade.remove_command("FacadeTestNote")
 
@@ -85,12 +87,12 @@ class FacadeTest < Minitest::Test
   # methods do not throw exception when called.
   def test_facade_register_and_retrieve_proxy
     # register a proxy and retrieve it.
-    facade = PureMVC::Facade.get_instance("FacadeTestKey4") { |key| PureMVC::Facade.new(key) }
-    facade.register_proxy(PureMVC::Proxy.new("colors",  %w[red green blue]))
+    facade = Facade.get_instance("FacadeTestKey4") { |key| Facade.new(key) }
+    facade.register_proxy(Proxy.new("colors",  %w[red green blue]))
     proxy = facade.retrieve_proxy("colors")
 
     # retrieve data from proxy
-    data = proxy.data
+    data = proxy&.data
 
     # test assertions
     refute_nil data, "Expecting data not nil"
@@ -103,8 +105,8 @@ class FacadeTest < Minitest::Test
   # Tests the removing Proxies via the Facade.
   def test_register_and_remove_proxy
     # register a proxy, remove it, then try to retrieve it
-    facade = PureMVC::Facade.get_instance("FacadeTestKey5") { |key| PureMVC::Facade.new(key) }
-    proxy = PureMVC::Proxy.new("sizes", [7, 13, 21])
+    facade = Facade.get_instance("FacadeTestKey5") { |key| Facade.new(key) }
+    proxy = Proxy.new("sizes", [7, 13, 21])
     facade.register_proxy(proxy)
 
     # remove the proxy
@@ -123,27 +125,27 @@ class FacadeTest < Minitest::Test
   # Tests registering, retrieving and removing Mediators via the Facade.
   def test_register_retrieve_and_remove_mediator
     # register a mediator, remove it, then try to retrieve it
-    facade = PureMVC::Facade.get_instance("FacadeTestKey6") { |key| PureMVC::Facade.new(key) }
-    facade.register_mediator(PureMVC::Mediator.new(PureMVC::Mediator::NAME, Object.new))
+    facade = Facade.get_instance("FacadeTestKey6") { |key| Facade.new(key) }
+    facade.register_mediator(Mediator.new(Mediator::NAME, Object.new))
 
     # retrieve the mediator
-    refute_nil facade.retrieve_mediator(PureMVC::Mediator::NAME), "Expecting mediator is not nil"
+    refute_nil facade.retrieve_mediator(Mediator::NAME), "Expecting mediator is not nil"
 
     # remove the mediator
-    removed_mediator = facade.remove_mediator(PureMVC::Mediator::NAME)
+    removed_mediator = facade.remove_mediator(Mediator::NAME)
 
     # assert that we have removed the appropriate mediator
-    assert_equal PureMVC::Mediator::NAME, removed_mediator.name, "Expecting removed_mediator.name == PureMVC::Mediator.NAME"
+    assert_equal Mediator::NAME, removed_mediator.name, "Expecting removed_mediator.name == Mediator.NAME"
 
     # assert that the mediator is no longer retrievable
-    assert_nil facade.retrieve_mediator(PureMVC::Mediator::NAME), "Expecting facade.retrieve_mediator(PureMVC::Mediator::NAME)"
+    assert_nil facade.retrieve_mediator(Mediator::NAME), "Expecting facade.retrieve_mediator(Mediator::NAME)"
   end
 
   # Tests the has_proxy Method
   def test_has_proxy
     # register a Proxy
-    facade = PureMVC::Facade.get_instance("FacadeTestKey7") { |key| PureMVC::Facade.new(key) }
-    facade.register_proxy(PureMVC::Proxy.new("hasProxyTest", [1, 2, 3]))
+    facade = Facade.get_instance("FacadeTestKey7") { |key| Facade.new(key) }
+    facade.register_proxy(Proxy.new("hasProxyTest", [1, 2, 3]))
 
     # assert that the model.has_proxy method returns true
     # for that proxy name
@@ -153,8 +155,8 @@ class FacadeTest < Minitest::Test
   # Tests the has_mediator Method
   def test_has_mediator
     # register a Mediator
-    facade = PureMVC::Facade.get_instance("FacadeTestKey8") { |key| PureMVC::Facade.new(key) }
-    facade.register_mediator(PureMVC::Mediator.new("facadeHasMediatorTest", Object.new))
+    facade = Facade.get_instance("FacadeTestKey8") { |key| Facade.new(key) }
+    facade.register_mediator(Mediator.new("facadeHasMediatorTest", Object.new))
 
     # assert that the facade.hasMediator method returns true
     # for that mediator name
@@ -170,7 +172,7 @@ class FacadeTest < Minitest::Test
   # Test has_command method.
   def facade_has_command
     # register the ControllerTestCommand to handle 'hasCommandTest' notes
-    facade = PureMVC::Facade.get_instance("FacadeTestKey10") { |key| PureMVC::Facade.new(key) }
+    facade = Facade.get_instance("FacadeTestKey10") { |key| Facade.new(key) }
     facade.register_command("facadeHasCommandTest") { FacadeTestCommand.new }
 
     # test that has_command returns true for hasCommandTest notifications
@@ -186,19 +188,19 @@ class FacadeTest < Minitest::Test
   # Tests the has_core and remove_core methods
   def test_has_core_and_remove_core
     # assert that the Facade.has_core method returns false first
-    assert_equal false, PureMVC::Facade.has_core?("FacadeTestKey11"), "Expecting Facade.has_core('FacadeTestKey11')"
+    assert_equal false, Facade.has_core?("FacadeTestKey11"), "Expecting Facade.has_core('FacadeTestKey11')"
 
     # register a Core
-    PureMVC::Facade.get_instance("FacadeTestKey11") { |key| PureMVC::Facade.new(key) }
+    Facade.get_instance("FacadeTestKey11") { |key| Facade.new(key) }
 
     # assert that the Facade.has_core method returns true now that a Core is registered
-    assert_equal true, PureMVC::Facade.has_core?("FacadeTestKey11"), "Expecting Facade.has_core('FacadeTestKey11')"
+    assert_equal true, Facade.has_core?("FacadeTestKey11"), "Expecting Facade.has_core('FacadeTestKey11')"
 
     # remove the Core
-    PureMVC::Facade.remove_core("FacadeTestKey11")
+    Facade.remove_core("FacadeTestKey11")
 
     # assert that the Facade.has_core method returns false now that the core has been removed.
-      assert_equal false, PureMVC::Facade.has_core?("FacadeTestKey11"), "Expecting facade.has_core('FacadeTestKey11')"
+    assert_equal false, Facade.has_core?("FacadeTestKey11"), "Expecting facade.has_core('FacadeTestKey11')"
   end
 
 end
@@ -207,7 +209,7 @@ end
 #
 # @see FacadeTest
 # @see FacadeTestVO
-class FacadeTestCommand < PureMVC::SimpleCommand
+class FacadeTestCommand < SimpleCommand
   # Fabricate a result by multiplying the input by 2
   #
   # @param notification [Notification] the Notification carrying the FacadeTestVO

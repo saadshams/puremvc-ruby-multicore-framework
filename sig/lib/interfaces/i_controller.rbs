@@ -23,7 +23,7 @@ module PureMVC
     #
     # @abstract This method must be implemented by the concrete command.
     # @param notification_name [String] the name of the <code>_INotification</code>
-    # @param factory [Proc<() -> _ICommand>] the class of the _ICommand
+    # @param factory [^() -> _ICommand] the class of the _ICommand
     def register_command: (String notification_name) { () -> _ICommand  } -> void
 
     # Execute the <code>ICommand</code> previously registered as the

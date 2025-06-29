@@ -59,7 +59,6 @@ module PureMVC
     # will not yet have been called at that point.
     #
     # @param key [String] the <code>multiton_key</code> this <code>INotifier</code> will use
-    # @return [void]
     def initialize_notifier(key)
       @multiton_key = key
     end
@@ -72,7 +71,6 @@ module PureMVC
     # @param name [String] the name of the notification
     # @param body [Object, nil] optional body
     # @param type [String, nil] optional type
-    # @return [void]
     def send_notification(name, body = nil, type = nil)
       facade.send_notification(name, body, type)
     end

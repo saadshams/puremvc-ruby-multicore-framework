@@ -42,13 +42,11 @@ module PureMVC
     end
 
     # Called by the Model when the Proxy is registered
-    # @return [void]
     def on_register
 
     end
 
     # Called by the Model when the Proxy is removed
-    # @return [void]
     def on_remove
 
     end

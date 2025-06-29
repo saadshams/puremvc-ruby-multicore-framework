@@ -9,6 +9,8 @@
 require 'minitest/autorun'
 require_relative '../../../lib/puremvc'
 
+include PureMVC
+
 # Tests PureMVC Observer class.
 #
 # Since the Observer encapsulates the interested object's
@@ -24,7 +26,7 @@ class ObserverTest < Minitest::Test
   def test_observer_accessors
     # Create an observer with null args, then
     # use accessors to set notification method and context
-    observer = PureMVC::Observer.new
+    observer = Observer.new
     observer.context = self
     observer.notify = method(:observer_test_method)
 
@@ -34,7 +36,7 @@ class ObserverTest < Minitest::Test
     # a successful notification will result in our local
     # observerTestVar being set to the value we pass in
     # on the note body.
-    note = PureMVC::Notification.new("ObserverTestNote", 10)
+    note = Notification.new("ObserverTestNote", 10)
     observer.notify_observer(note)
 
     # test assertions
@@ -43,7 +45,7 @@ class ObserverTest < Minitest::Test
 
   def test_observer_constructor
     # Create observer passing in notification method and context
-    observer = PureMVC::Observer.new(method(:observer_test_method), self)
+    observer = Observer.new(method(:observer_test_method), self)
 
     # create a test note, setting a body value and notify
     # the observer with it. since the observer is this class
@@ -52,7 +54,7 @@ class ObserverTest < Minitest::Test
     # observerTestVar being set to the value we pass in
     # on the note body.
 
-    note = PureMVC::Notification.new("ObserverTestNote", 5)
+    note = Notification.new("ObserverTestNote", 5)
     observer.notify_observer(note)
 
     # test assertions
@@ -62,7 +64,7 @@ class ObserverTest < Minitest::Test
   # Tests the compareNotifyContext method of the Observer class
   def test_compare_notify_context
     # Create an observer passing in notification method and context
-    observer = PureMVC::Observer.new(method(:observer_test_method), self)
+    observer = Observer.new(method(:observer_test_method), self)
 
     neg_test_object = Object.new
 

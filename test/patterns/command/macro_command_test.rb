@@ -9,6 +9,8 @@
 require 'minitest/autorun'
 require_relative '../../../lib/puremvc'
 
+include PureMVC
+
 # Test the PureMVC MacroCommand class.
 #
 # @see MacroCommandTestVO
@@ -44,7 +46,7 @@ class MacroCommandTest < Minitest::Test
     vo = MacroCommandTestVO.new(5)
 
     # Create the Notification (note)
-    note = PureMVC::Notification.new("MacroCommendTest", vo)
+    note = Notification.new("MacroCommendTest", vo)
 
     # Create the SimpleCommand
     command = MacroCommandTestCommand.new
@@ -64,7 +66,7 @@ end
 # @see MacroCommandTestSub1Command
 # @see MacroCommandTestSub2Command
 # @see MacroCommandTestVO
-class MacroCommandTestCommand < PureMVC::MacroCommand
+class MacroCommandTestCommand < MacroCommand
   # Initialize the MacroCommandTestCommand by adding its 2 SubCommands.
   def initialize_macro_command
     add_sub_command { MacroCommandSub1Command.new }
@@ -77,7 +79,7 @@ end
 # @see MacroCommandTest
 # @see MacroCommandTestCommand
 # @see MacroCommandTestVO
-class MacroCommandSub1Command < PureMVC::SimpleCommand
+class MacroCommandSub1Command < SimpleCommand
   # Fabricate a result by multiplying the input by 2
   # @param notification [INotification] carrying the <code>MacroCommandTestVO</code>
   def execute(notification)
@@ -93,7 +95,7 @@ end
 # @see MacroCommandTest
 # @see MacroCommandTestCommand
 # @see MacroCommandTestVO
-class MacroCommandSub2Command < PureMVC::SimpleCommand
+class MacroCommandSub2Command < SimpleCommand
   # Fabricate a result by multiplying the input by itself
   # @param notification [INotification] carrying the <code>MacroCommandTestVO</code>
   def execute(notification)

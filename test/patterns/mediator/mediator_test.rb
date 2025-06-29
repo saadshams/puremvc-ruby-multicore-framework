@@ -9,19 +9,21 @@
 require 'minitest/autorun'
 require_relative '../../../lib/puremvc'
 
+include PureMVC
+
 # Test the PureMVC Mediator class.
 #
-# @see PureMVC::IMediator
-# @see PureMVC::Mediator
+# @see IMediator
+# @see Mediator
 class MediatorTest < Minitest::Test
 
   # Tests getting the name using Mediator class accessor method.
   def test_name_accessor
     # Create a new Mediator and use accessors to set the mediator name
-    mediator = PureMVC::Mediator.new
+    mediator = Mediator.new
 
     # test assertions
-    assert_equal PureMVC::Mediator::NAME, mediator.name, "Expecting mediator.name == Mediator::NAME"
+    assert_equal Mediator::NAME, mediator.name, "Expecting mediator.name == Mediator::NAME"
   end
 
   # Tests getting the name using Mediator class accessor method.
@@ -30,7 +32,7 @@ class MediatorTest < Minitest::Test
     component = Object.new
 
     # Create a new Proxy and use accessors to set the proxy name
-    mediator = PureMVC::Mediator.new(PureMVC::Mediator::NAME, component)
+    mediator = Mediator.new(Mediator::NAME, component)
 
     # test assertions
     assert_equal component, mediator.component, "Expecting component == #{component}"

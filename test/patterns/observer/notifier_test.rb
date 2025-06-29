@@ -9,14 +9,16 @@
 require 'minitest/autorun'
 require_relative '../../../lib/puremvc'
 
+include PureMVC
+
 # Test the PureMVC Notifier class.
 #
-# @see PureMVC::Notifier
+# @see Notifier
 class NotifierTest < Minitest::Test
   # Tests notifier methods.
   def test_notifier
     # Create a new Notifier and initialize the notifier with a test key
-    notifier = PureMVC::Notifier.new
+    notifier = Notifier.new
     notifier.initialize_notifier("NotifierTestKey1")
 
     # test assertions
@@ -27,7 +29,7 @@ class NotifierTest < Minitest::Test
   def test_register_command_and_send_notification
     # Create the Notifier, register the NotifierTestCommand to
     # handle 'NotifierTest' notifications
-    notifier = PureMVC::Notifier.new
+    notifier = Notifier.new
     notifier.initialize_notifier("NotifierTestKey2")
     notifier.facade.register_command("NotifierTest") { NotifierTestCommand.new }
 
@@ -35,7 +37,7 @@ class NotifierTest < Minitest::Test
     # (NotifierTestCommand) will be invoked and will multiply
     # the vo.input value by 2 and set the result on vo.result
     vo = NotifierTestVO.new(12)
-    note = PureMVC::Notification.new("NotifierTest", vo)
+    note = Notification.new("NotifierTest", vo)
     notifier.facade.send_notification(note.name, note.body)
 
     # test assertions
@@ -47,7 +49,7 @@ end
 #
 # @see NotifierTest
 # @see NotifierTestVO
-class NotifierTestCommand < PureMVC::SimpleCommand
+class NotifierTestCommand < SimpleCommand
   # Fabricate a result by multiplying the input by 2
   #
   # @param notification [Notification] the Notification carrying the NotifierTestVO

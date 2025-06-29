@@ -45,19 +45,16 @@ module PureMVC
     # Handles a notification.
     #
     # @param notification [_INotification] the notification to handle
-    # @return [void]
     def handle_notification(notification)
 
     end
 
     # Called when the mediator is registered.
-    # @return [void]
     def on_register
 
     end
 
     # Called when the mediator is removed.
-    # @return [void]
     def on_remove
 
     end
