@@ -134,8 +134,9 @@ module PureMVC
     # @param notification [INotification] the notification to handle
     def execute_command(notification)
       @command_mutex.synchronize do
-        # @type factory: [^() -> ICommand]
+        # @type factory: [^() -> ICommand]?
         factory = @command_map[notification.name]
+        return if factory.nil?
 
         # @type var command: _ICommand
         command = factory.call
