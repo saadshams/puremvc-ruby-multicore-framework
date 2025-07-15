@@ -1,4 +1,5 @@
 module PureMVC
+
   class Notification
 
     include _INotification
