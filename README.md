@@ -24,8 +24,8 @@ gem install puremvc
 ## Development
 
 ### Install Dependencies
-`bundle install 
-`
+`bundle install `
+
 ### Generate Documentation
 ```shell
 yard doc lib/**/*.rb --protected --private
@@ -35,7 +35,6 @@ open doc/index.html
 ### Generate RBS Signatures
 ```shell
 rbs prototype rb lib/**/*.rb --out-dir=sig
-Update???
 ```
 
 ### Run Type Checking
@@ -56,9 +55,6 @@ gem push --host https://rubygems.pkg.github.com/puremvc puremvc-1.0.0.gem
 ```
 ---
 
-## Status
-Production - [Version 1.0.0](https://github.com/PureMVC/puremvc-ruby-multicore-framework/blob/master/VERSION)
-
 ## License
 * PureMVC MultiCore Framework for Ruby 
 * PureMVC - Copyright © 2025 [Saad Shams](https://www.linkedin.com/in/muizz/)
@@ -72,6 +68,3 @@ Production - [Version 1.0.0](https://github.com/PureMVC/puremvc-ruby-multicore-f
     * Neither the name of Futurescale, Inc., PureMVC.org, nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-
