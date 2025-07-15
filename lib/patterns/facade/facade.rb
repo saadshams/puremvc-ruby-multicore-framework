@@ -25,7 +25,7 @@ module PureMVC
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      private def mutex = (@mutex ||= Mutex.new)
+      def mutex = (@mutex ||= Mutex.new)
 
       # Facade Multiton Factory method.
       #

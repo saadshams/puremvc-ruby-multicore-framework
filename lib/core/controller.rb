@@ -42,7 +42,7 @@ module PureMVC
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      private def mutex = (@mutex ||= Mutex.new)
+      def mutex = (@mutex ||= Mutex.new)
 
       # Gets an instance using the provided factory block
       #
@@ -107,7 +107,7 @@ module PureMVC
     #     @view = MyView::get_instance(key) { |key| MyView.new(key) }
     #   end
     #
-    protected def initialize_controller
+    def initialize_controller
       @view = View.get_instance(@multiton_key) { |key| View.new(key) }
     end
 
