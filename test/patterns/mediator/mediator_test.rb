@@ -23,7 +23,7 @@ class MediatorTest < Minitest::Test
     mediator = Mediator.new
 
     # test assertions
-    assert_equal Mediator::NAME, mediator.name, "Expecting mediator.name == Mediator::NAME"
+    assert_equal Mediator::NAME, mediator.name, 'Expecting mediator.name == Mediator::NAME'
   end
 
   # Tests getting the name using Mediator class accessor method.

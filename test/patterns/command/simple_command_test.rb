@@ -31,7 +31,7 @@ class SimpleCommandTest < Minitest::Test
     vo = SimpleCommandTestVO.new(5)
 
     # Create the Notification (note)
-    note = Notification.new("SimpleCommandTestNote", vo)
+    note = Notification.new('SimpleCommandTestNote', vo)
 
     # Create the SimpleCommand
     command = SimpleCommandTestCommand.new
@@ -40,7 +40,7 @@ class SimpleCommandTest < Minitest::Test
     command.execute(note)
 
     # test assertions
-    assert_equal 10, vo.result, "Expecting vo.result == 10"
+    assert_equal 10, vo.result, 'Expecting vo.result == 10'
   end
 end
 

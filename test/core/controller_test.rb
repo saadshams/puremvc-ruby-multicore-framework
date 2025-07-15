@@ -19,10 +19,10 @@ class ControllerTest < Minitest::Test
   # Tests the Controller Multiton Factory Method
   def test_get_instance
     # Test Factory Method
-    controller = Controller::get_instance("ControllerTestKey1") { |key| Controller.new(key) }
+    controller = Controller::get_instance('ControllerTestKey1') { |key| Controller.new(key) }
 
     # test assertions
-    refute_nil controller, "Expecting instance not nil"
+    refute_nil controller, 'Expecting instance not nil'
   end
 
   # Tests Command registration and execution.
@@ -38,12 +38,12 @@ class ControllerTest < Minitest::Test
   # be modified when the <code>Command</code> executes.
   def test_register_and_execute_command
     # Create the controller, register the ControllerTestCommand to handle 'ControllerTest' notes
-    controller = Controller::get_instance("ControllerTestKey2") { |key| Controller.new(key) }
-    controller.register_command("ControllerTest") { ControllerTestCommand.new }
+    controller = Controller::get_instance('ControllerTestKey2') { |key| Controller.new(key) }
+    controller.register_command('ControllerTest') { ControllerTestCommand.new }
 
     # Create a 'ControllerTest' note
     vo = ControllerTestVO.new(12)
-    note = Notification.new("ControllerTest", vo)
+    note = Notification.new('ControllerTest', vo)
 
     # Tell the controller to execute the Command associated with the note
     # the ControllerTestCommand invoked will multiply the vo.input value
@@ -51,7 +51,7 @@ class ControllerTest < Minitest::Test
     controller.execute_command(note)
 
     # test assertions
-    assert_equal 24, vo.result, "Expecting vo.result == 24"
+    assert_equal 24, vo.result, 'Expecting vo.result == 24'
   end
 
   # Tests Command registration and removal.
@@ -59,12 +59,12 @@ class ControllerTest < Minitest::Test
   # working, it can be removed from the Controller.
   def test_register_and_remove_command
     # Create the controller, register the ControllerTestCommand to handle 'ControllerTest' notes
-    controller = Controller::get_instance("ControllerTestKey3") { |key| Controller.new(key) }
-    controller.register_command("ControllerRemoveTest") { ControllerTestCommand.new }
+    controller = Controller::get_instance('ControllerTestKey3') { |key| Controller.new(key) }
+    controller.register_command('ControllerRemoveTest') { ControllerTestCommand.new }
 
     # Create a 'ControllerTest' note
     vo = ControllerTestVO.new(12)
-    note = Notification.new("ControllerRemoveTest", vo)
+    note = Notification.new('ControllerRemoveTest', vo)
 
     # Tell the controller to execute the Command associated with the note
     # the ControllerTestCommand invoked will multiply the vo.input value
@@ -72,13 +72,13 @@ class ControllerTest < Minitest::Test
     controller.execute_command(note)
 
     # test assertions
-    assert_equal 24, vo.result, "Expecting vo.result == 24"
+    assert_equal 24, vo.result, 'Expecting vo.result == 24'
 
     # Reset result
     vo.result = 0
 
     # Remove the Command from the Controller
-    controller.remove_command("ControllerRemoveTest")
+    controller.remove_command('ControllerRemoveTest')
 
     # Tell the controller to execute the Command associated with the
     # note. This time, it should not be registered, and our vo result
@@ -86,23 +86,23 @@ class ControllerTest < Minitest::Test
     controller.execute_command(note)
 
     # test assertions
-    assert_equal 0, vo.result, "Expecting vo.result == 0"
+    assert_equal 0, vo.result, 'Expecting vo.result == 0'
   end
 
   # Test has_command method.
   def test_has_command
     # register the ControllerTestCommand to handle 'hasCommandTest' notes
-    controller = Controller::get_instance("ControllerTestKey4") { |key| Controller.new(key) }
-    controller.register_command("hasCommandTest") { ControllerTestCommand.new }
+    controller = Controller::get_instance('ControllerTestKey4') { |key| Controller.new(key) }
+    controller.register_command('hasCommandTest') { ControllerTestCommand.new }
 
     # test that hasCommand returns true for hasCommandTest notifications
-    assert_equal true, controller.has_command?("hasCommandTest"), "Expecting controller.has_command?('hasCommandTest') == true"
+    assert_equal true, controller.has_command?('hasCommandTest'), "Expecting controller.has_command?('hasCommandTest') == true"
 
     # Remove the Command from the Controller
-    controller.remove_command("hasCommandTest")
+    controller.remove_command('hasCommandTest')
 
     # test that hasCommand returns false for hasCommandTest notifications
-    assert_equal false, controller.has_command?("hasCommandTest"), "Expecting controller.has_command?('hasCommandTest') == false"
+    assert_equal false, controller.has_command?('hasCommandTest'), "Expecting controller.has_command?('hasCommandTest') == false"
   end
 
   # Tests Removing and Reregistering a Command
@@ -114,34 +114,34 @@ class ControllerTest < Minitest::Test
   # test_register_and_remove.
   def test_reregister_and_execute_command
     # Fetch the controller, register the ControllerTestCommand2 to handle 'ControllerTest2' notes
-    controller = Controller::get_instance("ControllerTestKey5") { |key| Controller.new(key) }
-    controller.register_command("ControllerTest2") { ControllerTestCommand2.new }
+    controller = Controller::get_instance('ControllerTestKey5') { |key| Controller.new(key) }
+    controller.register_command('ControllerTest2') { ControllerTestCommand2.new }
 
     # Remove the Command from the Controller
-    controller.remove_command("ControllerTest2")
+    controller.remove_command('ControllerTest2')
 
     # Re-register the Command with the Controller
-    controller.register_command("ControllerTest2") { ControllerTestCommand2.new }
+    controller.register_command('ControllerTest2') { ControllerTestCommand2.new }
 
     # Create a 'ControllerTest2' note
     vo = ControllerTestVO.new(12)
-    note = Notification.new("ControllerTest2", vo)
+    note = Notification.new('ControllerTest2', vo)
 
     # retrieve a reference to the View from the same core.
-    view = View.get_instance("ControllerTestKey5") { |key| View.new(key) }
+    view = View.get_instance('ControllerTestKey5') { |key| View.new(key) }
 
     # send the Notification
     view.notify_observers(note)
 
     # test assertions
     # if the command is executed once the value will be 24
-    assert_equal 24, vo.result, "Expecting vo.result == 24"
+    assert_equal 24, vo.result, 'Expecting vo.result == 24'
 
     # Prove that accumulation works in the VO by sending the notification again
     view.notify_observers(note)
 
     # if the command is executed twice the value will be 48
-    assert_equal 48, vo.result, "Expecting vo.result == 48"
+    assert_equal 48, vo.result, 'Expecting vo.result == 48'
   end
 end
 

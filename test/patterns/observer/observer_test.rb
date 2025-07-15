@@ -36,11 +36,11 @@ class ObserverTest < Minitest::Test
     # a successful notification will result in our local
     # observerTestVar being set to the value we pass in
     # on the note body.
-    note = Notification.new("ObserverTestNote", 10)
+    note = Notification.new('ObserverTestNote', 10)
     observer.notify_observer(note)
 
     # test assertions
-    assert_equal 10, @observer_test_var, "Expecting @observer_test_var = 10"
+    assert_equal 10, @observer_test_var, 'Expecting @observer_test_var = 10'
   end
 
   def test_observer_constructor
@@ -54,11 +54,11 @@ class ObserverTest < Minitest::Test
     # observerTestVar being set to the value we pass in
     # on the note body.
 
-    note = Notification.new("ObserverTestNote", 5)
+    note = Notification.new('ObserverTestNote', 5)
     observer.notify_observer(note)
 
     # test assertions
-    assert_equal 5, @observer_test_var, "Expecting @observer_test_var = 5"
+    assert_equal 5, @observer_test_var, 'Expecting @observer_test_var = 5'
   end
 
   # Tests the compareNotifyContext method of the Observer class
@@ -69,8 +69,8 @@ class ObserverTest < Minitest::Test
     neg_test_object = Object.new
 
     # test assertions
-    assert_equal false, observer.compare_notify_context?(neg_test_object), "Expecting observer.compare_notify_context(neg_test_object) == false"
-    assert_equal true, observer.compare_notify_context?(self), "Expecting observer.compare_notify_context(self) == true"
+    assert_equal false, observer.compare_notify_context?(neg_test_object), 'Expecting observer.compare_notify_context(neg_test_object) == false'
+    assert_equal true, observer.compare_notify_context?(self), 'Expecting observer.compare_notify_context(self) == true'
   end
 
   # A function that is used as the observer notification

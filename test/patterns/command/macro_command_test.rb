@@ -46,7 +46,7 @@ class MacroCommandTest < Minitest::Test
     vo = MacroCommandTestVO.new(5)
 
     # Create the Notification (note)
-    note = Notification.new("MacroCommendTest", vo)
+    note = Notification.new('MacroCommendTest', vo)
 
     # Create the SimpleCommand
     command = MacroCommandTestCommand.new
@@ -55,8 +55,8 @@ class MacroCommandTest < Minitest::Test
     command.execute(note)
 
     # test assertions
-    assert_equal 10, vo.result1, "Expecting vo.result1 == 10"
-    assert_equal 25, vo.result2, "Expecting vo.result2 == 25"
+    assert_equal 10, vo.result1, 'Expecting vo.result1 == 10'
+    assert_equal 25, vo.result2, 'Expecting vo.result2 == 25'
   end
 end
 

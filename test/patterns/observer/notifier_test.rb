@@ -19,29 +19,29 @@ class NotifierTest < Minitest::Test
   def test_notifier
     # Create a new Notifier and initialize the notifier with a test key
     notifier = Notifier.new
-    notifier.initialize_notifier("NotifierTestKey1")
+    notifier.initialize_notifier('NotifierTestKey1')
 
     # test assertions
-    refute_nil notifier, "Expecting notifier not nil"
-    refute_nil notifier.facade, "Expecting notifier.facade not nil"
+    refute_nil notifier, 'Expecting notifier not nil'
+    refute_nil notifier.facade, 'Expecting notifier.facade not nil'
   end
 
   def test_register_command_and_send_notification
     # Create the Notifier, register the NotifierTestCommand to
     # handle 'NotifierTest' notifications
     notifier = Notifier.new
-    notifier.initialize_notifier("NotifierTestKey2")
-    notifier.facade.register_command("NotifierTest") { NotifierTestCommand.new }
+    notifier.initialize_notifier('NotifierTestKey2')
+    notifier.facade.register_command('NotifierTest') { NotifierTestCommand.new }
 
     # Send notification. The Command associated with the event
     # (NotifierTestCommand) will be invoked and will multiply
     # the vo.input value by 2 and set the result on vo.result
     vo = NotifierTestVO.new(12)
-    note = Notification.new("NotifierTest", vo)
+    note = Notification.new('NotifierTest', vo)
     notifier.facade.send_notification(note.name, note.body)
 
     # test assertions
-    assert_equal 24, vo.result, "Expecting vo.result == 24"
+    assert_equal 24, vo.result, 'Expecting vo.result == 24'
   end
 end
 
