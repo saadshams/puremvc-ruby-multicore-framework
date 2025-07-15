@@ -58,3 +58,4 @@ lib/.yardoc/
 
 .DS_Store
 .idea
+Gemfile.lock
