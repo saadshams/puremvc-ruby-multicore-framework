@@ -26,7 +26,7 @@ module PureMVC
   class Model
 
     # Message Constants
-    MULTITON_MSG = "Model instance for this Multiton key already constructed!"
+    MULTITON_MSG = 'Model instance for this Multiton key already constructed!'
     private_constant :MULTITON_MSG
 
     class << self
@@ -69,6 +69,7 @@ module PureMVC
     # @raise [RuntimeError] Error if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
+
       self.class.instance_map[key] = self
       @multiton_key = key
       @proxy_map = {}
@@ -82,9 +83,7 @@ module PureMVC
     # is your opportunity to initialize the Multiton
     # instance in your subclass without overriding the
     # constructor.
-    protected def initialize_model
-
-    end
+    protected def initialize_model; end
 
     # Register an <code>IProxy</code> with the <code>Model</code>.
     #
@@ -113,7 +112,7 @@ module PureMVC
     # @return [Boolean] whether a Proxy is currently registered with the given <code>proxy_name</code>.
     def has_proxy?(proxy_name)
       @proxy_mutex.synchronize do
-        @proxy_map.has_key?(proxy_name)
+        @proxy_map.key?(proxy_name)
       end
     end
 

@@ -31,6 +31,7 @@ module PureMVC
     # If your subclass does define a constructor,
     # be sure to call <code>super</code>
     def initialize
+      super()
       @sub_commands = []
       initialize_macro_command
     end

@@ -32,7 +32,7 @@ module PureMVC
   class Controller
 
     # Message Constants
-    MULTITON_MSG = "Controller instance for this Multiton key already constructed!"
+    MULTITON_MSG = 'Controller instance for this Multiton key already constructed!'
     private_constant :MULTITON_MSG
 
     class << self
@@ -75,6 +75,7 @@ module PureMVC
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
+
       self.class.instance_map[key] = self
       # The Multiton Key for this Core
       # @type var multiton_key: String
@@ -107,7 +108,7 @@ module PureMVC
     #   end
     #
     protected def initialize_controller
-      @view = View::get_instance(@multiton_key) { |key| View.new(key) }
+      @view = View.get_instance(@multiton_key) { |key| View.new(key) }
     end
 
     # Register a particular ICommand class as the handler for a particular INotification.
@@ -151,7 +152,7 @@ module PureMVC
     # @return [Boolean] whether a Command is currently registered for the given notification_name
     def has_command?(notification_name)
       @command_mutex.synchronize do
-        @command_map.has_key?(notification_name)
+        @command_map.key?(notification_name)
       end
     end
 

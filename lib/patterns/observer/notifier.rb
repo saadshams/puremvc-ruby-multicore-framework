@@ -40,7 +40,7 @@ module PureMVC
   class Notifier
 
     # Message Constants
-    MULTITON_MSG = "multitonKey for this Notifier not yet initialized!"
+    MULTITON_MSG = 'multitonKey for this Notifier not yet initialized!'
     private_constant :MULTITON_MSG
 
     # @attr_reader [String] The Multiton Key for this app
@@ -81,6 +81,7 @@ module PureMVC
     # @return [IFacade] the facade instance for the notifier's key
     def facade
       raise MULTITON_MSG if @multiton_key.nil?
+
       Facade.get_instance(@multiton_key) { |key| Facade.new(key) }
     end
 

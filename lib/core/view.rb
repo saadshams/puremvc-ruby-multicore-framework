@@ -25,7 +25,7 @@ module PureMVC
   # @see Notification
   class View
 
-    MULTITON_MSG = "View instance for this Multiton key already constructed!"
+    MULTITON_MSG = 'View instance for this Multiton key already constructed!'
     private_constant :MULTITON_MSG
 
     class << self
@@ -69,6 +69,7 @@ module PureMVC
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
+
       self.class.instance_map[key] = self
       # The Multiton Key for this Core
       # @type var multiton_key: String
@@ -94,9 +95,7 @@ module PureMVC
     # is your opportunity to initialize the Multiton
     # instance in your subclass without overriding the
     # constructor.
-    def initialize_view
-
-    end
+    def initialize_view; end
 
     # Register an <code>IObserver</code> to be notified
     # of <code>INotifications</code> with a given name.
@@ -127,7 +126,7 @@ module PureMVC
         observers = @observer_map[notification.name].dup
       end
       # Notify Observers from the working array
-      observers&.each { | observer | observer.notify_observer(notification) }
+      observers&.each { |observer| observer.notify_observer(notification) }
     end
 
     # Remove the observer for a given notifyContext from an observer list for a given Notification name.
@@ -208,7 +207,7 @@ module PureMVC
     # @return [Boolean] whether a Mediator is registered with the given <code>mediatorName</code>.
     def has_mediator?(mediator_name)
       @mediator_mutex.synchronize do
-        @mediator_map.has_key?(mediator_name)
+        @mediator_map.key?(mediator_name)
       end
     end
 

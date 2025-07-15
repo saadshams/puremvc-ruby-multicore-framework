@@ -15,7 +15,7 @@ module PureMVC
   class Facade
 
     # Message Constants
-    MULTITON_MSG = "Facade instance for this Multiton key already constructed!"
+    MULTITON_MSG = 'Facade instance for this Multiton key already constructed!'
     private_constant :MULTITON_MSG
 
     class << self
@@ -54,9 +54,9 @@ module PureMVC
       # @param key [String] the key of the Core to remove
       def remove_core(key)
         mutex.synchronize do
-          Model::remove_model(key)
-          View::remove_view(key)
-          Controller::remove_controller(key)
+          Model.remove_model(key)
+          View.remove_view(key)
+          Controller.remove_controller(key)
           instance_map.delete(key)
         end
       end
@@ -72,6 +72,7 @@ module PureMVC
     # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize(key)
       raise MULTITON_MSG if self.class.instance_map[key]
+
       self.class.instance_map[key] = self
       @model = @view = @controller = nil
       initialize_notifier(key)
@@ -101,7 +102,7 @@ module PureMVC
     # If you don't want to initialize a different <code>IController</code>, call <code>super.initialize_controller()</code>
     # at the beginning of your method, then register <code>Command</code>s.
     def initialize_controller
-      @controller = Controller::get_instance(@multiton_key) { |key| Controller.new(key) }
+      @controller = Controller.get_instance(@multiton_key) { |key| Controller.new(key) }
     end
 
     # Initialize the <code>Model</code>.
@@ -117,7 +118,7 @@ module PureMVC
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Proxy</code>s with the <code>Model</code>,
     # since <code>Proxy</code>s with mutable data will likely need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
     def initialize_model
-      @model = Model::get_instance(@multiton_key) { |key| Model.new(key) }
+      @model = Model.get_instance(@multiton_key) { |key| Model.new(key) }
     end
 
     # Initialize the <code>View</code>.
@@ -133,7 +134,7 @@ module PureMVC
     # Note: This method is <i>rarely</i> overridden; in practice you are more likely to use a <code>Command</code> to create and register <code>Mediator</code>s with the <code>View</code>, #
     # since <code>IMediator</code> instances will need to send <code>INotification</code>s and thus will likely want to fetch a reference to the <code>Facade</code> during their construction.
     def initialize_view
-      @view = View::get_instance(@multiton_key) { |key| View.new(key) }
+      @view = View.get_instance(@multiton_key) { |key| View.new(key) }
     end
 
     # Register an <code>ICommand</code> with the <code>Controller</code> by Notification name.

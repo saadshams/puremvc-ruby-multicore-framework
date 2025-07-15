@@ -17,7 +17,7 @@ module PureMVC
     # Typically, a <code>Mediator</code> will be written to serve
     # one specific control or group controls and so,
     # will not have a need to be dynamically named.
-    NAME = "Mediator"
+    NAME = 'Mediator'
     public_constant :NAME
 
     # @return [String] The name of the Mediator.
@@ -30,7 +30,8 @@ module PureMVC
     #
     # @param name [String | nil] the name of the mediator
     # @param component [Object, nil] the component this mediator manages
-    def initialize(name = nil, component = nil) # Expected a non-nilable type, got nilable instead
+    def initialize(name = nil, component = nil)
+      super()
       @name = name || NAME
       @component = component
     end
@@ -45,19 +46,13 @@ module PureMVC
     # Handles a notification.
     #
     # @param notification [_INotification] the notification to handle
-    def handle_notification(notification)
-
-    end
+    def handle_notification(notification); end
 
     # Called when the mediator is registered.
-    def on_register
-
-    end
+    def on_register; end
 
     # Called when the mediator is removed.
-    def on_remove
-
-    end
+    def on_remove; end
 
   end
 

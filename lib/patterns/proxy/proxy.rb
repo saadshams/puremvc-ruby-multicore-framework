@@ -37,19 +37,16 @@ module PureMVC
     # @param [String, nil] name the name of the proxy
     # @param [Object, nil] data optional data to be managed by the proxy
     def initialize(name = nil, data = nil)
+      super()
       @name =  name || NAME
       @data = data
     end
 
     # Called by the Model when the Proxy is registered
-    def on_register
-
-    end
+    def on_register; end
 
     # Called by the Model when the Proxy is removed
-    def on_remove
-
-    end
+    def on_remove; end
 
   end
 end
