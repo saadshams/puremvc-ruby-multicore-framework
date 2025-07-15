@@ -8,7 +8,7 @@ end
 
 group :development do
   gem 'rubocop', require: false
-  gem 'yard'
-  gem 'typeprof'
   gem 'steep'
+  gem 'typeprof'
+  gem 'yard'
 end
