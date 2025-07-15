@@ -44,7 +44,7 @@ module PureMVC
     private_constant :MULTITON_MSG
 
     # @attr_reader [String] The Multiton Key for this app
-    protected attr_reader :multiton_key # Missing type signature for method 'multiton_key'
+    attr_reader :multiton_key # Missing type signature for method 'multiton_key'
 
     # Initialize this INotifier instance.
     #

@@ -51,9 +51,7 @@ module PureMVC
     #
     # Note that SubCommands may be any ICommand implementor;
     # MacroCommands or SimpleCommands are both acceptable.
-    def initialize_macro_command
-
-    end
+    def initialize_macro_command; end
 
     # Add a SubCommand.
     # SubCommands will be called in First In/First Out (FIFO) order.

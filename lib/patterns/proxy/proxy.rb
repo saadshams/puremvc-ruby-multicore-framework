@@ -23,7 +23,7 @@ module PureMVC
   class Proxy < Notifier
 
     # The name of the <code>Proxy</code>.
-    NAME = "Proxy"
+    NAME = 'Proxy'
     public_constant :NAME
 
     # @return [String] The proxy name
@@ -38,7 +38,7 @@ module PureMVC
     # @param [Object, nil] data optional data to be managed by the proxy
     def initialize(name = nil, data = nil)
       super()
-      @name =  name || NAME
+      @name = name || NAME
       @data = data
     end
 

@@ -36,7 +36,7 @@ module PureMVC
 
       # Mutex used to synchronize access to the instance map for thread safety.
       # @return [Mutex]
-      private def mutex = (@mutex ||= Mutex.new)
+      def mutex = (@mutex ||= Mutex.new)
 
       # <code>Model</code> Multiton Factory method.
       #
@@ -83,7 +83,7 @@ module PureMVC
     # is your opportunity to initialize the Multiton
     # instance in your subclass without overriding the
     # constructor.
-    protected def initialize_model; end
+    def initialize_model; end
 
     # Register an <code>IProxy</code> with the <code>Model</code>.
     #
