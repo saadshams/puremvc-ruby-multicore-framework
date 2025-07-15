@@ -1,24 +1,15 @@
 module PureMVC
-  # A base <code>_IMediator</code> implementation.
-  #
-  # @see View
+
   class Mediator < Notifier
 
     include _IMediator
 
-    # The name of the <code>Mediator</code>.
     NAME: String
 
-    # @return [String] The name of the Mediator.
     attr_reader name: String
 
-    # @return [Object, nil] The component associated with this Mediator.
     attr_accessor component: Object?
 
-    # Initializes a new Mediator instance.
-    #
-    # @param name [String | nil] the name of the mediator
-    # @param component [Object, nil] the component this mediator manages (default: <code>nil</code>)
     def initialize: (?String? name, ?Object? component) -> void
   end
 

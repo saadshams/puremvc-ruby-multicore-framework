@@ -1,83 +1,35 @@
 module PureMVC
-  # A Multiton <code>_IModel</code> implementation.
-  #
-  # In PureMVC, the <code>Model</code> class provides access to model objects (Proxies) by named lookup.
-  #
-  # The <code>Model</code> assumes these responsibilities:
-  #
-  # - Maintains a cache of <code>_IProxy</code> instances.
-  # - Provides methods for registering, retrieving, and removing <code>_IProxy</code> instances.
-  #
-  # Your application must register <code>_IProxy</code> instances with the <code>Model</code>. Typically,
-  # an <code>_ICommand</code> is used to create and register <code>_IProxy</code> instances after the <code>Facade<code>
-  # has initialized the Core actors.
-  #
-  # @see Proxy
-  # @see IProxy
+
   class Model
 
     include _IModel
 
     MULTITON_MSG: String
 
-    # The Multiton IModel instanceMap.
-    # @return [Hash{String => _IModel}]
     self.@instance_map: Hash[String, _IModel]
 
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
     self.@mutex: Mutex
 
-    # The Multiton Key for this Core
     @multiton_key: String
 
-    # Mapping of proxyNames to IProxy instances
     @proxy_map: Hash[String, _IProxy]
 
-    # Mutex for proxy_map
     @proxy_mutex: Mutex
 
-    # The Multiton IModel instanceMap.
-    # @return [Hash{String => _IModel}]
     def self.instance_map: () -> Hash[String, _IModel]
 
     private
 
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
     def self.mutex: () -> Mutex
 
     public
 
-    # <code>Model</code> Multiton Factory method.
-    #
-    # @param key [String] the unique key identifying the Multiton instance
-    # @param factory [^(String) -> IModel] the unique key passed to the factory block
-    # @return [IModel] the instance for this Multiton key
     def self.get_instance: (String key) { (String k) -> _IModel } -> _IModel
 
-    # Remove an _IModel instance
-    #
-    # @param key [String] the multiton key of the IModel instance to remove
     def self.remove_model: (String key) -> void
 
-    # Constructor.
-    #
-    # This <code>_IModel</code> implementation is a Multiton,
-    # so you should not call the constructor directly, but instead call
-    # the static Multiton Factory method <code>PureMVC::Model.get_instance(key) { |key| PureMVC::Model.new(key) }</code>.
-    #
-    # @param key [String]
-    # @raise [RuntimeError] Error if an instance for this Multiton key has already been constructed.
     def initialize: (String key) -> void
 
-    # Initialize the <code>Model</code> instance.
-    #
-    # Called automatically by the constructor, this
-    # is your opportunity to initialize the Multiton
-    # instance in your subclass without overriding the
-    # constructor.
-    #
     def initialize_model: () -> void
   end
 

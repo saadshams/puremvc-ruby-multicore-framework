@@ -1,87 +1,39 @@
 module PureMVC
-  # A Multiton <code>_IView</code> implementation.
-  #
-  # In PureMVC, the <code>_IView</code> class assumes these responsibilities:
-  #
-  # - Maintains a cache of <code>_IMediator</code>instances.
-  # - Provides methods for registering, retrieving, and removing <code>_IMediators</code>.
-  # - Notifies <code>_IMediators</code>when they are registered or removed.
-  # - Manages the observer lists for each <code>_INotification</code>in the application.
-  # - Provides a method for attaching <code>_IObservers</code>to an <code>_INotification</code>'s observer list.
-  # - Provides a method for broadcasting an <code>_INotification</code>.
-  # - Notifies the <code>IObservers</code>of a given <code>_INotification</code>when it is broadcast.
-  #
-  # @see Mediator
-  # @see Observer
-  # @see Notification
+
   class View
 
     include _IView
 
     MULTITON_MSG: String
 
-    # The Multiton IModel instanceMap.
-    # @return [Hash{String => _IView}]
     self.@instance_map: Hash[String, _IView]
 
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
     self.@mutex: Mutex
 
-    # The Multiton Key for this Core
     @multiton_key: String
 
-    # Mapping of Notification names to Observer lists
     @observer_map: Hash[String, Array[_IObserver]]
 
-    # Mutex used to synchronize access to the observer_map
     @observer_mutex: Mutex
 
-    # Mapping of Mediator names to Mediator instances
     @mediator_map: Hash[String, _IMediator]
 
-    # Mutex used to synchronize access to the mediator_map
     @mediator_mutex: Mutex
 
-    # The Multiton IModel instanceMap.
-    # @return [Hash{String => _IView}]
     def self.instance_map: () -> Hash[String, _IView]
 
     private
 
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
     def self.mutex: () -> Mutex
 
     public
 
-    # View Multiton Factory method.
-    #
-    # @param key [String]
-    # @return [IView] the Multiton instance of <code>View</code>
     def self.get_instance: (String key) { (String k) -> _IView } -> _IView
 
-    # Remove an <code>_IView</code> instance.
-    #
-    # @param key [String] the key of the <code>_IView</code> instance to remove
     def self.remove_view: (String key) -> void
 
-    # Constructor.
-    #
-    # This <code>_IView</code> implementation is a Multiton,
-    # so you should not call the constructor directly.
-    # Instead, call the static Multiton factory method <code>View.get_instance(multiton_key) { |key| View.new(key) }</code>.
-    #
-    # @param key [String]
-    # @raise [RuntimeError] if an instance for this Multiton key has already been constructed.
     def initialize: (String key) -> void
 
-    # Initialize the Multiton <code>View</code> instance.
-    #
-    # Called automatically by the constructor, this
-    # is your opportunity to initialize the Multiton
-    # instance in your subclass without overriding the
-    # constructor.
     def initialize_view: () -> void
   end
 

@@ -1,12 +1,5 @@
 module PureMVC
-  # A base <code>_ICommand</code>implementation.
-  #
-  # Subclasses should override the <code>execute</code>method, where business logic
-  # will handle the <code>_INotification</code>.
-  #
-  # @see Controller
-  # @see Notification
-  # @see MacroCommand
+
   class SimpleCommand < Notifier
 
     include _ICommand

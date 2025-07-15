@@ -1,34 +1,14 @@
 module PureMVC
-  # A base <code>_IProxy</code> implementation.
-  #
-  # In PureMVC, <code>Proxy</code> classes are used to manage parts of the application's data model.
-  #
-  # A <code>Proxy</code> might simply manage a reference to a local data object, in which case
-  # interacting with it might involve setting and getting of its data in a synchronous fashion.
-  #
-  # <code>Proxy</code> classes are also used to encapsulate the application's interaction with
-  # remote services to save or retrieve data. In this case, we adopt an asynchronous idiom:
-  # setting data (or calling a method) on the <code>Proxy</code> and listening for a <code>Notification</code>
-  # to be sent when the <code>Proxy</code> has retrieved the data from the service.
-  #
-  # @see Model
   class Proxy < Notifier
 
     include _IProxy
 
-    # The name of the <code>Proxy</code>.
     NAME: String
 
-    # @return [String] The proxy name
     attr_reader name: String
 
-    # @return [Object | nil] The data managed by the proxy
     attr_accessor data: Object?
 
-    # Initializes a new Proxy instance.
-    #
-    # @param [String | nil] name the name of the proxy
-    # @param [Object, nil] data optional data to be managed by the proxy
     def initialize: (?String? name, ?Object? data) -> void
   end
 

@@ -1,100 +1,37 @@
 module PureMVC
-  # A Multiton <code>IController</code> implementation.
-  #
-  # In PureMVC, the <code>Controller</code> class follows the
-  # 'Command and Controller' strategy and assumes these responsibilities:
-  #
-  # * Remembering which <code>ICommand</code>s are intended to handle which <code>INotifications</code>.
-  # * Registering itself as an <code>IObserver</code> with the <code>View</code> for each <code>INotification</code>
-  #   that has an <code>ICommand</code> mapping.
-  # * Creating a new instance of the proper <code>ICommand</code> to handle a given <code>INotification</code> when notified by the <code>View</code>.
-  # * Calling the <code>ICommand</code>'s <code>execute</code> method, passing in the <code>INotification</code>.
-  #
-  # Your application must register <code>ICommands</code> with the <code>Controller</code>.
-  #
-  # The simplest way is to subclass <code>Facade</code>, and use its <code>initializeController</code> method
-  # to add your registrations.
-  #
-  # @see View
-  # @see Observer
-  # @see Notification
-  # @see SimpleCommand
-  # @see MacroCommand
+
   class Controller
 
     include _IController
 
     MULTITON_MSG: String
 
-    # The Multiton IController instanceMap.
-    # @return [Hash{String => _IController}]
     self.@instance_map: Hash[String, _IController]
 
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
     self.@mutex: Mutex
 
-    # The Multiton Key for this Core
     @multiton_key: String
 
-    # Local reference to View
     @view: _IView?
 
-    # Mapping of Notification names to Command factories
     @command_map: Hash[String, ^() -> _ICommand]
 
-    # Mutex used to synchronize access to the @command_map
     @command_mutex: Mutex
 
-    # The Multiton IController instanceMap.
-    # @return [Hash{String => IController}]
     def self.instance_map: () -> Hash[String, _IController]
 
     private
 
-    # Mutex used to synchronize access to the instance map for thread safety.
-    # @return [Mutex]
     def self.mutex: () -> Mutex
 
     public
 
-    # Gets an instance using the provided factory block
-    #
-    # @param key [String] the unique key identifying the Multiton instance
-    # @param factory [^(String) -> IController] the unique key passed to the factory block
-    # @return [IController] The controller instance created by the factory
     def self.get_instance: (String key) { (String k) -> _IController } -> _IController
 
-    # Remove an IController instance
-    #
-    # @param key [String] the multiton key of the IController instance to remove
     def self.remove_controller: (String key) -> void
 
-    # Constructor.
-    #
-    # This IController implementation is a Multiton, so you should not call the constructor
-    # directly. Instead, call the static factory method, passing the unique key for this instance:
-    # <code>PureMVC::Controller.getInstance(key) { |key| PureMVC::Controller.new(key) }</code>
-    #
-    # @param key [String]
-    # @raise [RuntimeError] if an instance for this Multiton key has already been constructed
     def initialize: (String key) -> void
 
-    # Initialize the Multiton Controller instance.
-    #
-    # Called automatically by the constructor.
-    #
-    # Note that if you are using a subclass of View
-    # in your application, you should also subclass Controller
-    # and override the initialize_controller method in the
-    # following way:
-    #
-    # @example
-    #   # ensure that the Controller is talking to my IView implementation
-    #   def initialize_controller
-    #     @view = MyView::get_instance(key) { |key| MyView.new(key) }
-    #   end
-    #
     def initialize_controller: () -> void
   end
 
