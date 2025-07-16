@@ -19,7 +19,7 @@ class ControllerTest < Minitest::Test
   # Tests the Controller Multiton Factory Method
   def test_get_instance
     # Test Factory Method
-    controller = Controller::get_instance('ControllerTestKey1') { |key| Controller.new(key) }
+    controller = Controller.get_instance('ControllerTestKey1') { |key| Controller.new(key) }
 
     # test assertions
     refute_nil controller, 'Expecting instance not nil'
@@ -38,7 +38,7 @@ class ControllerTest < Minitest::Test
   # be modified when the <code>Command</code> executes.
   def test_register_and_execute_command
     # Create the controller, register the ControllerTestCommand to handle 'ControllerTest' notes
-    controller = Controller::get_instance('ControllerTestKey2') { |key| Controller.new(key) }
+    controller = Controller.get_instance('ControllerTestKey2') { |key| Controller.new(key) }
     controller.register_command('ControllerTest') { ControllerTestCommand.new }
 
     # Create a 'ControllerTest' note
@@ -59,7 +59,7 @@ class ControllerTest < Minitest::Test
   # working, it can be removed from the Controller.
   def test_register_and_remove_command
     # Create the controller, register the ControllerTestCommand to handle 'ControllerTest' notes
-    controller = Controller::get_instance('ControllerTestKey3') { |key| Controller.new(key) }
+    controller = Controller.get_instance('ControllerTestKey3') { |key| Controller.new(key) }
     controller.register_command('ControllerRemoveTest') { ControllerTestCommand.new }
 
     # Create a 'ControllerTest' note
@@ -92,7 +92,7 @@ class ControllerTest < Minitest::Test
   # Test has_command method.
   def test_has_command
     # register the ControllerTestCommand to handle 'hasCommandTest' notes
-    controller = Controller::get_instance('ControllerTestKey4') { |key| Controller.new(key) }
+    controller = Controller.get_instance('ControllerTestKey4') { |key| Controller.new(key) }
     controller.register_command('hasCommandTest') { ControllerTestCommand.new }
 
     # test that hasCommand returns true for hasCommandTest notifications
@@ -114,7 +114,7 @@ class ControllerTest < Minitest::Test
   # test_register_and_remove.
   def test_reregister_and_execute_command
     # Fetch the controller, register the ControllerTestCommand2 to handle 'ControllerTest2' notes
-    controller = Controller::get_instance('ControllerTestKey5') { |key| Controller.new(key) }
+    controller = Controller.get_instance('ControllerTestKey5') { |key| Controller.new(key) }
     controller.register_command('ControllerTest2') { ControllerTestCommand2.new }
 
     # Remove the Command from the Controller
